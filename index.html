@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comunidad UXUI</title>
+<meta name="description" content="Aumenta tu seniority en UX/UI con práctica real, feedback honesto e IA aplicada a tu proceso. Una comunidad en español que acompaña.">
+<link rel="canonical" href="https://comunidaduxui.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://comunidaduxui.com/">
+<meta property="og:title" content="Comunidad UXUI">
+<meta property="og:description" content="Aumenta tu seniority en UX/UI con práctica real, feedback honesto e IA aplicada a tu proceso. Una comunidad en español que acompaña.">
+<meta property="og:image" content="https://comunidaduxui.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_LA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://comunidaduxui.com/assets/og.png">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="assets/iso.svg" type="image/svg+xml">
+<link rel="alternate icon" href="assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Raleway:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --papel: #F6F4EF;
+  --papel-2: #ECE9E2;
+  --card: #FFFFFF;
+  --tinta: #161513;
+  --grafito: #4F4B45;
+  --linea: rgba(22, 21, 19, .14);
+  --rosa: #D81B60;
+  --rosa-hover: #B8154F;
+  --sobre-rosa: #FFFFFF;
+  --acento: #D81B60;
+  --f-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --radio: 4px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --max: 1120px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papel: #161513;
+    --papel-2: #1F1D1A;
+    --card: #211F1B;
+    --tinta: #F2EEE6;
+    --grafito: #BDB6AA;
+    --linea: rgba(242, 238, 230, .16);
+    --rosa: #FF5C94;
+    --rosa-hover: #FF7FAB;
+    --sobre-rosa: #161513;
+    --acento: #FF8AB4;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  letter-spacing: .008em;
+  color: var(--tinta);
+  background: var(--papel);
+}
+h1, h2 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: .018em;
+  margin: 0;
+  text-wrap: balance;
+}
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Encabezado: logo, frase y la única acción */
+.hero { text-align: center; padding-block: clamp(2.5rem, 9vh, 6rem) clamp(2.5rem, 7vh, 4.5rem); }
+.logo { display: block; margin: 0 auto clamp(1.75rem, 5vh, 3rem); width: min(250px, 68vw); height: auto; }
+.logo-oscuro { display: none; }
+@media (prefers-color-scheme: dark) {
+  .logo-claro { display: none; }
+  .logo-oscuro { display: block; }
+}
+.hero h1 { font-size: clamp(2.1rem, 7vw, 3.8rem); max-width: 14ch; margin: 0 auto; }
+.hero .bajada { color: var(--grafito); font-size: clamp(1.02rem, 2.4vw, 1.2rem); max-width: 38ch; margin: 1rem auto 0; text-wrap: pretty; }
+.boton {
+  display: inline-block;
+  margin-top: clamp(1.5rem, 4vh, 2.25rem);
+  padding: 1rem 2.1rem;
+  background: var(--rosa);
+  color: var(--sobre-rosa);
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: .01em;
+  text-decoration: none;
+  border-radius: var(--radio);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.boton:hover { background: var(--rosa-hover); }
+.boton:active { transform: scale(.98); }
+
+/* Muro de reseñas */
+.muro { padding-block: 0; }
+.muro::before { content: ""; display: block; border-top: 1px solid var(--linea); margin-bottom: clamp(2rem, 6vh, 3.5rem); }
+.muro + .muro { margin-top: clamp(2.5rem, 7vh, 4rem); }
+.muro h2 { font-size: clamp(1.3rem, 3.4vw, 1.75rem); margin-bottom: .4rem; }
+.muro .nota { color: var(--grafito); font-size: .98rem; margin-bottom: 1.6rem; max-width: 60ch; }
+@media (min-width: 640px) { .muro .nota span { display: block; } }
+.columnas { columns: 1; column-gap: 2.25rem; }
+@media (min-width: 640px) { .columnas { columns: 2; } }
+@media (min-width: 980px) { .columnas { columns: 3; } }
+.resena {
+  break-inside: avoid;
+  margin: 0 0 1.9rem;
+  padding: 0 0 0 1rem;
+  border-left: 3px solid var(--acento);
+}
+.resena blockquote { margin: 0; }
+.resena .titular { font-family: var(--f-display); font-weight: 700; font-size: 1.2rem; line-height: 1.28; letter-spacing: .015em; text-wrap: balance; }
+.resena blockquote p + p { margin-top: .5rem; color: var(--grafito); font-size: .98rem; line-height: 1.55; text-wrap: pretty; }
+.resena figcaption { margin-top: .7rem; font-size: .9rem; line-height: 1.45; }
+.resena .nombre { font-weight: 700; }
+.resena .quien { color: var(--grafito); }
+.resena .fuente { display: block; color: var(--grafito); font-size: .82rem; }
+
+/* Cierre y pie */
+.cierre { text-align: center; padding-block: clamp(3rem, 9vh, 5rem); }
+.cierre h2 { font-size: clamp(1.4rem, 4vw, 2rem); max-width: 22ch; margin: 0 auto; }
+.pie { border-top: 1px solid var(--linea); padding: 1.75rem 0 2.25rem; font-size: .93rem; color: var(--grafito); }
+.pie .wrap { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; justify-content: space-between; align-items: baseline; }
+.pie ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.pie a { text-underline-offset: 3px; }
+.pie a:hover { color: var(--tinta); }
+
+@media (prefers-reduced-motion: reduce) { .boton { transition: none; } }
+</style>
+</head>
+<body>
+
+<main>
+  <header class="hero wrap">
+    <img class="logo logo-claro" src="assets/horizontal-texto-negro.svg" alt="Comunidad UXUI" width="335" height="60">
+    <img class="logo logo-oscuro" src="assets/horizontal-texto-blanco.svg" alt="Comunidad UXUI" width="335" height="60">
+    <h1>Aumenta tu seniority en UX/UI</h1>
+    <p class="bajada">Práctica real, feedback honesto e IA aplicada a tu proceso, en una comunidad en español que acompaña.</p>
+    <a class="boton" data-boton="arriba" href="https://www.skool.com/comunidaduxui/about">Ir a la comunidad</a>
+  </header>
+
+  <section class="muro wrap" aria-labelledby="t-comunidad">
+    <h2 id="t-comunidad">Lo que cuentan quienes ya están adentro</h2>
+    <p class="nota">Reseñas, posts y mensajes reales de la comunidad.</p>
+    <div class="columnas">
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Tengo trabajo gracias a la Comunidad UX/UI.</p>
+          <p>Vengo de ser la única diseñadora en mi equipo de 20 desarrolladores, por lo que al fin hablar con alguien de diseño fue terapéutico.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Luisa</span> <span class="quien">· UX designer</span><span class="fuente">Post en la comunidad</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Llegué saturada, terminé sin poder parar de crear.</p>
+          <p>Coleccionaba skills, las probaba y no llegaba a buenos resultados. Con la mentoría de Anita logré finalmente automatizar mi propio proceso de diseño: menos tiempo de ejecución y más tiempo de pensamiento estratégico.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Victoria</span> <span class="quien">· diseñadora de experiencias</span><span class="fuente">Post en la comunidad</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Hoy me han dado la respuesta que tanto esperaba: el puesto es mío.</p>
+          <p>Solo puedo decir gracias a esta comunidad y a la gente de aquí que me ha respondido una duda, me ha dado un consejo o ha compartido su experiencia sin pedir nada a cambio.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Diego</span> <span class="quien">· Product Designer, antes desarrollador web</span><span class="fuente">Post en la comunidad</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Llegué buscando plata y encontré oro.</p>
+          <p>Me alegra mucho haber encontrado esta comunidad.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Dayana</span> <span class="quien">· diseñadora UX/UI</span><span class="fuente">Mensaje a Anita Sevilla Ull, fundadora</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Uno llega buscando respuestas y termina encontrando apoyo, claridad y ese empujoncito que hace falta para creérselo de verdad.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Clarise</span> <span class="quien">· diseñadora UX/UI</span><span class="fuente">Comentario en la comunidad</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Valoro su lado humano: el apoyo, la cercanía y la motivación.</p>
+          <p>Las prácticas grupales nos permiten aplicar lo aprendido y ganar confianza para acercarnos a nuestras metas profesionales.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Katerine</span> <span class="quien">· Service &amp; UX Designer</span><span class="fuente">Reseña en Skool</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Lo que más valoro es el compañerismo.</p>
+          <p>Poder hacer preguntas, aprender juntos, compartir ideas y ayudarnos en el camino.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Sarah</span> <span class="quien">· diseñadora UX/UI</span><span class="fuente">Reseña en Skool</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Podemos compartir dudas, miedos y logros.</p>
+          <p>Ambientes como este nos ayudan muchísimo a ir mejorando y sentirnos escuchados y motivados.</p>
+        </blockquote>
+        <figcaption><span class="nombre">María de los Ángeles</span> <span class="quien">· Visual Designer</span><span class="fuente">Comentario en la comunidad</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Es un espacio seguro para aprender y compartir.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Natali</span> <span class="quien">· diseñadora gráfica y UX/UI</span><span class="fuente">Reseña en Skool</span></figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section class="muro wrap" aria-labelledby="t-mentorias">
+    <h2 id="t-mentorias">Lo que dicen de las mentorías con Anita Sevilla Ull</h2>
+    <p class="nota"><span>Anita fundó la comunidad y la acompaña todos los días.</span> <span>Estas son reseñas públicas de sus mentorías individuales.</span></p>
+    <div class="columnas">
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Anita es una gran profesional y una excelente mentora.</p>
+          <p>Fue honesta y precisa. Me ayudó a ordenarme y me dio una guía para mi transición a UX/UI.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Juana</span> <span class="quien">· diseñadora de imagen y sonido</span><span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Si sos junior y tenés problemas para destacarte, hablá con Anita.</p>
+          <p>Descubrió enseguida un problema de comunicación que no sabía que tenía.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Regina</span> <span class="quien">· UX Designer</span><span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Cada sesión con Anita es aprendizaje asegurado.</p>
+          <p>No solo te escucha atentamente, sino que también se involucra en el problema que estás tratando de resolver.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Magdalena</span> <span class="quien">· diseñadora UX</span><span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Recomiendo mucho a Anita.</p>
+          <p>Me ayudó a ordenar mis ideas y a hacerme las preguntas relevantes para avanzar en mi proceso.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Nico</span> <span class="quien">· Project Manager, en transición a UX</span><span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section class="cierre wrap" aria-labelledby="t-cierre">
+    <h2 id="t-cierre">Te esperamos adentro</h2>
+    <a class="boton" data-boton="abajo" href="https://www.skool.com/comunidaduxui/about">Ir a la comunidad</a>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <p>Comunidad UXUI · fundada por Anita Sevilla Ull</p>
+    <ul>
+      <li><a href="https://www.instagram.com/comunidaduxui/">Instagram</a></li>
+      <li><a href="https://www.youtube.com/@ComunidadUXUI">YouTube</a></li>
+      <li><a href="https://www.linkedin.com/company/comunidaduxui">LinkedIn</a></li>
+      <li><a href="https://comunidad-uxui.kit.com/fb40f8e711">Newsletter Minuto UX</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+/* Medición propia: cuenta visitas y clics en el botón. Sin cookies ni datos personales.
+   Tabla site_events del proyecto de Supabase de CUXUI (ver sql/001_site_events.sql). */
+(function () {
+  if (navigator.webdriver || !/(^|\.)comunidaduxui\.com$/.test(location.hostname)) return;
+  var URL_EVENTOS = 'https://ypmowaaxoyuknlmwmyth.supabase.co/rest/v1/site_events';
+  var CLAVE = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbW93YWF4b3l1a25sbXdteXRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNzk1ODEsImV4cCI6MjA5MjY1NTU4MX0.r9c_VB5H-kUmICseEc5La-VZ2_jKlAdAuDlWIIVVh1w';
+  var id;
+  try { id = sessionStorage.getItem('visita_id'); } catch (e) {}
+  var esNueva = !id;
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)).slice(0, 36);
+    try { sessionStorage.setItem('visita_id', id); } catch (e) {}
+  }
+  var origen = 'directo';
+  try { if (document.referrer) origen = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch (e) {}
+  var dispositivo = matchMedia('(max-width: 720px)').matches ? 'celular' : 'escritorio';
+  function registrar(evento, detalle) {
+    try {
+      fetch(URL_EVENTOS, {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json', apikey: CLAVE, Authorization: 'Bearer ' + CLAVE, Prefer: 'return=minimal' },
+        body: JSON.stringify({ site: 'comunidaduxui.com', event: evento, detalle: detalle || null, visita_id: id, origen: origen, dispositivo: dispositivo })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  if (esNueva) registrar('visita');
+  document.querySelectorAll('[data-boton]').forEach(function (b) {
+    b.addEventListener('click', function () { registrar('clic_boton', b.getAttribute('data-boton')); });
+  });
+})();
+</script>
+
+</body>
+</html>
