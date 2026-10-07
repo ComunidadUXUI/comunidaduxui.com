@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suscripción confirmada · Minuto UX</title>
+<meta name="description" content="Tu suscripción a Minuto UX, el newsletter de Comunidad UXUI, está confirmada.">
+<!-- Página a la que lleva el botón del mail de confirmación de Kit (formulario 9994514, Settings → Confirmation email → URL). -->
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../../assets/iso.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../../assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Raleway:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --papel: #F6F4EF;
+  --card: #FFFFFF;
+  --tinta: #161513;
+  --grafito: #4F4B45;
+  --linea: rgba(22, 21, 19, .14);
+  --rosa: #D81B60;
+  --rosa-hover: #B8154F;
+  --sobre-rosa: #FFFFFF;
+  --acento: #D81B60;
+  --f-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --radio: 4px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papel: #161513;
+    --card: #211F1B;
+    --tinta: #F2EEE6;
+    --grafito: #BDB6AA;
+    --linea: rgba(242, 238, 230, .16);
+    --rosa: #FF5C94;
+    --rosa-hover: #FF7FAB;
+    --sobre-rosa: #161513;
+    --acento: #FF8AB4;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--f-body);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  letter-spacing: .008em;
+  color: var(--tinta);
+  background: var(--papel);
+}
+main { flex: 1; }
+h1, h2 { font-family: var(--f-display); font-weight: 700; line-height: 1.14; letter-spacing: .018em; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: 100%; max-width: 640px; margin: 0 auto; padding: 0 var(--gutter); }
+.logo { display: block; width: min(200px, 60vw); height: auto; margin-bottom: clamp(2rem, 6vh, 3rem); }
+.logo-oscuro { display: none; }
+@media (prefers-color-scheme: dark) { .logo-claro { display: none; } .logo-oscuro { display: block; } }
+.confirmado { padding-block: clamp(2.5rem, 9vh, 5rem) clamp(2rem, 5vh, 3rem); }
+.eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--acento); margin-bottom: .6rem; }
+.confirmado h1 { font-size: clamp(2rem, 6vw, 3rem); }
+.confirmado .bajada { color: var(--grafito); font-size: clamp(1.02rem, 2.4vw, 1.15rem); margin-top: 1rem; max-width: 46ch; text-wrap: pretty; }
+.regalo { background: var(--card); border: 1px solid var(--linea); border-left: 4px solid var(--acento); border-radius: var(--radio); padding: clamp(1.25rem, 4vw, 1.75rem); }
+.regalo .eyebrow { margin-bottom: .4rem; }
+.regalo h2 { font-size: clamp(1.25rem, 3.4vw, 1.55rem); }
+.regalo p { color: var(--grafito); margin-top: .6rem; max-width: 50ch; text-wrap: pretty; }
+.boton {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: .85rem 1.6rem;
+  background: var(--rosa);
+  color: var(--sobre-rosa);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: var(--radio);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.boton:hover { background: var(--rosa-hover); }
+.boton:active { transform: scale(.98); }
+.peso { display: inline-block; margin-left: .75rem; font-size: .88rem; color: var(--grafito); }
+.pie { border-top: 1px solid var(--linea); margin-top: clamp(3rem, 9vh, 5rem); padding: 1.5rem 0 2rem; font-size: .93rem; color: var(--grafito); }
+.pie a { text-underline-offset: 3px; }
+.pie a:hover { color: var(--tinta); }
+@media (prefers-reduced-motion: reduce) { .boton { transition: none; } }
+</style>
+</head>
+<body>
+
+<main>
+  <header class="confirmado wrap">
+    <a href="/" aria-label="Comunidad UXUI, ir al inicio">
+      <img class="logo logo-claro" src="../../assets/horizontal-texto-negro.svg" alt="Comunidad UXUI" width="335" height="60">
+      <img class="logo logo-oscuro" src="../../assets/horizontal-texto-blanco.svg" alt="" width="335" height="60">
+    </a>
+    <p class="eyebrow">Minuto UX</p>
+    <h1>Tu suscripción está confirmada.</h1>
+    <p class="bajada">Recibirás el próximo Minuto UX en este mismo correo. Para que no se pierda entre las promociones, agrega anita@comunidaduxui.com a tus contactos.</p>
+  </header>
+
+  <!-- El regalo va rotando: para cambiarlo, se reemplazan este bloque y el archivo. -->
+  <section class="wrap" aria-labelledby="t-regalo">
+    <div class="regalo">
+      <p class="eyebrow">Un regalo para empezar</p>
+      <h2 id="t-regalo">30 prompts de IA para diseño UX/UI</h2>
+      <p>Para pasar de la página en blanco a un primer borrador en cada etapa de tu proceso, del research al portfolio. Sirven en ChatGPT, Claude o Gemini.</p>
+      <a class="boton" href="30-prompts-ia-diseno-uxui.pdf" download>Descargar el PDF</a><span class="peso">PDF · 0,7 MB</span>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <p><a href="/">Comunidad UXUI</a> · fundada por Anita Sevilla Ull</p>
+  </div>
+</footer>
+
+</body>
+</html>
