@@ -6,7 +6,9 @@
 // Segunda pasada (prueba a ciegas): las cuatro opciones de cada pregunta tienen la misma forma y describen hechos;
 // ninguna usa «debería», «nunca» ni «siempre», y ninguna es la única con un término técnico.
 
-export const VERSION = "3.6";
+// Versión PÚBLICA. La 1.0 es la que salió al público el 19/11/2026.
+// En el proceso interno de diseño esa misma versión se llamó 3.6 (ver README, «Versiones»).
+export const VERSION = "1.0";
 
 export const NOMBRE = "Mirada de auditor";
 
