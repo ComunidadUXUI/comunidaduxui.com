@@ -41,11 +41,11 @@ function cargar() { try { const s = JSON.parse(sessionStorage.getItem(CLAVE)); i
 
 // ---------- utilidades ----------
 let tAviso;
-function avisar(texto, visible = true) {
+function avisar(texto, visible = true, ms = 2600) {
   vivo.textContent = ""; requestAnimationFrame(() => { vivo.textContent = texto; });
   if (!visible) return;
   aviso.textContent = texto; aviso.classList.add("on");
-  clearTimeout(tAviso); tAviso = setTimeout(() => aviso.classList.remove("on"), 2600);
+  clearTimeout(tAviso); tAviso = setTimeout(() => aviso.classList.remove("on"), ms);
 }
 function mezcla(id, n) {
   if (!S.mez[id]) { const a = [...Array(n).keys()]; for (let i = n - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } S.mez[id] = a; guardar(); }
@@ -194,7 +194,12 @@ function pintarPantalla(p, conFoco) {
   escalar();
   const scr = main.querySelector("#scr");
   const marcas = () => (S.marcas[p.id] || (S.marcas[p.id] = []));
-  scr.querySelectorAll("[data-r]").forEach((el) => {
+  // Quien juega no lee la consigna (prueba de Seba, 19/11/2026): en la primera pantalla, las partes que se pueden
+  // tocar se encienden una tras otra, sin señalar ninguna falla. Se apaga con el primer toque.
+  const guiar = p.id === PANTALLAS[0].id && !S.inicio && S.fase === "marcar" && !sinMov.matches;
+  if (guiar) scr.classList.add("guia");
+  scr.querySelectorAll("[data-r]").forEach((el, n) => {
+    el.style.setProperty("--n", n);
     const reg = p.regiones.find((r) => r.id === el.dataset.r);
     el.setAttribute("role", "button"); el.tabIndex = 0;
     el.setAttribute("aria-label", reg.etiqueta); el.setAttribute("aria-pressed", "false");
@@ -204,6 +209,8 @@ function pintarPantalla(p, conFoco) {
     const m = S.marcas[p.id] || [];
     // «Listo» toma el color de acción recién cuando hay algo marcado.
     listo.classList.toggle("p", m.length > 0); listo.classList.toggle("s", m.length === 0);
+    // Con algo marcado, «Nada que marcar» deja de ser una opción: se apaga hasta que se quiten las marcas.
+    bien.disabled = m.length > 0;
     scr.querySelectorAll("[data-r]").forEach((el) => {
       const i = m.indexOf(el.dataset.r);
       el.setAttribute("aria-pressed", i >= 0 ? "true" : "false");
@@ -213,10 +220,12 @@ function pintarPantalla(p, conFoco) {
   }
   function alternar(el) {
     if (S.fase !== "marcar") return;
+    scr.classList.remove("guia");
+    const primera = !S.inicio; // la primera marca de la partida explica cómo se sigue (muchos buscan avanzar con el botón de la pantalla de Patitas)
     const m = marcas(), id = el.dataset.r, i = m.indexOf(id);
     if (i >= 0) { m.splice(i, 1); avisar(`Marca quitada. Quedan ${m.length} de ${MARCAS_MAX}.`, false); }
     else if (m.length >= MARCAS_MAX) return avisar(`Máximo ${MARCAS_MAX} marcas. Toca una para quitarla.`);
-    else { m.push(id); avisar(`Marca ${m.length} de ${MARCAS_MAX}.`, false); }
+    else { m.push(id); if (primera) avisar("Marcada. Toca otra falla o «Listo» para seguir.", true, 4200); else avisar(`Marca ${m.length} de ${MARCAS_MAX}.`, false); }
     if (!S.inicio) { S.inicio = true; evento("inicio"); }
     guardar(); pintarMarcas();
   }

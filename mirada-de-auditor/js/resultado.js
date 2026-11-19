@@ -130,7 +130,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
     ? `Encontré ${R.hallados} de ${R.sembrados} problemas en una app. ¿Cuántos ves tú? Es «${NOMBRE}», la simulación de auditoría UX/UI de Comunidad UX/UI.`
     : `Hay ${R.sembrados} problemas escondidos en una app. ¿Cuántos ves tú? Es «${NOMBRE}», la simulación de auditoría UX/UI de Comunidad UX/UI.`;
   const enlaceReto = conNumero ? enlace : `${sitio()}?reto`;
-  const linkedin = "https://www.linkedin.com/feed/?shareActive=true&text=" + encodeURIComponent(`${texto} ${sitio()}?reto`);
+  // Sin botón de LinkedIn: no abre la publicación con el texto y la imagen, solo lleva a la red y distrae (Anita, 19/11/2026).
 
   // La plantilla se promete solo si tiene enlace (en local se muestra igual, para revisar el texto).
   const conPlantilla = !!CONFIG.plantillaUrl || LOCAL;
@@ -179,8 +179,8 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
 
     ${propio ? `<section class="comparte" aria-labelledby="r6">
       <h2 id="r6">Reta a tu equipo</h2>
-      <div class="fila"><button class="btn s" id="copiar">${ic("copia")}Copiar enlace</button><a class="btn s" id="li" href="${linkedin}" target="_blank" rel="noopener">${ic("comparte")}LinkedIn<span class="sr"> (se abre en una pestaña nueva)</span></a><button class="btn s" id="img">${ic("descarga")}Imagen</button></div>
-      <div id="imgzona"></div>
+      <div class="fila"><button class="btn s" id="compartir" disabled>${ic("comparte")}Compartir imagen y texto</button></div>
+      <p class="nota" id="compmsj" role="status"></p>
     </section>` : ""}
 
     ${bloqueCalculo(propio, propio ? "Jugar otra vez" : "")}
@@ -198,17 +198,30 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
   $("#otra")?.addEventListener("click", alRepetir);
   $("#jugar")?.addEventListener("click", alRepetir);
   $("#skool1")?.addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "resultado" }));
-  $("#li")?.addEventListener("click", () => evento("compartir", { via: "linkedin" }));
-  $("#copiar")?.addEventListener("click", async (e) => {
-    const b = e.currentTarget;
-    try { await navigator.clipboard.writeText(enlaceReto); b.innerHTML = `${ic("check")}Enlace copiado`; evento("compartir", { via: "enlace" }); }
-    catch (err) { b.insertAdjacentHTML("afterend", `<p class="nota" style="word-break:break-all">${esc(enlaceReto)}</p>`); b.remove(); }
-  });
-  $("#img")?.addEventListener("click", async () => {
-    const url = await imagen(R);
-    $("#imgzona").innerHTML = `<img class="imgcomp" src="${url}" alt="Imagen para compartir: ${conNumero ? `Encontré ${R.hallados} de ${R.sembrados} problemas en una app.` : `Hay ${R.sembrados} problemas escondidos en una app.`} ¿Cuántos ves tú?"><p style="margin-top:.5rem"><a class="btn s" href="${url}" download="mirada-de-auditor.png">${ic("descarga")}Guardar la imagen</a></p>`;
-    evento("compartir", { via: "imagen" });
-  });
+  // Compartir, como en el test vocacional: un solo botón. En el celular abre el menú de compartir del teléfono con la
+  // imagen y el texto ya cargados (la persona no sale del juego). Donde eso no existe, descarga la imagen y copia el texto.
+  // La imagen se arma antes del toque: el menú de compartir solo se abre si se lo llama enseguida.
+  const botonComp = $("#compartir");
+  if (botonComp) {
+    const completo = `${texto} ${enlaceReto}`, msj = $("#compmsj");
+    let archivo = null;
+    imagenBlob(R).then((blob) => { archivo = new File([blob], "mirada-de-auditor.png", { type: "image/png" }); botonComp.disabled = false; }).catch(() => { botonComp.disabled = false; });
+    botonComp.addEventListener("click", async () => {
+      try {
+        // El menú de compartir sirve en el celular (ahí están LinkedIn y WhatsApp). En computadora ofrece otras cosas: se descarga.
+        if (archivo && matchMedia("(pointer: coarse)").matches && navigator.share && navigator.canShare?.({ files: [archivo] })) {
+          await navigator.share({ files: [archivo], text: completo });
+          msj.textContent = "Compartido."; evento("compartir", { via: "menu" });
+          return;
+        }
+      } catch (err) { if (err?.name === "AbortError") return; /* si falla el menú, sigue con la descarga */ }
+      if (archivo) { const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(archivo), download: archivo.name }); document.body.append(a); a.click(); a.remove(); }
+      let copiado = false;
+      try { await navigator.clipboard.writeText(completo); copiado = true; } catch (err) { /* sin permiso para copiar: se muestra el texto */ }
+      msj.innerHTML = copiado ? "Imagen descargada y texto copiado. Pégalos en tu publicación." : `Imagen descargada. Copia este texto para tu publicación: <span style="word-break:break-word">${esc(completo)}</span>`;
+      evento("compartir", { via: "descarga" });
+    });
+  }
   $("#pd")?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const form = e.currentTarget, campo = $("#correo"), msj = $("#pdmsj"), bot = form.querySelector("button");
@@ -314,7 +327,7 @@ export function mostrarDesglose(main, S, { alRepetir }) {
 // ---------- imagen para compartir (1080 × 1350) ----------
 // Es un reto, no un diagnóstico: el número (si es de 3 o más), la pregunta y dónde jugar. Nada sobre lo que falta.
 const RETO_DESDE = 3;
-async function imagen(R) {
+async function imagenBlob(R) {
   await document.fonts.ready;
   const conNumero = R.hallados >= RETO_DESDE;
   const W = 1080, H = 1350, c = Object.assign(document.createElement("canvas"), { width: W, height: H }), x = c.getContext("2d");
@@ -338,5 +351,5 @@ async function imagen(R) {
     const w = 280, h = (img.naturalHeight / img.naturalWidth) * w; x.drawImage(img, 90, 1215 - h, w, h);
   } catch (e) { /* sin logo: la imagen sirve igual */ }
   x.fillStyle = "#A9B8B1"; x.font = '500 30px "IBM Plex Mono", monospace'; x.fillText(location.host + location.pathname.replace(/\/$/, ""), 90, 1280);
-  return new Promise((ok) => c.toBlob((b) => ok(URL.createObjectURL(b)), "image/png"));
+  return new Promise((ok, mal) => c.toBlob((b) => (b ? ok(b) : mal(new Error("sin imagen"))), "image/png"));
 }

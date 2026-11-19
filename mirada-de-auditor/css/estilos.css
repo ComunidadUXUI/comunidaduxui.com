@@ -473,3 +473,7 @@ details ul{color:var(--humo);padding-left:1.1rem;display:flex;flex-direction:col
 .pasos li.foco small{color:var(--lente-texto)}
 .plantilla .btn{justify-content:center;text-align:center}
 .habs .val{white-space:nowrap}
+
+/* Guía de la primera pantalla: las partes que se pueden tocar se encienden una tras otra (dos vueltas) y se apagan. */
+.guia [data-r]::after{animation:guia 1.1s var(--sale) calc(.5s + var(--n) * .16s) 2 both}
+@keyframes guia{0%,100%{border-color:transparent}45%{border-color:rgba(255,77,141,.75)}}

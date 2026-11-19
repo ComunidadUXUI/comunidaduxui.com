@@ -9,7 +9,7 @@ export const CONFIG = {
   desgloseUrl: "https://ypmowaaxoyuknlmwmyth.supabase.co/functions/v1/auditor-desglose",
   // Plantilla de Notion que se regala con el desglose. Vacío: el sitio publicado no la promete ni la muestra.
   plantillaUrl: "https://elegant-unicorn-d6c.notion.site/41dfe4da3fb981aa98ffe180364579ef",
-  kit: "https://app.kit.com/forms/9994514/subscriptions",
+  kit: "https://app.kit.com/forms/10214262/subscriptions", // formulario propio del juego, sin correo de confirmación
   kitOrigen: "mirada-de-auditor",
   skool: "https://www.skool.com/comunidaduxui/about",
   paso0: "https://www.skool.com/comunidaduxui/classroom/e632fb03",

@@ -6,7 +6,7 @@
 // Segunda pasada (prueba a ciegas): las cuatro opciones de cada pregunta tienen la misma forma y describen hechos;
 // ninguna usa «debería», «nunca» ni «siempre», y ninguna es la única con un término técnico.
 
-export const VERSION = "3.5";
+export const VERSION = "3.6";
 
 export const NOMBRE = "Mirada de auditor";
 
@@ -245,8 +245,8 @@ export const ORDENAR = {
 export const DECIR = [
   {
     id: "abrir",
-    contexto: "Sofía tiene dos minutos.",
-    contextoAnuncio: "Sofía, líder de producto de Patitas, tiene dos minutos.",
+    // Para entonces nadie recuerda quién es Sofía ni qué hay que hacer (prueba de Seba, 19/11/2026): se dice acá.
+    contexto: "Ahora le cuentas lo que encontraste a Sofía, la líder de producto. Tiene dos minutos.",
     consigna: "¿Con qué frase abres tu resumen?",
     opciones: [
       { t: "62 de cada 100 personas se van en el primer paso: la foto no sube y nadie dice por qué.", ok: true },
