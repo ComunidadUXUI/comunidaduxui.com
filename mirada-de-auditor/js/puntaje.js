@@ -114,11 +114,20 @@ export function puntuar(r) {
   const sembrados = PANTALLAS.reduce((n, p) => n + p.problemas.length, 0);
 
   const falsas = falsasVer + falsasIa;
+  // Logros por habilidad, sin compuertas: lo que la persona demostró en este caso, aunque le falte un paso anterior.
+  // El dibujo del camino tilda estos logros y marca el salto; ya no dice «estás aquí» (Anita, 19/11/2026:
+  // con 5 de 6, «estás en Ves» frenaba justo a quien más sabe).
+  const logros = {
+    ves: ver >= 3,
+    nombras: vistosVer >= 2 && nombrar >= Math.ceil(0.75 * vistosVer),
+    ordenas: ordenar >= 2,
+    defiendes: decir >= 2,
+  };
   const titular = hallados === 0 ? TITULAR_CERO
     : salto === "ver" && falsas >= MARCAS_DE_MAS ? TITULAR_DE_MAS(hallados, falsas)
     : TITULARES[`${nivel}/${salto}`];
   return {
-    puntos, maximos: MAXIMOS, nivel, salto, titular,
+    puntos, maximos: MAXIMOS, nivel, salto, titular, logros,
     ruta, empiezaEn, detalle, orden: ord, hallados, sembrados,
     falsas,
   };

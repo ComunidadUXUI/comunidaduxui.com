@@ -8,7 +8,7 @@
 
 // Versión PÚBLICA. La 1.0 es la que salió al público el 19/11/2026.
 // En el proceso interno de diseño esa misma versión se llamó 3.6 (ver README, «Versiones»).
-export const VERSION = "1.0";
+export const VERSION = "1.1";
 
 export const NOMBRE = "Mirada de auditor";
 
@@ -320,15 +320,15 @@ export const DESGLOSE = {
 };
 
 // La invitación a la comunidad (resultado): un puente con lo que le pasó a la persona y lo que recibe.
-// El puente dice en qué paso se trabaja su salto. No dice «empiezas ahí»: el camino empieza igual para todas las personas.
+// El puente usa el mismo verbo del titular. Sin números de paso: en frío no dicen nada (Anita, 19/11/2026).
 export const PUENTE = {
-  ver: "Aprender a ver los problemas es el Paso 1 del camino de auditor.",
-  nombrar: "Ponerle nombre a lo que ves se trabaja en los Pasos 1 y 2 del camino de auditor.",
-  ordenar: "Priorizar por lo que le cuesta al negocio se trabaja en los Pasos 3 y 4 del camino de auditor.",
-  ia: "Revisar lo que hace una IA es el Paso 5 del camino de auditor.",
-  decir: "Defenderlo ante quien decide es el Paso 6 del camino de auditor.",
-  // La certificación no entra en Premium: se dice ahí mismo, para que nadie entre a 39 esperando la revisión (Alex, 19/11/2026).
-  certificar: "Certificarlo es el Paso 7 del camino de auditor: una auditoría real, revisada por Anita Sevilla Ull. Va con el plan VIP.",
+  ver: "En el camino de auditor aprendes a ver los problemas que hoy no ves.",
+  nombrar: "En el camino de auditor aprendes a ponerle nombre a lo que ves.",
+  ordenar: "En el camino de auditor aprendes a priorizar por lo que le cuesta al negocio.",
+  ia: "En el camino de auditor aprendes a revisar lo que hace una IA.",
+  decir: "En el camino de auditor aprendes a defender tus hallazgos ante quien decide.",
+  // La certificación no entra en Premium: se dice ahí mismo (Alex, 19/11/2026).
+  certificar: "En el camino de auditor certificas lo que ya sabes hacer, con una auditoría real revisada por Anita Sevilla Ull. La certificación va con el plan VIP.",
 };
 // Primero lo que la persona ya probó (las prácticas). El tercero usa las palabras del About de Skool.
 export const OFERTA = [

@@ -5,7 +5,9 @@ const TRAZOS = {
   x: '<path d="M18 6 6 18M6 6l12 12"/>',
   ojo: '<path d="M10.7 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-2.2 3.2M6.6 6.6C3.7 8.5 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6M2 2l20 20M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
   flecha: '<path d="M5 12h14M13 6l6 6-6 6"/>',
-  chevron: '<path d="m6 9 6 6 6-6"/>', // para lo que se despliega en el lugar (nunca la flecha, que significa «ir a otro lado»)
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+  mas: '<path d="M12 5v14M5 12h14"/>', // segundo nivel de un desplegable: se distingue de la punta del primero
+ // para lo que se despliega en el lugar (nunca la flecha, que significa «ir a otro lado»)
   sube: '<path d="M12 19V5M6 11l6-6 6 6"/>',
   baja: '<path d="M12 5v14M6 13l6 6 6-6"/>',
   copia: '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>',

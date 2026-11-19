@@ -477,3 +477,10 @@ details ul{color:var(--humo);padding-left:1.1rem;display:flex;flex-direction:col
 /* Guía de la primera pantalla: las partes que se pueden tocar se encienden una tras otra (dos vueltas) y se apagan. */
 .guia [data-r]::after{animation:guia 1.1s var(--sale) calc(.5s + var(--n) * .16s) 2 both}
 @keyframes guia{0%,100%{border-color:transparent}45%{border-color:rgba(255,77,141,.75)}}
+
+/* Segundo nivel de los desplegables: va hacia adentro y lleva un «más» que gira a «×» al abrir. */
+.grupo .resp{padding-left:1.25rem}
+.resp details[open]>summary>.abre{transform:rotate(45deg)}
+@media (max-width:34rem){.grupo .resp{padding-left:.6rem}}
+/* La estación del salto no va tildada: lleva la lente y la marca «Tu salto». */
+.camino li.aqui .nodo{color:var(--tiza)}

@@ -51,14 +51,14 @@ function botonCamino(id) {
 }
 // La invitación a la comunidad. En el resultado: puente + lo que recibe. En los resultados completos: puente + su ruta.
 // El precio del VIP va solo en los resultados completos: en la primera pantalla frenaba (revisiones del 19/11/2026).
-function bloqueCamino(R, id, ruta = "") {
+function bloqueCamino(R, id, conVip = false) {
   const altos = R.nivel === "ordenas" || R.nivel === "defiendes";
-  const vip = ruta && altos ? `<p class="precio">La certificación se obtiene solo con el plan VIP: ${PRECIOS.vipAnio} USD al año, precio de fundadores para las primeras 10 personas. Después, ${PRECIOS.vipDespues} USD al año.</p>` : "";
+  const vip = conVip && altos ? `<p class="precio">La certificación se obtiene solo con el plan VIP: ${PRECIOS.vipAnio} USD al año, precio de fundadores para las primeras 10 personas. Después, ${PRECIOS.vipDespues} USD al año.</p>` : "";
   return `
     <section class="cta" aria-labelledby="${id}t">
       <h2 id="${id}t">De aquí a cobrar por evaluar productos</h2>
       <p class="puente">${PUENTE[R.salto]}</p>
-      ${ruta ? `<ol class="pasos">${ruta}</ol>` : `<ul class="trae">${OFERTA.map((t) => `<li>${ic("check")}${t}</li>`).join("")}</ul>`}
+      <ul class="trae">${OFERTA.map((t) => `<li>${ic("check")}${t}</li>`).join("")}</ul>
       <div class="fila">${botonCamino(id)}</div>
       <p class="precio">El camino completo cuesta ${PRECIOS.premiumMes} USD al mes, con el plan Premium.</p>${vip}
     </section>`;
@@ -81,20 +81,23 @@ function bloqueCalculo(propio, alRepetirTexto) {
     </section>`;
 }
 // El camino: cuatro estaciones y el destino. Se reconoce antes de leerlo.
-function caminoHTML(R, propio) {
-  const iNivel = NIVELES.findIndex((n) => n.id === R.nivel);
-  const est = NIVELES.map((n, i) => {
-    // Si el salto es «ver», la primera estación está en curso: se marca «aquí» sin darla por lograda.
-    const cls = i === iNivel ? (R.salto === "ver" ? "aqui" : "aqui hecha") : i < iNivel ? "hecha" : "";
-    return `<li class="${cls}"><span class="nodo" aria-hidden="true">${ic(n.ic)}</span><div>${i === iNivel ? `<span class="tu">${!propio ? "Punto de partida" : R.salto === "ver" ? "El camino empieza aquí" : "Estás aquí"}</span>` : ""}<b>${n.nombre}</b><small>${n.corto}</small>${i < iNivel ? '<span class="sr"> (logrado)</span>' : ""}</div></li>`;
+// El camino: cada estación se tilda si la persona la demostró en este caso, y la del salto lleva la marca «Tu salto».
+// Sin «estás aquí»: con 5 de 6, decirle a alguien que está al principio la frenaba (Anita, 19/11/2026).
+const ESTACION_DEL_SALTO = { ver: "ves", nombrar: "nombras", ordenar: "ordenas", decir: "defiendes" };
+function caminoHTML(R) {
+  const salto = ESTACION_DEL_SALTO[R.salto];
+  const est = NIVELES.map((n) => {
+    const hecha = R.logros[n.id] && n.id !== salto, aqui = n.id === salto;
+    return `<li class="${aqui ? "aqui" : hecha ? "hecha" : ""}"><span class="nodo" aria-hidden="true">${ic(hecha ? "check" : n.ic)}</span><div>${aqui ? `<span class="tu">Tu salto</span>` : ""}<b>${n.nombre}</b><small>${n.corto}</small>${hecha ? '<span class="sr"> (logrado)</span>' : ""}</div></li>`;
   }).join("");
-  return `<div class="camino-caja"><ol class="camino" aria-label="El camino de auditor: cuatro puntos de partida y el destino">${est}<li class="meta"><span class="nodo" aria-hidden="true">${ic(DESTINO.ic)}</span><div><span class="tu">Destino</span><b>${DESTINO.nombre}</b><small>${DESTINO.corto}</small></div></li></ol><span class="foco" aria-hidden="true"></span></div>`;
+  return `<div class="camino-caja"><ol class="camino" aria-label="El camino de auditor: lo que lograste en este caso, tu salto y el destino">${est}<li class="meta"><span class="nodo" aria-hidden="true">${ic(DESTINO.ic)}</span><div><span class="tu">Destino</span><b>${DESTINO.nombre}</b><small>${DESTINO.corto}</small></div></li></ol><span class="foco" aria-hidden="true"></span></div>`;
 }
 function posarFoco(main) {
   // La lente viaja por el camino hasta la estación de la persona.
   const caja = main.querySelector(".camino-caja");
   if (!caja) return; // quien abre un enlace compartido no ve el camino de la otra persona
   const foco = caja.querySelector(".foco"), nodo = caja.querySelector("li.aqui .nodo"), primero = caja.querySelector("li .nodo");
+  if (!nodo) return; // sin una estación para el salto (revisar la IA, certificar), la lente no se posa
   const posar = (animar) => {
     const c = caja.getBoundingClientRect(), a = nodo.getBoundingClientRect(), p = primero.getBoundingClientRect();
     const m = 6, r = { x: a.left - c.left - m, y: a.top - c.top - m, w: a.width + m * 2 };
@@ -167,7 +170,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
 
     ${propio ? `<section class="camino-sec" aria-labelledby="r2">
       ${titularHTML(R, "r2", "h2")}
-      ${caminoHTML(R, propio)}
+      ${caminoHTML(R)}
     </section>` : `<section class="camino-sec" aria-labelledby="r2">
       <h2 class="titular" id="r2" tabindex="-1"><span class="grande">¿Cuántos ves tú?</span></h2>
       <div><button class="btn p grande" id="jugar">Jugar${ic("flecha")}</button></div>
@@ -246,7 +249,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
 
 // ---------- desglose ----------
 // Aquí se ve por primera vez qué estaba bien y qué no. Cada fila se abre para ver el detalle.
-const fila = (ok, titulo, meta, cuerpo) => `<li><details name="fila"><summary><span class="est ${ok ? "si" : "no"}" aria-hidden="true">${ic(ok ? "check" : "x")}</span><span class="tit"><b>${titulo}</b>${meta ? `<small>${meta}</small>` : ""}</span><span class="sr">${ok ? " (bien)" : " (para revisar)"}</span>${ic("chevron", "abre")}</summary><div class="exp">${cuerpo}</div></details></li>`;
+const fila = (ok, titulo, meta, cuerpo) => `<li><details><summary><span class="est ${ok ? "si" : "no"}" aria-hidden="true">${ic(ok ? "check" : "x")}</span><span class="tit"><b>${titulo}</b>${meta ? `<small>${meta}</small>` : ""}</span><span class="sr">${ok ? " (bien)" : " (para revisar)"}</span>${ic("mas", "abre")}</summary><div class="exp">${cuerpo}</div></details></li>`;
 
 export function mostrarDesglose(main, S, { alRepetir }) {
   const R = puntuar(S);
@@ -274,14 +277,6 @@ export function mostrarDesglose(main, S, { alRepetir }) {
     const seg = Array.from({ length: mx }, (_, i) => `<i class="${v >= i + 1 ? "on" : v > i ? "media" : ""}" style="--i:${i}"></i>`).join("");
     return `<li><span class="nom">${ic(a.ic)}${a.nombre}</span><span class="medidor" aria-hidden="true">${seg}</span><span class="val">${String(v).replace(".", ",")} de ${mx}</span></li>`;
   }).join("");
-  const todoAlto = R.nivel === "defiendes";
-  // La ruta se dibuja como un camino: lo que la persona logra va primero; el número del paso, chico.
-  const ruta = R.ruta.map((b) => {
-    const aqui = b.pasos === R.empiezaEn;
-    const et = aqui ? (todoAlto ? "Tu siguiente paso" : "Tu foco") : b.banda ? ETIQUETAS_BANDA[b.banda] : "Certificación";
-    const cls = aqui ? "foco" : b.banda === "alto" ? "hecho" : "";
-    return `<li class="${cls}"><span class="punto" aria-hidden="true">${cls === "hecho" ? ic("check") : ""}</span><div><b>${b.texto}</b><small>${et} · ${b.pasos}</small></div></li>`;
-  }).join("");
   // La pantalla sin fallas también cuenta (por eso «Ver» suma hasta 5): tiene su fila.
   const limpia = R.detalle.revisar, pLimpia = PANTALLAS.find((p) => p.id === "revisar");
   const filaLimpia = { ok: limpia.limpiaBien, html: fila(limpia.limpiaBien, "La pantalla «Revisar» no tenía fallas", limpia.limpiaBien ? "No marcaste nada" : `Marcaste ${limpia.falsas === 1 ? "una parte" : limpia.falsas + " partes"}`, `<p>${pLimpia.limpia.texto}</p>`) };
@@ -292,7 +287,7 @@ export function mostrarDesglose(main, S, { alRepetir }) {
   const grupos = [["Las pantallas", [...problemas, filaLimpia], notas], ["El orden", orden, ""], ["Tus frases", frases, ""]].map(([t, filas, nota]) => {
     const bien = filas.filter((x) => x.ok).length, abre = !abierto && bien < filas.length; if (abre) abierto = true;
     const ordenadas = [...filas.filter((x) => !x.ok), ...filas.filter((x) => x.ok)];
-    return `<details class="grupo" name="grupo"${abre ? " open" : ""}><summary><span class="g-t">${t}</span><span class="g-n">${bien} de ${filas.length} bien</span>${ic("chevron", "abre")}</summary><ol class="resp">${ordenadas.map((x) => x.html).join("")}</ol>${nota ? `<p class="nota">${nota}</p>` : ""}</details>`;
+    return `<details class="grupo"${abre ? " open" : ""}><summary><span class="g-t">${t}</span><span class="g-n">${bien} de ${filas.length} bien</span>${ic("chevron", "abre")}</summary><ol class="resp">${ordenadas.map((x) => x.html).join("")}</ol>${nota ? `<p class="nota">${nota}</p>` : ""}</details>`;
   }).join("");
   const plantilla = CONFIG.plantillaUrl || LOCAL ? `<section class="plantilla" aria-labelledby="dp"><h2 id="dp">${ic("regalo")}${DESGLOSE.plantillaTitulo}</h2>${CONFIG.plantillaUrl ? `<a class="btn p" href="${CONFIG.plantillaUrl}" target="_blank" rel="noopener">${DESGLOSE.plantillaBoton}<span class="sr"> (se abre en una pestaña nueva)</span></a>` : `<p class="mono">Falta cargar el enlace de la plantilla (plantillaUrl en config.js). Este aviso solo se ve en local.</p>`}</section>` : "";
 
@@ -300,7 +295,7 @@ export function mostrarDesglose(main, S, { alRepetir }) {
   <div class="res des">
     <section class="entra" aria-labelledby="d1">
       ${titularHTML(R, "d1", "h1")}
-      <ul class="fichas"><li><b>${R.hallados} de ${R.sembrados}</b> encontrados</li><li>${ic(nivel.ic)}Estás en: <b>${nivel.nombre}</b></li></ul>
+      <ul class="fichas"><li><b>${R.hallados} de ${R.sembrados}</b> encontrados</li></ul>
     </section>
 
     ${plantilla}
@@ -312,13 +307,21 @@ export function mostrarDesglose(main, S, { alRepetir }) {
 
     <section aria-labelledby="d3"><h2 id="d3">Tus 5 habilidades</h2><ul class="habs">${habs}</ul></section>
 
-    ${bloqueCamino(R, "skool2", ruta)}
+    ${bloqueCamino(R, "skool2", true)}
     ${bloqueCalculo(true, "Jugar otra vez")}
   </div>`;
-  // Un solo detalle abierto a la vez (los navegadores nuevos lo hacen solos con «name»; esto cubre al resto).
-  main.querySelectorAll("details[name]").forEach((d) => d.addEventListener("toggle", () => {
-    if (d.open) main.querySelectorAll(`details[name="${d.getAttribute("name")}"]`).forEach((o) => { if (o !== d) o.open = false; });
-  }));
+  // Un solo grupo y una sola respuesta abiertos a la vez. Al cerrarse los otros cambia el alto de la página:
+  // se corrige el desplazamiento para que lo que la persona tocó se quede donde estaba.
+  main.querySelectorAll(".grupo, .resp details").forEach((d) => {
+    const sum = d.querySelector(":scope > summary"), deGrupo = d.classList.contains("grupo");
+    sum.addEventListener("click", () => {
+      const y0 = sum.getBoundingClientRect().top;
+      requestAnimationFrame(() => {
+        if (d.open) main.querySelectorAll(deGrupo ? ".grupo" : ".resp details").forEach((o) => { if (o !== d) o.open = false; });
+        window.scrollBy(0, sum.getBoundingClientRect().top - y0);
+      });
+    });
+  });
   main.querySelector("#d1").focus({ preventScroll: true });
   main.querySelector("#otra").addEventListener("click", alRepetir);
   main.querySelector("#skool2").addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "desglose" }));
