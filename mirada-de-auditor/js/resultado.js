@@ -1,11 +1,11 @@
 // Mirada de auditor · resultado (a la vista) y desglose (se abre desde el correo).
 // Resultado: cuántos problemas encontró, dónde está en el camino y el pedido del desglose. Poco texto, a propósito.
 // Desglose: problema por problema, las cinco habilidades y la ruta.
-import { PANTALLAS, ORDENAR, DECIR, ACTOS, NIVELES, DESTINO, DESGLOSE, AVISO_ORIENTACION, ETIQUETAS_BANDA, PERFIL, PRECIOS, NOMBRE } from "./instrumento.js";
+import { PANTALLAS, ORDENAR, DECIR, ACTOS, NIVELES, DESTINO, DESGLOSE, PUENTE, OFERTA, AVISO_ORIENTACION, ETIQUETAS_BANDA, PERFIL, PRECIOS, NOMBRE } from "./instrumento.js";
 import { temaActual } from "./tema.js";
 import { puntuar } from "./puntaje.js";
 import { CONFIG } from "./config.js";
-import { evento, guardarResultado, pedirDesglose, DESDE_PASO0, PRIMERO_CAMINO, LOCAL } from "./datos.js";
+import { evento, guardarResultado, pedirDesglose, PRIMERO_CAMINO, LOCAL } from "./datos.js";
 import { ic, esc } from "./util.js";
 
 // ---------- enlaces (todo va en el #, nada se lee de un servidor) ----------
@@ -47,29 +47,27 @@ const CORREO = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 // ---------- piezas compartidas ----------
 function botonCamino(id) {
-  return DESDE_PASO0
-    ? `<a class="btn p" id="${id}" href="${CONFIG.paso0}">Volver al Paso 0${ic("flecha")}</a>`
-    : `<a class="btn p" id="${id}" href="${CONFIG.skool}" target="_blank" rel="noopener">Ver el camino de auditor${ic("flecha")}<span class="sr"> (se abre en una pestaña nueva)</span></a>`;
+  return `<a class="btn p" id="${id}" href="${CONFIG.skool}" target="_blank" rel="noopener">Ver el camino de auditor${ic("flecha")}<span class="sr"> (se abre en una pestaña nueva)</span></a>`;
 }
-// Precios: salen de PRECIOS (instrumento.js). La certificación se nombra solo en los dos puntos de partida altos.
+// La invitación a la comunidad. En el resultado: puente + lo que recibe. En los resultados completos: puente + su ruta.
 // El precio del VIP va solo en los resultados completos: en la primera pantalla frenaba (revisiones del 19/11/2026).
-function bloqueCamino(R, id, conVip = false) {
+function bloqueCamino(R, id, ruta = "") {
   const altos = R.nivel === "ordenas" || R.nivel === "defiendes";
-  const precio = DESDE_PASO0 ? "" : `<p class="precio">El camino completo cuesta ${PRECIOS.premiumMes} USD al mes, con el plan Premium.</p>`;
-  const vip = conVip && !DESDE_PASO0 && altos ? `<p class="precio">La certificación se obtiene solo con el plan VIP: ${PRECIOS.vipAnio} USD al año, precio de fundadores para las primeras 10 personas. Después, ${PRECIOS.vipDespues} USD al año.</p>` : "";
+  const vip = ruta && altos ? `<p class="precio">La certificación se obtiene solo con el plan VIP: ${PRECIOS.vipAnio} USD al año, precio de fundadores para las primeras 10 personas. Después, ${PRECIOS.vipDespues} USD al año.</p>` : "";
   return `
     <section class="cta" aria-labelledby="${id}t">
       <h2 id="${id}t">De aquí a cobrar por evaluar productos</h2>
-      <p>El camino de auditor: 7 pasos en Comunidad UX/UI.</p>
+      <p class="puente">${PUENTE[R.salto]}</p>
+      ${ruta ? `<ol class="pasos">${ruta}</ol>` : `<ul class="trae">${OFERTA.map((t) => `<li>${ic("check")}${t}</li>`).join("")}</ul>`}
       <div class="fila">${botonCamino(id)}</div>
-      ${precio}${vip}
+      <p class="precio">El camino completo cuesta ${PRECIOS.premiumMes} USD al mes, con el plan Premium.</p>${vip}
     </section>`;
 }
 function bloqueCalculo(propio, alRepetirTexto) {
   return `
     <section class="cierre">
       <p class="nota">${AVISO_ORIENTACION}</p>
-      <details><summary>${ic("flecha")}Cómo se calculó ${propio ? "tu" : "este"} resultado</summary>
+      <details><summary>${ic("chevron", "abre")}Cómo se calculó ${propio ? "tu" : "este"} resultado</summary>
         <ul>
           <li>Ver: un punto por cada problema marcado en Foto y en Zona, más uno por decir que Revisar estaba bien. Cada marca sobre algo que funciona resta medio punto.</li>
           <li>Nombrar: un punto por cada problema que marcaste en esas dos pantallas y al que le pusiste el criterio correcto.</li>
@@ -137,16 +135,12 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
   // La plantilla se promete solo si tiene enlace (en local se muestra igual, para revisar el texto).
   const conPlantilla = !!CONFIG.plantillaUrl || LOCAL;
   const traeHTML = `<ul class="trae">${DESGLOSE.trae.map((t) => `<li>${ic("check")}${t}</li>`).join("")}${conPlantilla ? `<li class="extra">${ic("regalo")}${DESGLOSE.plantilla}</li>` : ""}</ul>`;
-  const pedirTitulo = DESDE_PASO0 ? "Tus resultados completos" : DESGLOSE.titulo(R.sembrados - R.hallados);
+  const pedirTitulo = DESGLOSE.titulo(R.sembrados - R.hallados);
   // Si ya los pidió en esta sesión, no se le vuelve a pedir el correo.
   const CLAVE_PEDIDO = "mirada-pedido";
   const yaPedido = (() => { try { return sessionStorage.getItem(CLAVE_PEDIDO) === codigo; } catch (e) { return false; } })();
   // El desglose se pide por correo. Quien llega desde el Paso 0 ya es parte de la comunidad: lo abre directo.
-  const pedir = !propio ? "" : DESDE_PASO0 ? `
-    <section class="pedir" aria-labelledby="r3">
-      <div><h2 id="r3" class="titular">${dosPesos(pedirTitulo)}</h2>${traeHTML}</div>
-      <div class="pedir-form"><a class="btn p" href="#d=${codigo}">Ver mis resultados completos${ic("flecha")}</a></div>
-    </section>` : yaPedido ? `
+  const pedir = !propio ? "" : yaPedido ? `
     <section class="pedir" aria-labelledby="r3">
       <div><h2 id="r3" class="titular">${dosPesos(pedirTitulo)}</h2>${traeHTML}</div>
       <div class="pedir-form"><p class="msj ok">Ya los pediste.</p><a class="btn p" href="#d=${codigo}">Ver mis resultados completos${ic("flecha")}</a></div>
@@ -157,7 +151,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
         <label for="correo">Tu correo</label>
         <div class="campo"><input id="correo" name="correo" type="email" autocomplete="email" inputmode="email" placeholder="tu@correo.com" required aria-describedby="pdmsj"></div>
         <label class="casilla" for="quiere"><input type="checkbox" id="quiere" name="newsletter"><span>Quiero recibir también Minuto UX, nuestro newsletter</span></label>
-        <div class="campo"><button class="btn p" type="submit">${ic("correo")}Enviármelos</button></div>
+        <div class="campo"><button class="btn p" type="submit">${ic("correo")}Envíamelo</button></div>
         <p class="legal" id="pdlegal">Usamos tu correo para enviarte tus resultados. <a href="${CONFIG.legales}">Privacidad</a></p>
         <p class="msj" id="pdmsj" role="status"></p>
       </form>
@@ -203,7 +197,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
   posarFoco(main);
   $("#otra")?.addEventListener("click", alRepetir);
   $("#jugar")?.addEventListener("click", alRepetir);
-  $("#skool1")?.addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, lugar: "resultado" }));
+  $("#skool1")?.addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "resultado" }));
   $("#li")?.addEventListener("click", () => evento("compartir", { via: "linkedin" }));
   $("#copiar")?.addEventListener("click", async (e) => {
     const b = e.currentTarget;
@@ -239,7 +233,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
 
 // ---------- desglose ----------
 // Aquí se ve por primera vez qué estaba bien y qué no. Cada fila se abre para ver el detalle.
-const fila = (ok, titulo, meta, cuerpo) => `<li><details><summary><span class="est ${ok ? "si" : "no"}" aria-hidden="true">${ic(ok ? "check" : "x")}</span><span class="tit"><b>${titulo}</b>${meta ? `<small>${meta}</small>` : ""}</span><span class="sr">${ok ? " (bien)" : " (para revisar)"}</span>${ic("flecha", "abre")}</summary><div class="exp">${cuerpo}</div></details></li>`;
+const fila = (ok, titulo, meta, cuerpo) => `<li><details name="fila"><summary><span class="est ${ok ? "si" : "no"}" aria-hidden="true">${ic(ok ? "check" : "x")}</span><span class="tit"><b>${titulo}</b>${meta ? `<small>${meta}</small>` : ""}</span><span class="sr">${ok ? " (bien)" : " (para revisar)"}</span>${ic("chevron", "abre")}</summary><div class="exp">${cuerpo}</div></details></li>`;
 
 export function mostrarDesglose(main, S, { alRepetir }) {
   const R = puntuar(S);
@@ -254,29 +248,40 @@ export function mostrarDesglose(main, S, { alRepetir }) {
     const cuerpo = visto
       ? `${e && !crit ? `<p><b>Tu respuesta:</b> ${esc(e.t)}.</p><p class="porque">${esc(e.nota)}</p>` : ""}<p><b>La correcta:</b> ${esc(okDe(pr.opciones).t)}.</p><p class="porque">${pr.criterio}</p>`
       : `<p>${pr.que}</p><p><b>Por qué es un problema:</b> ${esc(okDe(pr.opciones).t)}.</p><p class="porque">${pr.criterio}</p>`;
-    return fila(visto && crit, pr.titulo, meta, cuerpo);
-  })).join("");
-  const orden = ORDENAR.comprobaciones.map((c) => fila(R.orden[c.id], c.t, "", `<p>${c.porque}</p>`)).join("");
+    return { ok: visto && crit, html: fila(visto && crit, pr.titulo, meta, cuerpo) };
+  }));
+  const orden = ORDENAR.comprobaciones.map((c) => ({ ok: R.orden[c.id], html: fila(R.orden[c.id], c.t, "", `<p>${c.porque}</p>`) }));
   const frases = DECIR.map((d, i) => {
     const e = elegida(d.opciones, S.decir[d.id]), ok = !!e?.ok;
     const cuerpo = `${e && !ok ? `<p><b>Tu frase:</b> ${esc(e.t)}</p><p class="porque">${esc(e.nota)}</p>` : ""}<p><b>La correcta:</b> ${esc(okDe(d.opciones).t)}</p><p class="porque">${d.porque}</p>`;
-    return fila(ok, i === 0 ? "La frase que abre tu resumen" : "Tu recomendación", "", cuerpo);
-  }).join("");
+    return { ok, html: fila(ok, i === 0 ? "La frase que abre tu resumen" : "Tu recomendación", "", cuerpo) };
+  });
   const habs = ACTOS.map((a) => {
     const v = R.puntos[a.id], mx = R.maximos[a.id];
     const seg = Array.from({ length: mx }, (_, i) => `<i class="${v >= i + 1 ? "on" : v > i ? "media" : ""}" style="--i:${i}"></i>`).join("");
     return `<li><span class="nom">${ic(a.ic)}${a.nombre}</span><span class="medidor" aria-hidden="true">${seg}</span><span class="val">${String(v).replace(".", ",")} de ${mx}</span></li>`;
   }).join("");
   const todoAlto = R.nivel === "defiendes";
+  // La ruta se dibuja como un camino: lo que la persona logra va primero; el número del paso, chico.
   const ruta = R.ruta.map((b) => {
     const aqui = b.pasos === R.empiezaEn;
     const et = aqui ? (todoAlto ? "Tu siguiente paso" : "Tu foco") : b.banda ? ETIQUETAS_BANDA[b.banda] : "Certificación";
-    return `<li class="${aqui ? "empieza" : ""}"><b>${b.pasos}<small>${et}</small></b><span>${b.texto}</span></li>`;
+    const cls = aqui ? "foco" : b.banda === "alto" ? "hecho" : "";
+    return `<li class="${cls}"><span class="punto" aria-hidden="true">${cls === "hecho" ? ic("check") : ""}</span><div><b>${b.texto}</b><small>${et} · ${b.pasos}</small></div></li>`;
   }).join("");
   // La pantalla sin fallas también cuenta (por eso «Ver» suma hasta 5): tiene su fila.
   const limpia = R.detalle.revisar, pLimpia = PANTALLAS.find((p) => p.id === "revisar");
-  const filaLimpia = fila(limpia.limpiaBien, "La pantalla «Revisar» no tenía fallas", limpia.limpiaBien ? "No marcaste nada" : `Marcaste ${limpia.falsas === 1 ? "una parte" : limpia.falsas + " partes"}`, `<p>${pLimpia.limpia.texto}</p>`);
+  const filaLimpia = { ok: limpia.limpiaBien, html: fila(limpia.limpiaBien, "La pantalla «Revisar» no tenía fallas", limpia.limpiaBien ? "No marcaste nada" : `Marcaste ${limpia.falsas === 1 ? "una parte" : limpia.falsas + " partes"}`, `<p>${pLimpia.limpia.texto}</p>`) };
+  // Tres grupos plegados, con su cuenta. Se abre uno a la vez (grupos y filas), para que no quede una lista interminable.
+  // Abre solo el primer grupo que tiene algo para revisar; dentro de cada grupo, lo que hay que revisar va primero.
   const notas = R.falsas ? `En total marcaste ${R.falsas === 1 ? "una parte que funcionaba" : R.falsas + " partes que funcionaban"}. Cada una resta medio punto.` : "";
+  let abierto = false;
+  const grupos = [["Las pantallas", [...problemas, filaLimpia], notas], ["El orden", orden, ""], ["Tus frases", frases, ""]].map(([t, filas, nota]) => {
+    const bien = filas.filter((x) => x.ok).length, abre = !abierto && bien < filas.length; if (abre) abierto = true;
+    const ordenadas = [...filas.filter((x) => !x.ok), ...filas.filter((x) => x.ok)];
+    return `<details class="grupo" name="grupo"${abre ? " open" : ""}><summary><span class="g-t">${t}</span><span class="g-n">${bien} de ${filas.length} bien</span>${ic("chevron", "abre")}</summary><ol class="resp">${ordenadas.map((x) => x.html).join("")}</ol>${nota ? `<p class="nota">${nota}</p>` : ""}</details>`;
+  }).join("");
+  const plantilla = CONFIG.plantillaUrl || LOCAL ? `<section class="plantilla" aria-labelledby="dp"><h2 id="dp">${ic("regalo")}${DESGLOSE.plantillaTitulo}</h2>${CONFIG.plantillaUrl ? `<a class="btn p" href="${CONFIG.plantillaUrl}" target="_blank" rel="noopener">${DESGLOSE.plantillaBoton}<span class="sr"> (se abre en una pestaña nueva)</span></a>` : `<p class="mono">Falta cargar el enlace de la plantilla (plantillaUrl en config.js). Este aviso solo se ve en local.</p>`}</section>` : "";
 
   main.innerHTML = `
   <div class="res des">
@@ -285,24 +290,25 @@ export function mostrarDesglose(main, S, { alRepetir }) {
       <ul class="fichas"><li><b>${R.hallados} de ${R.sembrados}</b> encontrados</li><li>${ic(nivel.ic)}Estás en: <b>${nivel.nombre}</b></li></ul>
     </section>
 
-    <section aria-labelledby="d2"><h2 id="d2">Respuesta por respuesta</h2>
-      <h3 class="mono">Las pantallas</h3><ol class="resp">${problemas}${filaLimpia}</ol>${notas ? `<p class="nota">${notas}</p>` : ""}
-      <h3 class="mono">El orden</h3><ol class="resp">${orden}</ol>
-      <h3 class="mono">Tus frases</h3><ol class="resp">${frases}</ol>
-    </section>
+    ${plantilla}
 
-    ${CONFIG.plantillaUrl || LOCAL ? `<section class="plantilla" aria-labelledby="dp"><h2 id="dp">${ic("regalo")}${DESGLOSE.plantillaTitulo}</h2>${CONFIG.plantillaUrl ? `<a class="btn p" href="${CONFIG.plantillaUrl}" target="_blank" rel="noopener">${DESGLOSE.plantillaBoton}${ic("flecha")}</a>` : `<p class="mono">Falta elegir la plantilla y cargar su enlace (plantillaUrl en config.js). Este aviso solo se ve en local.</p>`}</section>` : ""}
+    <section aria-labelledby="d2">
+      <h2 id="d2">Respuesta por respuesta</h2>
+      <div class="grupos">${grupos}</div>
+    </section>
 
     <section aria-labelledby="d3"><h2 id="d3">Tus 5 habilidades</h2><ul class="habs">${habs}</ul></section>
 
-    <section aria-labelledby="d4"><h2 id="d4">Tu ruta</h2><ol class="ruta">${ruta}</ol></section>
-
-    ${bloqueCamino(R, "skool2", true)}
+    ${bloqueCamino(R, "skool2", ruta)}
     ${bloqueCalculo(true, "Jugar otra vez")}
   </div>`;
+  // Un solo detalle abierto a la vez (los navegadores nuevos lo hacen solos con «name»; esto cubre al resto).
+  main.querySelectorAll("details[name]").forEach((d) => d.addEventListener("toggle", () => {
+    if (d.open) main.querySelectorAll(`details[name="${d.getAttribute("name")}"]`).forEach((o) => { if (o !== d) o.open = false; });
+  }));
   main.querySelector("#d1").focus({ preventScroll: true });
   main.querySelector("#otra").addEventListener("click", alRepetir);
-  main.querySelector("#skool2").addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, lugar: "desglose" }));
+  main.querySelector("#skool2").addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "desglose" }));
 }
 
 // ---------- imagen para compartir (1080 × 1350) ----------
@@ -326,10 +332,11 @@ async function imagen(R) {
   // el reto
   x.fillStyle = "#FF4D8D"; x.font = '800 124px "Bricolage Grotesque", sans-serif';
   x.fillText("¿Cuántos", 90, 960); x.fillText("ves tú?", 90, 1090);
-  x.fillStyle = "#A9B8B1"; x.font = '500 30px "IBM Plex Mono", monospace'; x.fillText(location.host + location.pathname.replace(/\/$/, ""), 90, 1270);
+  // Abajo, en columna: el logo y, debajo, la dirección (en una misma línea se encimaban).
   try {
     const img = new Image(); img.src = "assets/logo.svg"; await img.decode();
-    const w = 300, h = (img.naturalHeight / img.naturalWidth) * w; x.drawImage(img, W - 90 - w, 1270 - h + 8, w, h);
+    const w = 280, h = (img.naturalHeight / img.naturalWidth) * w; x.drawImage(img, 90, 1215 - h, w, h);
   } catch (e) { /* sin logo: la imagen sirve igual */ }
+  x.fillStyle = "#A9B8B1"; x.font = '500 30px "IBM Plex Mono", monospace'; x.fillText(location.host + location.pathname.replace(/\/$/, ""), 90, 1280);
   return new Promise((ok) => c.toBlob((b) => ok(URL.createObjectURL(b)), "image/png"));
 }

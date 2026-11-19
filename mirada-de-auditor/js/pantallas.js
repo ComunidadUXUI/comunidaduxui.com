@@ -43,7 +43,7 @@ export const PANTALLA_HTML = {
     </div>
     <div class="pt-foot" data-lente="peso-invertido">
       <div class="pt-btn" data-r="zona-planes">Ver planes de difusión</div>
-      <div class="pt-link" data-r="zona-seguir">Seguir con 2 km</div>
+      <div class="pt-link" data-r="zona-seguir">Continuar</div>
     </div>`,
 
   revisar: `

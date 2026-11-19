@@ -5,7 +5,8 @@ import { VERSION } from "./instrumento.js";
 
 const q = new URLSearchParams(location.search);
 export const ORIGEN = (q.get("utm_source") || q.get("desde") || (q.has("reto") ? "reto" : "") || "directo").slice(0, 40);
-export const DESDE_PASO0 = q.get("desde") === "paso0";
+// ?desde=paso0 (el enlace del Paso 0 en Skool) solo etiqueta el origen: la persona ve lo mismo que el resto,
+// con el pedido de correo y la invitación a la comunidad (Anita, 19/11/2026).
 // ?entrada=juego empieza directo en la primera pantalla (para anuncios).
 export const ENTRADA_JUEGO = q.get("entrada") === "juego";
 // ?primero=camino pone el camino y su precio antes del pedido de correo (para quienes ya están en la lista).

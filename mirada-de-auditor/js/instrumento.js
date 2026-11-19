@@ -6,7 +6,7 @@
 // Segunda pasada (prueba a ciegas): las cuatro opciones de cada pregunta tienen la misma forma y describen hechos;
 // ninguna usa «debería», «nunca» ni «siempre», y ninguna es la única con un término técnico.
 
-export const VERSION = "3.3";
+export const VERSION = "3.5";
 
 export const NOMBRE = "Mirada de auditor";
 
@@ -105,7 +105,7 @@ export const PANTALLAS = [
       { id: "zona-direccion", etiqueta: "Dirección detectada: Parque Centenario, entrada de Av. Díaz Vélez, con enlace «Cambiar»" },
       { id: "zona-alcance", etiqueta: "Texto: «Tu alerta llega a 2 km a la redonda»" },
       { id: "zona-planes", problema: "peso-invertido", etiqueta: "Botón grande verde, el más visible de la pantalla: «Ver planes de difusión»" },
-      { id: "zona-seguir", problema: "peso-invertido", etiqueta: "Enlace de texto chico, sin forma de botón: «Seguir con 2 km»" },
+      { id: "zona-seguir", problema: "peso-invertido", etiqueta: "Enlace de texto chico, sin forma de botón: «Continuar»" },
     ],
     problemas: [
       {
@@ -127,7 +127,7 @@ export const PANTALLAS = [
       {
         id: "peso-invertido",
         titulo: "Lo que la usuaria necesita pesa menos que lo que Patitas quiere vender",
-        que: "El botón grande dice «Ver planes de difusión». Para seguir con la alerta hay que encontrar el enlace chico «Seguir con 2 km».",
+        que: "El botón grande dice «Ver planes de difusión». Para seguir con la alerta hay que encontrar el enlace chico «Continuar».",
         donde: "Alerta de mascota perdida - Zona, los dos controles de abajo.",
         criterio: "La acción principal de la tarea lleva el mayor peso visual (jerarquía visual).",
         porque: "La usuaria toca el botón grande creyendo que avanza y llega a una pantalla de precios. Varias personas entienden que publicar la alerta se paga, y abandonan.",
@@ -316,6 +316,24 @@ export const DESGLOSE = {
   plantillaTitulo: "Tu plantilla para tu próxima auditoría",
   plantillaBoton: "Abrir la plantilla",
 };
+
+// La invitación a la comunidad (resultado): un puente con lo que le pasó a la persona y lo que recibe.
+// El puente dice en qué paso se trabaja su salto. No dice «empiezas ahí»: el camino empieza igual para todas las personas.
+export const PUENTE = {
+  ver: "Aprender a ver los problemas es el Paso 1 del camino de auditor.",
+  nombrar: "Ponerle nombre a lo que ves se trabaja en los Pasos 1 y 2 del camino de auditor.",
+  ordenar: "Priorizar por lo que le cuesta al negocio se trabaja en los Pasos 3 y 4 del camino de auditor.",
+  ia: "Revisar lo que hace una IA es el Paso 5 del camino de auditor.",
+  decir: "Defenderlo ante quien decide es el Paso 6 del camino de auditor.",
+  // La certificación no entra en Premium: se dice ahí mismo, para que nadie entre a 39 esperando la revisión (Alex, 19/11/2026).
+  certificar: "Certificarlo es el Paso 7 del camino de auditor: una auditoría real, revisada por Anita Sevilla Ull. Va con el plan VIP.",
+};
+// Primero lo que la persona ya probó (las prácticas). El tercero usa las palabras del About de Skool.
+export const OFERTA = [
+  "Prácticas sobre pantallas como las de este juego",
+  "7 pasos, de ver un problema a presentarlo a quien decide",
+  "Tu propia auditoría, lista para mostrar",
+];
 
 // Titular del resultado según el nivel y la primera compuerta que no se pasó ("salto").
 export const TITULARES = {
