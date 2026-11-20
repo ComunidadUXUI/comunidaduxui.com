@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Diseñarías bien esta IA? · Comunidad UXUI</title>
+<meta name="description" content="Cinco decisiones de diseño de una app con IA. Dos minutos. Todas las opciones parecen razonables: una funciona mejor.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../../assets/iso.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../../assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Raleway:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --papel: #F6F4EF;
+  --papel-2: #ECE9E2;
+  --card: #FFFFFF;
+  --tinta: #161513;
+  --grafito: #4F4B45;
+  --linea: rgba(22, 21, 19, .14);
+  --rosa: #D81B60;
+  --rosa-hover: #B8154F;
+  --sobre-rosa: #FFFFFF;
+  --acento: #D81B60;
+  /* las pantallas de ejemplo son "capturas": se ven claras en los dos temas */
+  --ui-fondo: #FFFFFF;
+  --ui-tinta: #1A1A1A;
+  --ui-suave: #6B665E;
+  --ui-linea: #E6E2DA;
+  --ui-gris: #F1EEE8;
+  --bien: #2E7D4F;
+  --bien-fondo: #E7F3EC;
+  --duda: #9A5C00;
+  --duda-fondo: #FBF0DD;
+  --mal: #C62828;
+  --mal-fondo: #FBE6E6;
+  --f-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --radio: 4px;
+  --gutter: clamp(1rem, 5vw, 3rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papel: #161513;
+    --papel-2: #1F1D1A;
+    --card: #211F1B;
+    --tinta: #F2EEE6;
+    --grafito: #BDB6AA;
+    --linea: rgba(242, 238, 230, .16);
+    --rosa: #FF5C94;
+    --rosa-hover: #FF7FAB;
+    --sobre-rosa: #161513;
+    --acento: #FF8AB4;
+    --bien: #7BD3A0;
+    --bien-fondo: rgba(123, 211, 160, .12);
+    --duda: #F2B85B;
+    --duda-fondo: rgba(242, 184, 91, .12);
+    --mal: #FF8A80;
+    --mal-fondo: rgba(255, 138, 128, .12);
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  letter-spacing: .008em;
+  color: var(--tinta);
+  background: var(--papel);
+  overflow-x: hidden;
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.14; letter-spacing: .018em; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: 2px; }
+[hidden] { display: none !important; }
+.wrap { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 var(--gutter); }
+.top { padding-top: clamp(1.2rem, 4vh, 2rem); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.logo { display: block; width: min(170px, 46vw); height: auto; }
+.logo-oscuro { display: none; }
+@media (prefers-color-scheme: dark) { .logo-claro { display: none; } .logo-oscuro { display: block; } }
+.progreso { font-weight: 700; font-size: .9rem; color: var(--grafito); }
+.barra-progreso { height: 4px; background: var(--linea); border-radius: 2px; margin-top: 1rem; overflow: hidden; }
+.barra-progreso span { display: block; height: 100%; width: 0; background: var(--rosa); transition: width 300ms ease; }
+main { padding-block: clamp(2rem, 6vh, 3.5rem) 4rem; }
+.antetitulo { font-weight: 700; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); margin-bottom: .7rem; }
+h1 { font-size: clamp(2rem, 6vw, 3.1rem); max-width: 17ch; }
+h2 { font-size: clamp(1.35rem, 3.6vw, 1.8rem); max-width: 30ch; }
+.bajada { color: var(--grafito); font-size: clamp(1.04rem, 2.3vw, 1.18rem); max-width: 50ch; margin-top: 1rem; text-wrap: pretty; }
+
+.boton {
+  display: inline-block;
+  padding: 1rem 2.1rem;
+  background: var(--rosa);
+  color: var(--sobre-rosa);
+  font: 700 1.1rem/1.2 var(--f-body);
+  letter-spacing: .01em;
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--radio);
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.boton:hover { background: var(--rosa-hover); }
+.boton:active { transform: scale(.98); }
+.chica { margin-top: .55rem; font-size: .93rem; color: var(--grafito); }
+
+/* Portada */
+.reglas { list-style: none; margin: 1.6rem 0 2rem; display: grid; gap: .55rem; }
+.reglas li { display: flex; gap: .7rem; align-items: baseline; }
+.reglas b { font-family: var(--f-display); color: var(--acento); min-width: 1.2rem; }
+
+/* Pantallas de ejemplo (mismo lenguaje que el carrusel de patrones) */
+.pantalla { background: var(--ui-fondo); color: var(--ui-tinta); border: 1.5px solid #1A1A1A; border-radius: 10px; box-shadow: 5px 5px 0 #1A1A1A; overflow: hidden; font-size: .88rem; line-height: 1.45; margin: 1.4rem 0 1.6rem; max-width: 460px; }
+@media (prefers-color-scheme: dark) { .pantalla { border-color: #000; box-shadow: 5px 5px 0 rgba(0,0,0,.55); } }
+.barra { display: flex; align-items: center; gap: .35rem; padding: .5rem .75rem; border-bottom: 1px solid var(--ui-linea); font-size: .75rem; color: var(--ui-suave); }
+.barra i { width: 7px; height: 7px; border-radius: 50%; background: #D9D4CA; display: inline-block; }
+.barra span { margin-left: .4rem; }
+.lienzo { padding: .8rem 1rem; }
+.fila { display: flex; justify-content: space-between; gap: .8rem; padding: .45rem 0; border-bottom: 1px solid var(--ui-linea); }
+.fila:last-child { border-bottom: 0; }
+.fila small { color: var(--ui-suave); display: block; font-size: .76rem; }
+.punto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #C62828; margin-left: .35rem; vertical-align: middle; }
+.etq { font-size: .74rem; font-weight: 700; padding: .1rem .5rem; border-radius: 999px; background: var(--ui-gris); white-space: nowrap; align-self: center; }
+.etq.duda { background: #FBF0DD; color: #8A5200; }
+.pedido { background: var(--ui-gris); border-radius: 8px; padding: .55rem .75rem; margin-bottom: .6rem; }
+.nota { padding: .5rem 0; border-bottom: 1px dashed var(--ui-linea); }
+.nota:last-child { border-bottom: 0; }
+
+/* Opciones */
+.opciones { list-style: none; display: grid; gap: .7rem; margin-top: 1.4rem; }
+.opcion {
+  width: 100%;
+  text-align: left;
+  font: 600 1rem/1.45 var(--f-body);
+  color: var(--tinta);
+  background: var(--card);
+  border: 1.5px solid var(--linea);
+  border-radius: 8px;
+  padding: .9rem 1rem;
+  cursor: pointer;
+  display: flex;
+  gap: .8rem;
+  align-items: baseline;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.opcion:hover:not(:disabled) { border-color: var(--tinta); }
+.opcion:disabled { cursor: default; }
+.opcion .letra { font-family: var(--f-display); font-weight: 700; color: var(--grafito); flex: none; }
+.opcion.mejor { border-color: var(--bien); background: var(--bien-fondo); }
+.opcion.medias { border-color: var(--duda); background: var(--duda-fondo); }
+.opcion.rompe { border-color: var(--mal); background: var(--mal-fondo); }
+.opcion.apagada { opacity: .55; }
+.opcion .veredicto { display: block; font-size: .8rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-top: .25rem; }
+.mejor .veredicto { color: var(--bien); }
+.medias .veredicto { color: var(--duda); }
+.rompe .veredicto { color: var(--mal); }
+
+/* Consecuencia */
+.consecuencia { margin-top: 1.4rem; padding: 1.1rem 1.2rem; border-left: 4px solid var(--linea); background: var(--card); border-radius: 0 8px 8px 0; }
+.consecuencia.mejor { border-left-color: var(--bien); }
+.consecuencia.medias { border-left-color: var(--duda); }
+.consecuencia.rompe { border-left-color: var(--mal); }
+.consecuencia h3 { font-size: 1.15rem; margin-bottom: .4rem; }
+.consecuencia p + p { margin-top: .6rem; }
+.consecuencia .clave { color: var(--grafito); }
+.siguiente { margin-top: 1.6rem; }
+
+/* Resultado */
+.puntaje { font-family: var(--f-display); font-weight: 700; font-size: clamp(3.4rem, 12vw, 5rem); line-height: 1; color: var(--acento); margin-bottom: .6rem; }
+.puntaje small { font-size: .4em; color: var(--grafito); }
+.repaso { list-style: none; margin: 2rem 0; border-top: 1px solid var(--linea); }
+.repaso li { display: grid; grid-template-columns: auto 1fr auto; gap: .8rem; align-items: baseline; padding: .8rem 0; border-bottom: 1px solid var(--linea); }
+.repaso .marca { font-weight: 700; width: 1.2rem; }
+.repaso .marca.mejor { color: var(--bien); }
+.repaso .marca.medias { color: var(--duda); }
+.repaso .marca.rompe { color: var(--mal); }
+.repaso .semana { font-size: .82rem; font-weight: 700; color: var(--grafito); white-space: nowrap; }
+.oferta { background: var(--card); border: 1.5px solid var(--tinta); border-radius: 10px; padding: clamp(1.3rem, 4vw, 2rem); margin-top: 2rem; }
+.oferta h2 { margin-bottom: .8rem; }
+.oferta ul { list-style: none; display: grid; gap: .45rem; margin: 1.1rem 0 1.6rem; }
+.oferta li { display: flex; gap: .6rem; }
+.oferta li::before { content: "✓"; color: var(--bien); font-weight: 700; }
+.texto + .texto { margin-top: .8rem; }
+.texto { max-width: 58ch; }
+.otra-vez { display: inline-block; margin-top: 2rem; background: none; border: 0; padding: 0; font: 600 .95rem var(--f-body); color: var(--grafito); text-decoration: underline; cursor: pointer; }
+
+/* Ronda sin opciones */
+.etiqueta { display: block; font-weight: 700; margin-bottom: .4rem; }
+.campo { width: 100%; font: 500 1rem/1.5 var(--f-body); color: var(--tinta); background: var(--card); border: 1.5px solid var(--linea); border-radius: 8px; padding: .8rem 1rem; resize: vertical; }
+.campo:focus { outline: 3px solid var(--acento); outline-offset: 1px; border-color: transparent; }
+.boton:disabled { opacity: .45; cursor: not-allowed; }
+.comparacion { display: grid; gap: 1rem; margin-top: 1.6rem; }
+@media (min-width: 640px) { .comparacion { grid-template-columns: 1fr 1fr; } }
+.rotulo { font-size: .82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--grafito); margin-bottom: .4rem; }
+.globo { background: var(--card); border: 1.5px solid var(--linea); border-radius: 10px; padding: .8rem 1rem; overflow-wrap: anywhere; }
+.globo.posible { border-color: var(--bien); }
+.revisa { margin: .3rem 0 .8rem 1.2rem; display: grid; gap: .3rem; }
+
+.aparece { animation: aparece 260ms ease both; }
+@keyframes aparece { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .aparece { animation: none; } .barra-progreso span { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="top">
+    <a href="../">
+      <img class="logo logo-claro" src="../../assets/horizontal-texto-negro.svg" alt="Comunidad UXUI" width="335" height="60">
+      <img class="logo logo-oscuro" src="../../assets/horizontal-texto-blanco.svg" alt="Comunidad UXUI" width="335" height="60">
+    </a>
+    <p class="progreso" id="progreso" hidden></p>
+  </div>
+  <div class="barra-progreso" id="barra" hidden><span></span></div>
+</header>
+
+<main class="wrap" id="escena" aria-live="polite"></main>
+
+<script>
+(function () {
+  /* Cada situación: una pregunta, una pantalla de ejemplo y tres opciones razonables.
+     tipo: "mejor", "medias" o "rompe"; solo "mejor" cuenta como acierto. La opción "segura" suele ser la trampa. */
+  var SITUACIONES = [
+    {
+      tema: 'Dónde va la IA',
+      semana: 'Semana 2',
+      pregunta: 'Tu PM pide: «Sumemos IA para que la gente entienda sus gastos». La app ya marca con un punto rojo los gastos raros. ¿Qué propones?',
+      pantalla: '<div class="barra"><i></i><i></i><i></i><span>Cuentas · Octubre</span></div><div class="lienzo">' +
+        '<div class="fila"><div>Supermercado<small>12/10</small></div><b>84 USD</b></div>' +
+        '<div class="fila"><div>Uber Eats<span class="punto" aria-label="gasto raro"></span><small>13/10 · 2:14 a. m.</small></div><b>48 USD</b></div>' +
+        '<div class="fila"><div>Alquiler<small>1/10</small></div><b>620 USD</b></div></div>',
+      opciones: [
+        { tipo: 'rompe', texto: 'Una pestaña «Asistente» con un chat y tres preguntas sugeridas.',
+          titulo: 'Casi nadie lo abre.',
+          que: 'La duda aparece cuando la persona ve el punto rojo, y el chat está en otra pestaña. Además, tiene que saber qué preguntar. A las dos semanas el uso cae.' },
+        { tipo: 'mejor', texto: 'Un botón «¿Por qué es raro?» junto a cada gasto marcado.',
+          titulo: 'La IA aparece donde nace la duda.',
+          que: 'La persona toca un botón en la pantalla que ya usa y recibe una respuesta sobre ese gasto, sin escribir nada.' },
+        { tipo: 'medias', texto: 'El chat y también el botón, para cubrir los dos usos.',
+          titulo: 'Duplicas el trabajo sin saber qué funciona.',
+          que: 'Dos entradas para la misma necesidad. El equipo diseña, construye y mantiene ambas, y la persona no sabe cuál usar.' }
+      ],
+      clave: 'El chat sirve para explorar. Cuando la tarea se repite y tiene un lugar claro, gana el botón.'
+    },
+    {
+      tema: 'Cuando la IA duda',
+      semana: 'Semana 3',
+      pregunta: 'La IA sospecha que a la persona le cobraron dos veces, pero su confianza es del 62 %. ¿Qué muestra la app?',
+      pantalla: '<div class="barra"><i></i><i></i><i></i><span>Cuentas · Octubre</span></div><div class="lienzo">' +
+        '<div class="fila"><div>Netflix<small>15/10 · 9:02</small></div><b>11 USD</b></div>' +
+        '<div class="fila"><div>Netflix<small>15/10 · 9:03</small></div><b>11 USD</b></div></div>',
+      opciones: [
+        { tipo: 'medias', texto: '«62 % de probabilidad de cobro duplicado» y un botón «Revisarlo».',
+          titulo: 'Parece transparente, pero nadie sabe qué hacer con un 62 %.',
+          que: '¿Es mucho o es poco? Algunas personas lo ignoran y otras se asustan. El número solo no dice por qué la IA sospecha.' },
+        { tipo: 'rompe', texto: '«Cobro duplicado detectado» y un botón «Pedir el reembolso».',
+          titulo: 'Afirma algo que la IA no sabe.',
+          que: 'Con un 62 %, casi 4 de cada 10 avisos son falsos. La persona reclama cobros que estaban bien, y después deja de creerle, también cuando acierta.' },
+        { tipo: 'mejor', texto: '«Dos cargos iguales con un minuto de diferencia» y un botón «Revisarlo».',
+          titulo: 'Muestra en qué se basa.',
+          que: 'La persona ve el motivo de la sospecha y decide con información. Si la IA se equivoca, la persona lo nota enseguida.' }
+      ],
+      clave: 'Una IA confiable dice en qué se basa, con palabras que se entienden, y deja la decisión a la persona.'
+    },
+    {
+      tema: 'Dónde decide la persona',
+      semana: 'Semana 4',
+      pregunta: 'La IA pone la categoría a unos 200 gastos por mes. Acierta en 19 de cada 20. ¿Cómo lo diseñas?',
+      pantalla: '<div class="barra"><i></i><i></i><i></i><span>Cuentas · Categorías</span></div><div class="lienzo">' +
+        '<div class="fila"><div>Supermercado</div><span class="etq">Comida</span></div>' +
+        '<div class="fila"><div>Uber</div><span class="etq">Transporte</span></div>' +
+        '<div class="fila"><div>Farmacia del Centro</div><span class="etq duda">¿Salud o Compras?</span></div>' +
+        '<div class="fila"><div>Transferencia · J. López</div><span class="etq duda">¿?</span></div></div>',
+      opciones: [
+        { tipo: 'rompe', texto: 'Pide confirmar cada categoría antes de guardarla.',
+          titulo: 'Doscientas confirmaciones al mes.',
+          que: 'A la segunda semana la gente toca «Aceptar» sin leer. Los errores pasan igual y la app se siente lenta. Es la opción que parece más responsable, y por eso es la trampa más común.' },
+        { tipo: 'medias', texto: 'Categoriza sola; cualquier categoría se cambia desde el detalle.',
+          titulo: 'Funciona, pero los errores quedan escondidos.',
+          que: 'Nadie entra al detalle de 200 gastos. Los 10 errores del mes siguen ahí y nadie los ve.' },
+        { tipo: 'mejor', texto: 'Categoriza sola y pide revisar solo las que le generan dudas.',
+          titulo: 'La atención va donde hace falta.',
+          que: 'La persona revisa unos pocos gastos, no 200. No atrapa todos los errores, porque a veces la IA se equivoca muy segura. Por eso también se mide cuántas categorías corrige la gente.' }
+      ],
+      clave: 'Pedir permiso para todo también es un error de diseño: la gente aprueba sin leer.'
+    },
+    {
+      tema: 'Lo que no se puede deshacer',
+      semana: 'Semana 4',
+      pregunta: 'La persona le pide a la IA: «Cancela las suscripciones que no uso». La app solo ve los cobros, y la IA encuentra cuatro. ¿Qué hace?',
+      pantalla: '<div class="barra"><i></i><i></i><i></i><span>Cuentas · Asistente</span></div><div class="lienzo">' +
+        '<div class="pedido">Cancela las suscripciones que no uso</div>' +
+        '<div class="fila"><div>Spotify Familiar<small>pagas desde 2022</small></div><b>17 USD</b></div>' +
+        '<div class="fila"><div>Gimnasio<small>pagas desde marzo</small></div><b>35 USD</b></div>' +
+        '<div class="fila"><div>Duolingo<small>pagas desde enero</small></div><b>7 USD</b></div>' +
+        '<div class="fila"><div>Disney+<small>pagas desde 2023</small></div><b>10 USD</b></div></div>',
+      opciones: [
+        { tipo: 'rompe', texto: 'Las cancela y muestra «Deshacer» durante 10 segundos.',
+          titulo: 'La IA adivinó y actuó.',
+          que: 'La app no sabe qué usa la persona: solo ve cobros. Diez segundos no alcanzan para revisar cuatro decisiones, y cuando la persona se da cuenta, la cancelación ya pasó en Spotify y en el gimnasio.' },
+        { tipo: 'mejor', texto: 'Muestra las cuatro sin marcar y la persona elige cuáles cancelar.',
+          titulo: 'La IA busca, la persona decide.',
+          que: 'La IA hizo el trabajo de encontrar los cobros. Como no sabe qué se usa, la decisión queda en manos de quien sí lo sabe.' },
+        { tipo: 'medias', texto: 'Muestra las cuatro, lo que se ahorra y un botón «Cancelar las 4».',
+          titulo: 'Un solo botón para cuatro decisiones.',
+          que: 'El Spotify Familiar lo usa el resto de la familia. Con un solo botón, la persona aprueba la suposición de la IA sin revisarla una por una.' }
+      ],
+      clave: 'Cuando la IA supone y la acción es difícil de revertir, la IA propone y la persona decide.'
+    },
+    {
+      tema: 'Probar con personas',
+      semana: 'Semana 5',
+      pregunta: 'Pruebas tu prototipo con cinco personas. Tres aceptan la categoría que sugiere la IA sin leerla, incluso cuando está mal. ¿Qué cambias?',
+      pantalla: '<div class="barra"><i></i><i></i><i></i><span>Notas de la prueba</span></div><div class="lienzo">' +
+        '<div class="nota">P1: tocó «Aceptar» en 2 segundos.</div>' +
+        '<div class="nota">P3: «Si la app lo dice, debe estar bien».</div>' +
+        '<div class="nota">P4: aceptó «Ocio» para un pago al médico.</div></div>',
+      opciones: [
+        { tipo: 'medias', texto: 'Sumas a cada sugerencia una explicación de cómo la eligió la IA.',
+          titulo: 'Más texto, la misma confianza ciega.',
+          que: 'Hay estudios que muestran que las explicaciones pueden aumentar la confianza en la IA, también cuando se equivoca. La gente ve que hay una explicación y acepta sin leerla.' },
+        { tipo: 'rompe', texto: 'Sumas un aviso: «La IA puede equivocarse. Revisa las sugerencias».',
+          titulo: 'Un aviso que nadie lee.',
+          que: 'Casi todas las apps lo tienen, y por eso la gente ya no lo ve. El aviso protege a la empresa, pero no ayuda a la persona a decidir.' },
+        { tipo: 'mejor', texto: 'Si la IA duda, ofrece dos categorías y la persona elige una.',
+          titulo: 'La persona piensa justo donde hace falta.',
+          que: 'En los casos dudosos, elegir entre dos obliga a mirar el gasto un segundo. En los claros, todo sigue igual de rápido.' }
+      ],
+      clave: 'A veces la solución es pedir una decisión en el momento justo, en vez de dar más información.'
+    }
+  ];
+
+  /* Ronda final sin opciones: la que hace sentir que elegir no alcanza (también a quien acierta todo). */
+  var ABIERTA = {
+    tema: 'Ahora sin opciones',
+    pregunta: 'La IA puso «Ocio» a un pago al médico. La persona lo cambia a «Salud». Escribe el mensaje que muestra la app justo después.',
+    pantalla: '<div class="barra"><i></i><i></i><i></i><span>Cuentas · Categorías</span></div><div class="lienzo">' +
+      '<div class="fila"><div>Dr. Pérez · 20/10</div><span class="etq">Ocio → Salud</span></div>' +
+      '<div class="fila"><div>Dr. Pérez · 18/9<small>categoría: Ocio</small></div><b>40 USD</b></div>' +
+      '<div class="fila"><div>Dr. Pérez · 21/8<small>categoría: Ocio</small></div><b>40 USD</b></div></div>',
+    posible: 'Listo, quedó en Salud. ¿Cambio también los otros 2 pagos al Dr. Pérez?',
+    revisa: [
+      'Confirma el cambio en pocas palabras.',
+      'Promete solo lo que la app hace. «Aprendo de ti» suena bien, pero ¿es cierto?',
+      'Aprovecha la corrección para ahorrarle trabajo a la persona.'
+    ]
+  };
+
+  var MARCA = { mejor: '✓', medias: '~', rompe: '✕' };
+  var NOMBRE = { mejor: 'La mejor', medias: 'A medias', rompe: 'Se rompe' };
+  var LANDING = '../?de=juego';
+
+  var escena = document.getElementById('escena');
+  var progreso = document.getElementById('progreso');
+  var barra = document.getElementById('barra');
+  var actual = 0;
+  var elegidas = [];
+
+  function mezclar(lista) {
+    var copia = lista.slice();
+    for (var i = copia.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = copia[i]; copia[i] = copia[j]; copia[j] = t;
+    }
+    return copia;
+  }
+
+  function pintar(html) {
+    escena.innerHTML = '<div class="aparece">' + html + '</div>';
+    window.scrollTo({ top: 0 });
+    var foco = escena.querySelector('h1, h2');
+    if (foco) { foco.setAttribute('tabindex', '-1'); foco.focus({ preventScroll: true }); }
+  }
+
+  function portada() {
+    progreso.hidden = true;
+    barra.hidden = true;
+    pintar(
+      '<p class="antetitulo">Un juego de dos minutos</p>' +
+      '<h1>¿Diseñarías bien esta IA?</h1>' +
+      '<p class="bajada">Una app de gastos suma IA. Tú tomas cinco decisiones de diseño, las mismas que hoy toman los equipos de producto.</p>' +
+      '<ol class="reglas">' +
+        '<li><b>1</b><span>Cada decisión tiene tres opciones. Todas parecen razonables.</span></li>' +
+        '<li><b>2</b><span>Una funciona mejor, otra funciona a medias y otra se rompe con usuarios reales.</span></li>' +
+        '<li><b>3</b><span>Después de cada respuesta ves qué pasa en el producto.</span></li>' +
+      '</ol>' +
+      '<button class="boton" type="button" id="empezar">Empezar</button>'
+    );
+    document.getElementById('empezar').addEventListener('click', function () { actual = 0; elegidas = []; situacion(); });
+  }
+
+  function situacion() {
+    var s = SITUACIONES[actual];
+    var opciones = mezclar(s.opciones);
+    progreso.hidden = false;
+    barra.hidden = false;
+    progreso.textContent = (actual + 1) + ' de ' + SITUACIONES.length;
+    barra.firstElementChild.style.width = (actual / SITUACIONES.length * 100) + '%';
+    pintar(
+      '<p class="antetitulo">' + s.tema + '</p>' +
+      '<h2>' + s.pregunta + '</h2>' +
+      '<div class="pantalla" aria-hidden="true">' + s.pantalla + '</div>' +
+      '<ul class="opciones">' + opciones.map(function (o, i) {
+        return '<li><button class="opcion" type="button" data-i="' + i + '"><span class="letra">' + 'ABC'[i] + '</span><span>' + o.texto + '<span class="veredicto"></span></span></button></li>';
+      }).join('') + '</ul>' +
+      '<div id="despues"></div>'
+    );
+    escena.querySelectorAll('.opcion').forEach(function (b) {
+      b.addEventListener('click', function () { responder(opciones, Number(b.getAttribute('data-i'))); });
+    });
+  }
+
+  function responder(opciones, i) {
+    var s = SITUACIONES[actual];
+    var o = opciones[i];
+    elegidas.push(o.tipo);
+    escena.querySelectorAll('.opcion').forEach(function (b, k) {
+      var tipo = opciones[k].tipo;
+      b.disabled = true;
+      b.classList.add(tipo);
+      if (k !== i && tipo !== 'mejor') b.classList.add('apagada');
+      b.querySelector('.veredicto').textContent = (k === i ? 'Tu elección · ' : '') + NOMBRE[tipo];
+    });
+    var ultima = actual === SITUACIONES.length - 1;
+    var despues = document.getElementById('despues');
+    despues.innerHTML =
+      '<div class="consecuencia ' + o.tipo + ' aparece">' +
+        '<h3>' + o.titulo + '</h3>' +
+        '<p>' + o.que + '</p>' +
+        '<p class="clave"><strong>Lo que hay detrás:</strong> ' + s.clave + '</p>' +
+      '</div>' +
+      '<button class="boton siguiente" type="button" id="seguir">' + (ultima ? 'Una más, sin opciones' : 'Siguiente') + '</button>';
+    barra.firstElementChild.style.width = ((actual + 1) / SITUACIONES.length * 100) + '%';
+    var seguir = document.getElementById('seguir');
+    seguir.focus({ preventScroll: true });
+    despues.querySelector('.consecuencia').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+    seguir.addEventListener('click', function () {
+      actual++;
+      if (ultima) abierta(); else situacion();
+    });
+  }
+
+  function escapar(t) {
+    return t.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; });
+  }
+
+  function enumerar(lista) {
+    if (lista.length < 2) return lista.join('');
+    return lista.slice(0, -1).join(', ') + ' y ' + lista[lista.length - 1];
+  }
+
+  function abierta() {
+    progreso.hidden = false;
+    barra.hidden = true;
+    progreso.textContent = 'Ronda extra';
+    pintar(
+      '<p class="antetitulo">' + ABIERTA.tema + '</p>' +
+      '<h2>' + ABIERTA.pregunta + '</h2>' +
+      '<div class="pantalla" aria-hidden="true">' + ABIERTA.pantalla + '</div>' +
+      '<label class="etiqueta" for="mensaje">Tu mensaje</label>' +
+      '<textarea id="mensaje" class="campo" rows="3" maxlength="160" placeholder="Escribe lo que vería la persona"></textarea>' +
+      '<p class="chica" id="cuenta">0 de 160 caracteres</p>' +
+      '<button class="boton siguiente" type="button" id="comparar" disabled>Comparar con una respuesta posible</button>' +
+      '<div id="despues"></div>'
+    );
+    var campo = document.getElementById('mensaje');
+    var comparar = document.getElementById('comparar');
+    campo.addEventListener('input', function () {
+      document.getElementById('cuenta').textContent = campo.value.length + ' de 160 caracteres';
+      comparar.disabled = campo.value.trim().length < 3;
+    });
+    comparar.addEventListener('click', function () {
+      campo.readOnly = true;
+      comparar.hidden = true;
+      var despues = document.getElementById('despues');
+      despues.innerHTML =
+        '<div class="comparacion aparece">' +
+          '<div><p class="rotulo">Lo que escribiste</p><p class="globo">' + escapar(campo.value.trim()) + '</p></div>' +
+          '<div><p class="rotulo">Una respuesta posible</p><p class="globo posible">' + ABIERTA.posible + '</p></div>' +
+        '</div>' +
+        '<div class="consecuencia aparece">' +
+          '<h3>Revisa el tuyo con estas tres preguntas</h3>' +
+          '<ul class="revisa">' + ABIERTA.revisa.map(function (r) { return '<li>' + r + '</li>'; }).join('') + '</ul>' +
+          '<p class="clave">Aquí nadie te dice si el tuyo funciona. En tu trabajo tampoco hay opciones para elegir: escribes, pruebas y defiendes lo que escribiste.</p>' +
+        '</div>' +
+        '<button class="boton siguiente" type="button" id="seguir">Ver mi resultado</button>';
+      var seguir = document.getElementById('seguir');
+      seguir.focus({ preventScroll: true });
+      despues.querySelector('.comparacion').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      seguir.addEventListener('click', resultado);
+    });
+  }
+
+  function resultado() {
+    progreso.hidden = true;
+    barra.hidden = true;
+    var aciertos = elegidas.filter(function (t) { return t === 'mejor'; }).length;
+    var faltas = SITUACIONES.filter(function (s, k) { return elegidas[k] !== 'mejor'; });
+    var temas = enumerar(faltas.map(function (s) { return s.tema.toLowerCase(); }));
+    var semanas = enumerar(faltas.map(function (s) { return s.semana.toLowerCase(); })
+      .filter(function (v, k, a) { return a.indexOf(v) === k; }));
+
+    var titulo, cuerpo;
+    if (aciertos === SITUACIONES.length) {
+      titulo = 'Elegiste bien las cinco. La sexta es la que cuenta.';
+      cuerpo =
+        '<p class="texto">En tu trabajo nadie te da tres opciones. Te toca escribir el mensaje, decidir con qué nivel de confianza avisa la IA, probarlo con personas y defenderlo cuando el PM pide un chat.</p>' +
+        '<p class="texto">Eso se practica en un producto real, con alguien que revise lo que haces. En seis semanas lo haces en tu producto o en el de tu trabajo, con feedback en vivo cada jueves. Terminas con un caso completo y una certificación verificable de ese criterio.</p>';
+    } else if (aciertos >= 3) {
+      titulo = 'Buen instinto, con ' + (faltas.length === 1 ? 'un hueco' : 'dos huecos') + '.';
+      cuerpo =
+        '<p class="texto">Te faltó en <strong>' + temas + '</strong>. Lo trabajamos en la ' + semanas + ' de la capacitación.</p>' +
+        '<p class="texto">Y en la ronda extra viste la otra parte: escribirlo sin opciones. En seis semanas lo haces en tu propio producto, con feedback en vivo cada jueves.</p>';
+    } else {
+      titulo = 'Usas IA. Diseñarla es otro oficio.';
+      cuerpo =
+        '<p class="texto">Te faltó en <strong>' + temas + '</strong>. Las opciones que parecen más responsables suelen ser las que fallan con usuarios reales. Le pasa a casi todo el mundo la primera vez.</p>' +
+        '<p class="texto">Son decisiones que se aprenden con práctica. En seis semanas las tomas en tu propio producto, con feedback en vivo cada jueves.</p>';
+    }
+
+    pintar(
+      '<p class="antetitulo">Tu resultado</p>' +
+      '<p class="puntaje">' + aciertos + '<small> de ' + SITUACIONES.length + '</small></p>' +
+      '<h1>' + titulo + '</h1>' +
+      '<div style="margin-top:1rem">' + cuerpo + '</div>' +
+      '<ul class="repaso">' + SITUACIONES.map(function (s, k) {
+        var t = elegidas[k];
+        return '<li><span class="marca ' + t + '" aria-label="' + NOMBRE[t] + '">' + MARCA[t] + '</span><span>' + s.tema + '</span><span class="semana">' + s.semana + '</span></li>';
+      }).join('') +
+        '<li><span class="marca" aria-hidden="true">✎</span><span>Ahora sin opciones</span><span class="semana">Semana 4</span></li>' +
+      '</ul>' +
+      '<section class="oferta">' +
+        '<p class="antetitulo">De usar IA a diseñarla</p>' +
+        '<h2>Seis semanas en vivo para diseñar una función de IA en tu producto</h2>' +
+        '<ul>' +
+          '<li>Una clase en vivo cada martes, desde el 17/11.</li>' +
+          '<li>Feedback sobre tu caso cada jueves y en el workshop del 19/12.</li>' +
+          '<li>Un caso completo para tu portfolio, probado con personas.</li>' +
+          '<li>Certificación verificable.</li>' +
+        '</ul>' +
+        '<a class="boton" href="' + LANDING + '" data-boton="juego">Ver la capacitación</a>' +
+        '<p class="chica">Empieza el lunes 16/11. Incluida en el plan Premium de Comunidad UX/UI.</p>' +
+      '</section>' +
+      '<button class="otra-vez" type="button" id="otra">Jugar de nuevo</button>'
+    );
+    document.getElementById('otra').addEventListener('click', portada);
+  }
+
+  portada();
+})();
+</script>
+
+</body>
+</html>

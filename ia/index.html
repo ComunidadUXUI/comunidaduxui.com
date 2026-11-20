@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De usar IA a diseñarla · Comunidad UXUI</title>
+<meta name="description" content="Capacitación en vivo para diseñadoras y diseñadores UX/UI: terminas con una función de IA en tu producto, probada con personas y lista para desarrollo. Arranca el 16/11.">
+<link rel="canonical" href="https://comunidaduxui.com/ia/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://comunidaduxui.com/ia/">
+<meta property="og:title" content="De usar IA a diseñarla · capacitación en vivo">
+<meta property="og:description" content="Una función de IA en tu producto, probada con personas y lista para desarrollo. Arranca el 16/11.">
+<meta property="og:image" content="https://comunidaduxui.com/assets/og-ia.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_LA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://comunidaduxui.com/assets/og-ia.png">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../assets/iso.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Raleway:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --papel: #F6F4EF;
+  --papel-2: #ECE9E2;
+  --card: #FFFFFF;
+  --tinta: #161513;
+  --grafito: #4F4B45;
+  --linea: rgba(22, 21, 19, .14);
+  --rosa: #D81B60;
+  --rosa-hover: #B8154F;
+  --sobre-rosa: #FFFFFF;
+  --acento: #D81B60;
+  --f-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --radio: 4px;
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+  --max: 1120px;
+  --texto: 64ch;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papel: #161513;
+    --papel-2: #1F1D1A;
+    --card: #211F1B;
+    --tinta: #F2EEE6;
+    --grafito: #BDB6AA;
+    --linea: rgba(242, 238, 230, .16);
+    --rosa: #FF5C94;
+    --rosa-hover: #FF7FAB;
+    --sobre-rosa: #161513;
+    --acento: #FF8AB4;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  letter-spacing: .008em;
+  color: var(--tinta);
+  background: var(--papel);
+}
+h1, h2, h3 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: .018em;
+  margin: 0;
+  text-wrap: balance;
+}
+p { margin: 0; }
+a { color: inherit; }
+ul, ol { margin: 0; padding: 0; }
+strong { font-weight: 700; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+/* Encabezado: nombre, promesa y la única acción */
+.hero { text-align: center; padding-block: clamp(2rem, 7vh, 4.5rem) clamp(2.5rem, 7vh, 4.5rem); }
+.logo { display: block; margin: 0 auto clamp(1.5rem, 4vh, 2.5rem); width: min(210px, 56vw); height: auto; }
+.logo-oscuro { display: none; }
+@media (prefers-color-scheme: dark) {
+  .logo-claro { display: none; }
+  .logo-oscuro { display: block; }
+}
+.antetitulo { font-weight: 700; font-size: .95rem; letter-spacing: .04em; color: var(--acento); margin-bottom: .9rem; }
+.hero h1 { font-size: clamp(1.95rem, 6.2vw, 3.5rem); max-width: 20ch; margin: 0 auto; }
+.hero .bajada { color: var(--grafito); font-size: clamp(1.02rem, 2.4vw, 1.2rem); max-width: 44ch; margin: 1rem auto 0; text-wrap: pretty; }
+.datos { margin-top: 1.25rem; font-weight: 600; font-size: .98rem; }
+.boton {
+  display: inline-block;
+  margin-top: clamp(1.4rem, 3.5vh, 2rem);
+  padding: 1rem 2rem;
+  background: var(--rosa);
+  color: var(--sobre-rosa);
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 1.08rem;
+  letter-spacing: .01em;
+  line-height: 1.35;
+  text-decoration: none;
+  border-radius: var(--radio);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.boton span { display: block; font-weight: 500; font-size: .9rem; opacity: .92; }
+.boton:hover { background: var(--rosa-hover); }
+.guia { margin-top: .6rem; font-size: .9rem; color: var(--grafito); }
+.boton:active { transform: scale(.98); }
+
+/* Secciones */
+.seccion { padding-block: clamp(2.25rem, 6vh, 3.5rem) 0; }
+.seccion::before { content: ""; display: block; border-top: 1px solid var(--linea); margin-bottom: clamp(2rem, 5vh, 3rem); }
+.seccion h2 { font-size: clamp(1.35rem, 3.4vw, 1.8rem); margin-bottom: 1rem; }
+.seccion .cuerpo { max-width: var(--texto); }
+.seccion .cuerpo > p + p { margin-top: .8rem; }
+.grafito { color: var(--grafito); }
+
+.dos { display: grid; gap: 2.25rem; }
+@media (min-width: 860px) { .dos { grid-template-columns: 1fr 1fr; gap: 3.5rem; } }
+
+.logros { list-style: none; display: grid; gap: 1.1rem; }
+.logros li { padding-left: 1rem; border-left: 3px solid var(--acento); }
+
+/* Las seis semanas: una secuencia real, por eso va numerada */
+.semanas { list-style: none; counter-reset: semana; display: grid; gap: .1rem; }
+.semanas li { counter-increment: semana; display: grid; grid-template-columns: 2.4rem 1fr; align-items: baseline; padding: .55rem 0; border-bottom: 1px solid var(--linea); font-weight: 600; }
+.semanas li::before { content: counter(semana); font-family: var(--f-display); font-weight: 700; font-size: 1.3rem; color: var(--acento); }
+
+.agenda { list-style: none; display: grid; gap: 1rem; }
+.agenda li { display: grid; gap: .1rem; }
+@media (min-width: 560px) { .agenda li { grid-template-columns: 11.5rem 1fr; gap: 1rem; } }
+.agenda .cuando { font-weight: 700; }
+.agenda .clave { color: var(--acento); font-weight: 700; }
+.husos { margin-top: 1.2rem; font-size: .93rem; color: var(--grafito); }
+
+/* Certificación */
+.cert { display: grid; gap: 2rem; align-items: start; }
+@media (min-width: 860px) { .cert { grid-template-columns: 1.2fr 1fr; gap: 3.5rem; } }
+.cert .cuerpo > p + p, .cert .cuerpo > p + ul, .cert .cuerpo > ul + p { margin-top: .8rem; }
+.cert ul { padding-left: 1.2rem; }
+.cert ul li + li { margin-top: .3rem; }
+.muestra {
+  background: var(--card);
+  border: 1px solid var(--linea);
+  border-top: 6px solid var(--acento);
+  border-radius: var(--radio);
+  padding: 1.6rem 1.5rem 1.4rem;
+}
+.muestra .emisor { font-size: .85rem; font-weight: 700; letter-spacing: .04em; color: var(--grafito); }
+.muestra .titulo { font-family: var(--f-display); font-weight: 700; font-size: 1.55rem; line-height: 1.2; margin-top: .6rem; text-wrap: balance; }
+.muestra .persona { margin-top: 1rem; font-weight: 600; }
+.muestra .distincion { display: inline-block; margin-top: .7rem; padding: .2rem .6rem; border: 1.5px solid var(--acento); border-radius: var(--radio); color: var(--acento); font-weight: 700; font-size: .85rem; }
+.muestra .verificar { margin-top: 1rem; padding-top: .8rem; border-top: 1px solid var(--linea); font-size: .85rem; color: var(--grafito); }
+.muestra-nota { margin-top: .6rem; font-size: .85rem; color: var(--grafito); text-align: center; }
+
+/* Quién enseña */
+.quien { max-width: var(--texto); }
+.quien .nombre { font-family: var(--f-display); font-weight: 700; font-size: 1.25rem; }
+.quien .rol { color: var(--grafito); margin-top: .1rem; }
+.quien p + p { margin-top: .8rem; }
+
+/* Preguntas */
+.preguntas { display: grid; gap: 1.4rem; max-width: var(--texto); }
+.preguntas dt { font-weight: 700; }
+.preguntas dd { margin: .25rem 0 0; color: var(--grafito); }
+
+/* Cierre y pie */
+.cierre { text-align: center; padding-block: clamp(3rem, 9vh, 5rem); }
+.cierre::before { content: ""; display: block; border-top: 1px solid var(--linea); margin-bottom: clamp(2.5rem, 7vh, 4rem); }
+.cierre h2 { font-size: clamp(1.4rem, 4vw, 2rem); max-width: 24ch; margin: 0 auto; }
+.cierre p { color: var(--grafito); margin-top: .7rem; }
+.pie { border-top: 1px solid var(--linea); padding: 1.75rem 0 2.25rem; font-size: .93rem; color: var(--grafito); }
+.pie .wrap { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; justify-content: space-between; align-items: baseline; }
+.pie ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.pie a { text-underline-offset: 3px; }
+.pie a:hover { color: var(--tinta); }
+
+@media (prefers-reduced-motion: reduce) { .boton { transition: none; } }
+</style>
+</head>
+<body>
+
+<main>
+  <header class="hero wrap">
+    <a href="/" aria-label="Comunidad UXUI, ir al inicio">
+      <img class="logo logo-claro" src="../assets/horizontal-texto-negro.svg" alt="Comunidad UXUI" width="335" height="60">
+      <img class="logo logo-oscuro" src="../assets/horizontal-texto-blanco.svg" alt="Comunidad UXUI" width="335" height="60">
+    </a>
+    <p class="antetitulo">DE USAR IA A DISEÑARLA · CAPACITACIÓN EN VIVO</p>
+    <h1>Una función de IA en tu producto, probada con personas y lista para desarrollo</h1>
+    <p class="bajada">Para diseñadoras y diseñadores UX/UI que ya usan IA en su trabajo y quieren diseñarla: lo que hoy piden los equipos de producto.</p>
+    <p class="datos">Del 16/11 al 3/1 · unas 3 horas por semana · todo queda grabado</p>
+    <a class="boton" data-boton="arriba" href="https://www.skool.com/comunidaduxui/about">Unirme<span>incluido en Premium, 39 USD al mes</span></a>
+    <p class="guia">En la página de Skool, elige el plan Premium.</p>
+  </header>
+
+  <section class="seccion wrap" aria-labelledby="t-para">
+    <div class="dos">
+      <div>
+        <h2 id="t-para">Para quién es</h2>
+        <div class="cuerpo">
+          <p>Para diseñadoras y diseñadores UX/UI con trabajo que ya usan IA todos los días y ahora quieren diseñarla.</p>
+          <p>El producto lo eliges tú: puede ser uno que uses todos los días o el de tu trabajo, si te dejan mostrarlo.</p>
+        </div>
+      </div>
+      <div>
+        <h2>Al terminar</h2>
+        <ul class="logros">
+          <li>Diseñaste una función de IA de punta a punta en un producto real, prototipada y probada con personas.</li>
+          <li>Sabes pasarla a desarrollo: cómo se comporta, qué es una buena respuesta y qué medir después del lanzamiento.</li>
+          <li>Tienes la certificación de Comunidad UX/UI, verificable en línea, con tu caso enlazado.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion wrap" aria-labelledby="t-semanas">
+    <div class="dos">
+      <div>
+        <h2 id="t-semanas">Las seis semanas</h2>
+        <ol class="semanas">
+          <li>Cambiaron las reglas</li>
+          <li>Elige el patrón: chat, botón, sugerencia o agente</li>
+          <li>Prototipa con IA</li>
+          <li>Diseña la confianza</li>
+          <li>Pruébalo con personas</li>
+          <li>Llévalo a producción</li>
+        </ol>
+      </div>
+      <div>
+        <h2>Tu semana</h2>
+        <ul class="agenda">
+          <li><span class="cuando">Martes 15:00</span><span>Clase en vivo de una hora. Queda grabada: la puedes ver cuando quieras.</span></li>
+          <li><span class="cuando">Jueves 15:00</span><span>Preguntas y respuestas en vivo sobre las entregas. Opcional.</span></li>
+          <li><span class="cuando">Hasta el domingo</span><span>Avanzas tu proyecto con la práctica de la semana, unas 2 horas. <span class="clave">Es lo único que se pide.</span></span></li>
+          <li><span class="cuando">Sábados 28/11 y 19/12, 13:00</span><span>Dos workshops en vivo. En el segundo pruebas tu prototipo con otra persona del grupo.</span></li>
+          <li><span class="cuando">Domingo 3/1</span><span>Entregas tu caso final.</span></li>
+        </ul>
+        <p class="husos">Horarios de Argentina. 15:00 en Argentina son las 12:00 en Ciudad de México, las 13:00 en Bogotá y las 19:00 en Madrid.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion wrap" aria-labelledby="t-cert">
+    <div class="cert">
+      <div class="cuerpo">
+        <h2 id="t-cert">La certificación</h2>
+        <p>Entregas tu caso final y Anita Sevilla Ull, quien enseña, lo revisa con cinco criterios, que conoces desde el primer día. Si cumple los cinco, te certificas. Si falta alguno, te dice qué y lo corriges una vez.</p>
+        <p><strong>Con distinción</strong>, si además haces dos de estas tres cosas:</p>
+        <ul>
+          <li>Pruebas tu función con tres personas o más.</li>
+          <li>Conectas tu prototipo a un modelo de IA real.</li>
+          <li>Tu feedback ayuda a dos personas del grupo a mejorar su caso.</li>
+        </ul>
+        <p class="grafito">Emitida por Comunidad UX/UI y verificable en línea.</p>
+      </div>
+      <figure style="margin:0">
+        <div class="muestra" aria-label="Ejemplo de certificación">
+          <p class="emisor">COMUNIDAD UX/UI</p>
+          <p class="titulo">Diseño de funciones de IA</p>
+          <p class="persona">Tu nombre</p>
+          <p class="distincion">Con distinción</p>
+          <p class="verificar">Verificable en línea · con tu caso enlazado</p>
+        </div>
+        <figcaption class="muestra-nota">Así se lee en tu perfil de LinkedIn</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="seccion wrap" aria-labelledby="t-dic">
+    <h2 id="t-dic">Si diciembre se complica</h2>
+    <div class="cuerpo">
+      <p>Tu caso no se pierde. Si te atrasas, terminas con las grabaciones y lo entregas en la próxima edición, mientras sigas en Premium. Puedes sumarte cuando quieras: las clases quedan en el classroom.</p>
+    </div>
+  </section>
+
+  <section class="seccion wrap" aria-labelledby="t-quien">
+    <h2 id="t-quien">Quién enseña</h2>
+    <div class="quien">
+      <p class="nombre">Anita Sevilla Ull</p>
+      <p class="rol">UXer hace 10 años, diseño de comportamiento e interacción. Fundadora de Comunidad UX/UI.</p>
+      <p>Desde 2023 suma la IA a su proceso de diseño en Globant. Desde 2025 diseña funciones de IA para productos tradicionales, las secuencias e interacciones de productos nuevos con agentes y las reglas de comportamiento de un sistema multinacional con millones de personas usuarias activas.</p>
+      <p>En esta capacitación enseña lo que aplica en su trabajo: dónde poner la IA, cuánto control darle a cada persona y cómo probarlo antes de que llegue a desarrollo.</p>
+    </div>
+  </section>
+
+  <section class="seccion wrap" aria-labelledby="t-preguntas">
+    <h2 id="t-preguntas">Preguntas</h2>
+    <dl class="preguntas">
+      <div>
+        <dt>¿Ya soy Premium, me tengo que inscribir?</dt>
+        <dd>No. Ya estás adentro: el curso aparece en el classroom antes del 16/11, con tu primera tarea.</dd>
+      </div>
+      <div>
+        <dt>¿Soy Standard, cómo entro?</dt>
+        <dd>Te cambias a Premium desde la configuración de tu membresía en la comunidad y entras con el grupo.</dd>
+      </div>
+      <div>
+        <dt>¿Y si en diciembre no tengo tiempo?</dt>
+        <dd>Lo único que se pide es la práctica de cada semana. Las clases quedan grabadas, la entrega final es el 3/1 y, si te atrasas, terminas en la próxima edición.</dd>
+      </div>
+      <div>
+        <dt>¿Necesito una herramienta paga?</dt>
+        <dd>Ayuda tener una herramienta de IA que genere código o prototipos, como Claude Code, Lovable, v0 o Figma Make. Para el prototipo alcanza la versión gratuita de Lovable, v0 o Figma Make.</dd>
+      </div>
+      <div>
+        <dt>¿Cuándo se abre la capacitación?</dt>
+        <dd>Cuando se confirma el pago de tu suscripción Premium. También puedes elegir el plan anual en la misma página.</dd>
+      </div>
+      <div>
+        <dt>¿Puedo dejar Premium después?</dt>
+        <dd>Sí, cuando quieras, desde tu cuenta. Para recibir la revisión de tu caso y la certificación necesitas seguir en Premium.</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="cierre wrap" aria-labelledby="t-cierre">
+    <h2 id="t-cierre">Arranca el lunes 16/11</h2>
+    <p>La primera clase es el martes 17/11 a las 15:00. El feedback en vivo sobre tu caso es durante esta edición: los jueves y en el workshop del 19/12.</p>
+    <a class="boton" data-boton="abajo" href="https://www.skool.com/comunidaduxui/about">Unirme<span>incluido en Premium, 39 USD al mes</span></a>
+    <p class="guia">En la página de Skool, elige el plan Premium.</p>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <p>Comunidad UXUI · fundada por Anita Sevilla Ull</p>
+    <ul>
+      <li><a href="https://www.instagram.com/comunidaduxui/">Instagram</a></li>
+      <li><a href="https://www.youtube.com/@ComunidadUXUI">YouTube</a></li>
+      <li><a href="https://www.linkedin.com/company/comunidaduxui">LinkedIn</a></li>
+      <li><a href="https://comunidad-uxui.kit.com/fb40f8e711">Newsletter Minuto UX</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+/* Medición propia, la misma tabla que la portada (site_events). Sin cookies ni datos personales.
+   Para separar esta página de la portada, detalle lleva "ia" (visita) o "ia-arriba"/"ia-abajo" (clic).
+   Si el link trae ?de=linkedin (o email, skool…), la visita guarda "ia:linkedin". Consultas en sql/003_landing_ia.sql. */
+(function () {
+  if (navigator.webdriver || !/(^|\.)comunidaduxui\.com$/.test(location.hostname)) return;
+  var URL_EVENTOS = 'https://ypmowaaxoyuknlmwmyth.supabase.co/rest/v1/site_events';
+  var CLAVE = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbW93YWF4b3l1a25sbXdteXRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNzk1ODEsImV4cCI6MjA5MjY1NTU4MX0.r9c_VB5H-kUmICseEc5La-VZ2_jKlAdAuDlWIIVVh1w';
+  var id;
+  try { id = sessionStorage.getItem('visita_id_ia'); } catch (e) {}
+  var esNueva = !id;
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)).slice(0, 36);
+    try { sessionStorage.setItem('visita_id_ia', id); } catch (e) {}
+  }
+  var origen = 'directo';
+  try { if (document.referrer) origen = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch (e) {}
+  var de = '';
+  try { de = (new URLSearchParams(location.search).get('de') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 12); } catch (e) {}
+  var dispositivo = matchMedia('(max-width: 720px)').matches ? 'celular' : 'escritorio';
+  function registrar(evento, detalle) {
+    try {
+      fetch(URL_EVENTOS, {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json', apikey: CLAVE, Authorization: 'Bearer ' + CLAVE, Prefer: 'return=minimal' },
+        body: JSON.stringify({ site: 'comunidaduxui.com', event: evento, detalle: detalle, visita_id: id, origen: origen, dispositivo: dispositivo })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  if (esNueva) registrar('visita', de ? 'ia:' + de : 'ia');
+  document.querySelectorAll('[data-boton]').forEach(function (b) {
+    b.addEventListener('click', function () { registrar('clic_boton', 'ia-' + b.getAttribute('data-boton')); });
+  });
+})();
+</script>
+
+</body>
+</html>

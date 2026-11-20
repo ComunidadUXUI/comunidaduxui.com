@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De usar IA a diseñarla · Comunidad UXUI</title>
+<meta name="description" content="Capacitación en vivo de seis semanas para diseñadoras y diseñadores UX/UI: terminas con una función de IA en tu producto, probada con personas y lista para desarrollo. Arranca el 16/11.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://comunidaduxui.com/ia/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://comunidaduxui.com/ia/">
+<meta property="og:title" content="De usar IA a diseñarla · capacitación en vivo">
+<meta property="og:description" content="Una función de IA en tu producto, probada con personas y lista para desarrollo. Arranca el 16/11.">
+<meta property="og:image" content="https://comunidaduxui.com/assets/og-ia.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_LA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://comunidaduxui.com/assets/og-ia.png">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="../../assets/iso.svg" type="image/svg+xml">
+<link rel="alternate icon" href="../../assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Raleway:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --papel: #F6F4EF;
+  --papel-2: #ECE9E2;
+  --card: #FFFFFF;
+  --tinta: #161513;
+  --grafito: #4F4B45;
+  --linea: rgba(22, 21, 19, .14);
+  --rosa: #D81B60;
+  --rosa-hover: #B8154F;
+  --sobre-rosa: #FFFFFF;
+  --acento: #D81B60;
+  --indigo: #3F51B5;
+  /* las pantallas de ejemplo son "capturas": se ven claras en los dos temas */
+  --ui-fondo: #FFFFFF;
+  --ui-tinta: #1A1A1A;
+  --ui-suave: #6B665E;
+  --ui-linea: #E6E2DA;
+  --ui-gris: #F1EEE8;
+  --bien: #2E7D4F;
+  --duda: #B26A00;
+  --mal: #C62828;
+  --f-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --f-body: 'Raleway', 'Helvetica Neue', Arial, sans-serif;
+  --radio: 4px;
+  --gutter: clamp(1rem, 5vw, 3rem);
+  --max: 1040px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --papel: #161513;
+    --papel-2: #1F1D1A;
+    --card: #211F1B;
+    --tinta: #F2EEE6;
+    --grafito: #BDB6AA;
+    --linea: rgba(242, 238, 230, .16);
+    --rosa: #FF5C94;
+    --rosa-hover: #FF7FAB;
+    --sobre-rosa: #161513;
+    --acento: #FF8AB4;
+    --indigo: #9FA8DA;
+  }
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: 1.04rem;
+  line-height: 1.6;
+  letter-spacing: .008em;
+  color: var(--tinta);
+  background: var(--papel);
+  overflow-x: hidden;
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 700; line-height: 1.14; letter-spacing: .018em; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+ul, ol { margin: 0; padding: 0; }
+strong { font-weight: 700; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+.texto { max-width: 62ch; }
+.grafito { color: var(--grafito); }
+
+/* Guía de lectura: cada sección abre igual (paso + título + bajada), siempre alineada a la izquierda */
+.seccion { padding-block: clamp(3rem, 9vh, 5.5rem) 0; }
+.paso { display: flex; gap: .6rem; align-items: baseline; font-weight: 700; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); margin-bottom: .7rem; }
+.paso b { font-family: var(--f-display); font-size: 1rem; }
+.seccion h2 { font-size: clamp(1.6rem, 4.4vw, 2.4rem); max-width: 24ch; }
+.seccion .intro { color: var(--grafito); font-size: clamp(1.02rem, 2.2vw, 1.15rem); max-width: 58ch; margin-top: .8rem; text-wrap: pretty; }
+
+/* Botón */
+.boton {
+  display: inline-block;
+  padding: 1rem 2.1rem;
+  background: var(--rosa);
+  color: var(--sobre-rosa);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: .01em;
+  text-decoration: none;
+  border-radius: var(--radio);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.boton:hover { background: var(--rosa-hover); }
+.boton:active { transform: scale(.98); }
+.precio-corto { margin-top: .55rem; font-size: .93rem; color: var(--grafito); }
+
+/* Encabezado */
+.top { padding-top: clamp(1.4rem, 4vh, 2.4rem); }
+.logo { display: block; width: min(190px, 52vw); height: auto; }
+.logo-oscuro { display: none; }
+@media (prefers-color-scheme: dark) { .logo-claro { display: none; } .logo-oscuro { display: block; } }
+.hero { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: center; padding-top: clamp(2rem, 6vh, 3.5rem); }
+@media (min-width: 900px) { .hero { grid-template-columns: 1.05fr 1fr; align-items: start; } .hero figure { margin-top: 3.2rem !important; } }
+.antetitulo { font-weight: 700; font-size: .9rem; letter-spacing: .06em; color: var(--acento); margin-bottom: .9rem; }
+.hero h1 { font-size: clamp(2rem, 5.6vw, 3.3rem); max-width: 18ch; }
+.hero .bajada { color: var(--grafito); font-size: clamp(1.04rem, 2.3vw, 1.2rem); max-width: 46ch; margin-top: 1rem; text-wrap: pretty; }
+.datos { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.4rem 0 1.6rem; }
+.datos li { font-size: .9rem; font-weight: 600; padding: .3rem .7rem; border: 1px solid var(--linea); border-radius: 999px; background: var(--card); }
+
+/* Pantallas de ejemplo (mismo lenguaje que el carrusel de patrones) */
+.pantalla { background: var(--ui-fondo); color: var(--ui-tinta); border: 1.5px solid #1A1A1A; border-radius: 10px; box-shadow: 6px 6px 0 #1A1A1A; overflow: hidden; font-size: .88rem; line-height: 1.45; }
+@media (prefers-color-scheme: dark) { .pantalla { border-color: #000; box-shadow: 6px 6px 0 rgba(0,0,0,.55); } }
+.barra { display: flex; align-items: center; gap: .35rem; padding: .5rem .75rem; border-bottom: 1px solid var(--ui-linea); font-size: .75rem; color: var(--ui-suave); }
+.barra i { width: 7px; height: 7px; border-radius: 50%; background: #D9D4CA; display: inline-block; }
+.barra span { margin-left: .4rem; }
+.lienzo { padding: 1rem; }
+.renglon { height: 7px; border-radius: 4px; background: var(--ui-gris); margin: .45rem 0; }
+.chip { display: inline-block; padding: .3rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 600; border: 1px solid #1A1A1A; background: #fff; color: #1A1A1A; }
+.chip.lleno { background: #1A1A1A; color: #fff; }
+.check { display: flex; gap: .55rem; align-items: center; padding: .38rem 0; border-bottom: 1px solid var(--ui-linea); }
+.check:last-child { border-bottom: 0; }
+.caja { width: 15px; height: 15px; border-radius: 3px; border: 1.5px solid #1A1A1A; flex: none; display: grid; place-items: center; font-size: .7rem; line-height: 1; }
+.caja.hecha { background: #1A1A1A; color: #fff; }
+.caja.ahora { border-color: var(--mal); }
+.tenue { color: var(--ui-suave); }
+.alto { margin-top: .8rem; padding: .75rem; border: 1px solid #F3C7C7; background: #FFF6F5; border-radius: 6px; }
+.alto p { font-weight: 600; margin-bottom: .55rem; }
+.acciones { display: flex; flex-wrap: wrap; gap: .4rem; }
+.pie-foto { margin-top: .9rem; font-size: .88rem; color: var(--grafito); max-width: 46ch; }
+
+/* 01 · El cambio: comparación */
+.comparar { display: grid; gap: 1.5rem; margin-top: 2rem; }
+@media (min-width: 760px) { .comparar { grid-template-columns: 1fr 1fr; } }
+.comparar h3 { font-size: 1.05rem; margin-bottom: .7rem; }
+.comparar h3 .marca { color: var(--acento); }
+.burbuja { padding: .55rem .75rem; border-radius: 10px; max-width: 85%; margin: .35rem 0; }
+.burbuja.yo { background: #1A1A1A; color: #fff; margin-left: auto; }
+.burbuja.ia { background: var(--ui-gris); }
+.entrada { margin-top: .7rem; border: 1px solid var(--ui-linea); border-radius: 999px; padding: .45rem .8rem; color: var(--ui-suave); font-size: .8rem; }
+.resaltado { background: #E8EAF6; padding: 0 .15rem; border-radius: 2px; }
+.leyenda { margin-top: .75rem; font-size: .93rem; color: var(--grafito); }
+
+/* 02 · Lo que te llevas */
+.llevas { list-style: none; display: grid; gap: 1.2rem; margin-top: 2rem; counter-reset: llevas; }
+@media (min-width: 760px) { .llevas { grid-template-columns: repeat(3, 1fr); } }
+.llevas li { background: var(--card); border: 1px solid var(--linea); border-top: 4px solid var(--acento); border-radius: var(--radio); padding: 1.2rem 1.2rem 1.3rem; }
+.llevas h3 { font-size: 1.15rem; margin-bottom: .45rem; }
+.llevas p { color: var(--grafito); font-size: .97rem; }
+
+/* 03 · Las seis semanas */
+.semanas { list-style: none; margin-top: 2.2rem; display: grid; gap: 1.25rem; }
+.semana { display: grid; gap: 1.25rem; background: var(--card); border: 1px solid var(--linea); border-radius: var(--radio); padding: clamp(1.1rem, 3vw, 1.75rem); }
+@media (min-width: 820px) { .semana { grid-template-columns: 1.15fr 1fr; gap: 2.25rem; align-items: center; } }
+.semana .num { font-family: var(--f-display); font-weight: 700; color: var(--acento); font-size: .95rem; letter-spacing: .04em; }
+.semana .num span { color: var(--grafito); font-family: var(--f-body); font-weight: 600; letter-spacing: .01em; }
+.semana h3 { font-size: clamp(1.3rem, 3vw, 1.6rem); margin: .3rem 0 .6rem; }
+.semana .que { text-wrap: pretty; }
+.semana .entregas { margin-top: .8rem; padding-top: .7rem; border-top: 1px dashed var(--linea); font-size: .95rem; color: var(--grafito); }
+.semana .entregas b { color: var(--tinta); }
+.semana .pantalla { box-shadow: 4px 4px 0 #1A1A1A; }
+.respuesta { display: flex; gap: .5rem; align-items: flex-start; padding: .5rem .6rem; border-radius: 6px; background: var(--ui-gris); margin: .4rem 0; }
+.etiqueta { flex: none; font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: .12rem .45rem; border-radius: 3px; color: #fff; margin-top: .1rem; }
+.etiqueta.bien { background: var(--bien); }
+.etiqueta.duda { background: var(--duda); }
+.etiqueta.mal { background: var(--mal); }
+.patrones { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.patron { border: 1px solid var(--ui-linea); border-radius: 6px; padding: .55rem .6rem; font-size: .8rem; }
+.patron b { display: block; font-size: .85rem; }
+.patron.elegido { border: 2px solid #1A1A1A; background: #FAFAF7; }
+.dos-col { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.dos-col > div { border: 1px solid var(--ui-linea); border-radius: 6px; padding: .6rem; }
+.dos-col small { display: block; font-weight: 700; font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ui-suave); margin-bottom: .3rem; }
+.nota-prueba { border-left: 3px solid var(--indigo); padding: .3rem 0 .3rem .7rem; margin: .5rem 0; }
+.ficha { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.ficha th, .ficha td { text-align: left; padding: .38rem .4rem; border-bottom: 1px solid var(--ui-linea); vertical-align: top; }
+.ficha th { font-size: .7rem; letter-spacing: .05em; text-transform: uppercase; color: var(--ui-suave); }
+
+/* 04 · Calendario */
+.ritmo { list-style: none; display: grid; grid-template-columns: repeat(7, 1fr); gap: .35rem; margin-top: 2rem; }
+.ritmo li { border: 1px solid var(--linea); border-radius: var(--radio); padding: .55rem .3rem .7rem; text-align: center; min-height: 6.4rem; background: var(--card); font-size: .78rem; line-height: 1.3; }
+.ritmo .dia { display: block; font-weight: 700; font-size: .8rem; margin-bottom: .45rem; color: var(--grafito); }
+.ritmo li.activo { border: 2px solid var(--acento); }
+.ritmo .que { font-weight: 700; display: block; }
+.ritmo .hora { display: block; color: var(--grafito); margin-top: .15rem; }
+.ritmo .opc { display: block; color: var(--grafito); font-style: italic; margin-top: .15rem; }
+@media (max-width: 560px) {
+  .ritmo { grid-template-columns: 1fr; }
+  .ritmo li { min-height: 0; display: grid; grid-template-columns: 5.5rem 1fr; text-align: left; align-items: baseline; padding: .55rem .8rem; }
+  .ritmo li:not(.activo) { display: none; }
+  .ritmo .dia { margin: 0; }
+}
+.husos { margin-top: 1.4rem; display: grid; gap: .5rem; max-width: 40rem; }
+.husos label { font-weight: 700; font-size: .95rem; }
+.husos select { font: inherit; font-size: 1rem; padding: .6rem .7rem; border: 1px solid var(--linea); border-radius: var(--radio); background: var(--card); color: var(--tinta); max-width: 22rem; }
+.husos .ahi { color: var(--grafito); font-size: .95rem; }
+
+.linea-tiempo { list-style: none; margin-top: 2.2rem; position: relative; display: grid; gap: 0; }
+.linea-tiempo::before { content: ""; position: absolute; left: .55rem; top: .5rem; bottom: .5rem; width: 2px; background: var(--linea); }
+.linea-tiempo li { position: relative; padding: 0 0 1.2rem 2.1rem; }
+.linea-tiempo li::before { content: ""; position: absolute; left: .18rem; top: .42rem; width: .8rem; height: .8rem; border-radius: 50%; background: var(--papel); border: 2px solid var(--grafito); }
+.linea-tiempo li.hito::before { background: var(--acento); border-color: var(--acento); }
+.linea-tiempo .fecha { font-weight: 700; }
+.linea-tiempo .fecha small { font-weight: 600; color: var(--grafito); font-size: .88rem; margin-left: .35rem; }
+.linea-tiempo p { color: var(--grafito); font-size: .97rem; }
+@media (min-width: 900px) {
+  .linea-tiempo { grid-template-columns: repeat(5, 1fr); gap: 1rem; }
+  .linea-tiempo::before { left: 0; right: 0; top: .5rem; bottom: auto; width: auto; height: 2px; }
+  .linea-tiempo li { padding: 1.6rem .2rem 0 0; }
+  .linea-tiempo li::before { left: 0; top: .1rem; }
+}
+
+/* 05 · Certificación */
+.certs { display: grid; gap: 1.6rem; margin-top: 2rem; }
+@media (min-width: 820px) { .certs { grid-template-columns: 1fr 1fr; } }
+.cert { margin: 0; }
+.hoja { aspect-ratio: 297 / 210; background: #FBF7F0; color: #1a1a1a; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 10px 30px rgba(0,0,0,.12); position: relative; overflow: hidden; display: flex; flex-direction: column; padding: 6% 7% 5%; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; container-type: inline-size; }
+.hoja::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1.6%; background: linear-gradient(90deg, #3F51B5 0 62%, #FF4081 62% 100%); }
+.hoja img { width: 20%; height: auto; }
+.hoja .centro { flex: 1; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+.hoja .kicker { font-size: 2.6cqw; letter-spacing: .28em; text-transform: uppercase; color: #3F51B5; font-weight: 700; margin-bottom: 2.4cqw; }
+.hoja .otorga { font-size: 2.6cqw; color: #57534c; }
+.hoja .nombre { font-size: 6.4cqw; font-weight: 700; letter-spacing: -.015em; margin: 1cqw 0 2cqw; }
+.hoja .subrayado { width: 12%; height: .5cqw; background: #FF4081; margin: 0 auto 2.4cqw; border-radius: 2px; }
+.hoja .frase { font-size: 2.7cqw; line-height: 1.6; color: #57534c; max-width: 80%; margin: 0 auto; }
+.hoja .frase b { color: #1a1a1a; }
+.hoja .sello { display: inline-block; margin-top: 2.2cqw; font-size: 2.3cqw; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #FF4081; border: .35cqw solid #FF4081; border-radius: 3px; padding: .5cqw 1.6cqw; }
+.hoja .pie-hoja { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #e8e6e1; padding-top: 2cqw; font-size: 2cqw; color: #57534c; }
+.hoja .pie-hoja b { display: block; color: #1a1a1a; font-size: 2.2cqw; }
+.hoja .qr { width: 8.5cqw; height: 8.5cqw; flex: none; }
+.cert figcaption { margin-top: .8rem; font-weight: 700; }
+.cert figcaption span { display: block; font-weight: 500; color: var(--grafito); font-size: .95rem; margin-top: .15rem; }
+.criterios { margin-top: 2.2rem; display: grid; gap: 1.6rem; }
+@media (min-width: 820px) { .criterios { grid-template-columns: 1fr 1fr; gap: 2.5rem; } }
+.criterios h3 { font-size: 1.1rem; margin-bottom: .6rem; }
+.criterios ol, .criterios ul { padding-left: 1.2rem; }
+.criterios li + li { margin-top: .35rem; }
+.criterios p { color: var(--grafito); margin-top: .7rem; font-size: .97rem; }
+
+/* 06 · Quién enseña */
+.quien { display: grid; gap: 1.8rem; margin-top: 2rem; align-items: start; }
+@media (min-width: 760px) { .quien { grid-template-columns: 220px 1fr; gap: 2.5rem; } }
+.quien img { width: 100%; max-width: 220px; aspect-ratio: 1; object-fit: cover; object-position: 50% 30%; border-radius: var(--radio); display: block; }
+.quien .nombre { font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; }
+.quien .rol { color: var(--grafito); margin-top: .1rem; }
+.quien .bio p + p { margin-top: .8rem; }
+.quien .bio p:first-of-type { margin-top: .9rem; }
+.resenas { display: grid; gap: 1.6rem; margin-top: 2.6rem; }
+@media (min-width: 760px) { .resenas { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; } }
+.resena { margin: 0; padding-left: 1rem; border-left: 3px solid var(--acento); }
+.resena blockquote { margin: 0; }
+.resena .titular { font-family: var(--f-display); font-weight: 700; font-size: 1.12rem; line-height: 1.3; text-wrap: balance; }
+.resena blockquote p + p { margin-top: .45rem; color: var(--grafito); font-size: .96rem; }
+.resena figcaption { margin-top: .6rem; font-size: .88rem; }
+.resena .quien-es { font-weight: 700; }
+.resena .fuente { display: block; color: var(--grafito); font-size: .82rem; }
+
+/* 07 · Precio */
+.oferta { margin-top: 2rem; background: var(--card); border: 1px solid var(--linea); border-top: 6px solid var(--acento); border-radius: var(--radio); padding: clamp(1.3rem, 4vw, 2.2rem); display: grid; gap: 1.6rem; }
+@media (min-width: 820px) { .oferta { grid-template-columns: 1.2fr 1fr; gap: 2.5rem; align-items: center; } }
+.oferta .monto { font-family: var(--f-display); font-weight: 700; font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1; }
+.oferta .monto small { font-family: var(--f-body); font-size: 1rem; font-weight: 600; color: var(--grafito); }
+.oferta .cuenta { margin-top: .9rem; }
+.oferta ul { list-style: none; margin-top: 1rem; display: grid; gap: .45rem; }
+.oferta ul li { padding-left: 1.5rem; position: relative; }
+.oferta ul li::before { content: "✓"; position: absolute; left: 0; color: var(--acento); font-weight: 700; }
+.oferta .lado-boton p { margin-top: .7rem; font-size: .93rem; color: var(--grafito); }
+
+
+/* ¿Te suena? */
+.dolores { list-style: none; margin-top: 1.8rem; display: grid; gap: 1rem; max-width: 46rem; }
+.dolores li { display: grid; grid-template-columns: 2.6rem 1fr; gap: .5rem; align-items: baseline; padding: 1rem 0; border-bottom: 1px solid var(--linea); font-size: 1.08rem; }
+.dolores b { font-family: var(--f-display); color: var(--acento); font-size: 1.1rem; }
+.remate { margin-top: 1.4rem; font-family: var(--f-display); font-weight: 700; font-size: clamp(1.2rem, 3vw, 1.5rem); }
+
+/* Hoy / al terminar */
+.antes-despues { display: grid; gap: 1rem; margin: 2rem 0 2.6rem; }
+@media (min-width: 760px) { .antes-despues { grid-template-columns: 1fr 1fr; } }
+.col-ad { border: 1px solid var(--linea); border-radius: var(--radio); padding: 1.2rem 1.3rem; }
+.col-ad .cab { font-weight: 700; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; color: var(--grafito); margin-bottom: .6rem; }
+.col-ad ul { list-style: none; display: grid; gap: .55rem; }
+.col-ad li { padding-left: 1.6rem; position: relative; color: var(--grafito); }
+.col-ad li::before { content: "✕"; position: absolute; left: 0; color: var(--grafito); }
+.col-ad.despues { background: var(--card); border: 2px solid var(--acento); }
+.col-ad.despues .cab { color: var(--acento); }
+.col-ad.despues li { color: var(--tinta); font-weight: 600; }
+.col-ad.despues li::before { content: "✓"; color: var(--acento); font-weight: 700; }
+
+/* Avisos */
+.avisos .cita { font-family: var(--f-display); font-weight: 700; font-size: 1.12rem; line-height: 1.32; text-wrap: balance; }
+.avisos .fuente-aviso { margin-top: .6rem; font-size: .86rem; color: var(--grafito); }
+.avisos .semana-ref { margin-top: .8rem; display: inline-block; font-weight: 700; font-size: .82rem; color: var(--acento); border: 1.5px solid var(--acento); border-radius: 999px; padding: .1rem .6rem; }
+.nota-fuente { margin-top: .8rem; font-size: .85rem; color: var(--grafito); }
+
+/* Tres pasos */
+.tres-pasos { list-style: none; display: grid; gap: 1rem; margin: 2rem 0 1rem; }
+@media (min-width: 760px) { .tres-pasos { grid-template-columns: repeat(3, 1fr); } }
+.tres-pasos li { position: relative; padding: 1.2rem 1.2rem 1.3rem 4rem; border: 1px solid var(--linea); border-radius: var(--radio); }
+.tres-pasos b { position: absolute; left: 1.1rem; top: 1rem; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--rosa); color: var(--sobre-rosa); display: grid; place-items: center; font-family: var(--f-display); font-size: 1.1rem; }
+.tres-pasos h3 { font-size: 1.12rem; margin-bottom: .3rem; }
+.tres-pasos p { color: var(--grafito); font-size: .97rem; }
+
+/* Cifras de quien enseña */
+.cifras { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem; margin-top: 1.4rem; }
+.cifras li { border-top: 2px solid var(--acento); padding-top: .6rem; font-size: .92rem; color: var(--grafito); line-height: 1.4; }
+.cifras b { display: block; font-family: var(--f-display); font-size: 1.5rem; color: var(--tinta); line-height: 1.15; margin-bottom: .2rem; }
+
+/* Todo lo que incluye */
+.incluye { width: 100%; border-collapse: collapse; margin-top: 1.6rem; }
+.incluye td { padding: .8rem 0; border-bottom: 1px solid var(--linea); vertical-align: baseline; }
+.incluye td:first-child::before { content: "✓"; color: var(--acento); font-weight: 700; margin-right: .7rem; }
+.oferta .cobros { list-style: none; margin-top: .6rem; display: grid; gap: .4rem; }
+.oferta .cobros li { padding-left: .9rem; border-left: 2px solid var(--acento); }
+.oferta .cobros li::before { content: none; }
+.oferta .contexto { margin-top: .9rem; font-size: .9rem; color: var(--grafito); }
+
+/* 09 · Preguntas */
+.preguntas { margin-top: 1.6rem; max-width: 46rem; }
+.preguntas details { border-bottom: 1px solid var(--linea); }
+.preguntas summary { cursor: pointer; list-style: none; padding: 1rem 2rem 1rem 0; font-weight: 700; position: relative; }
+.preguntas summary::-webkit-details-marker { display: none; }
+.preguntas summary::after { content: "+"; position: absolute; right: .2rem; top: .85rem; font-size: 1.3rem; font-weight: 500; color: var(--acento); }
+.preguntas details[open] summary::after { content: "−"; }
+.preguntas details p { padding: 0 0 1.1rem; color: var(--grafito); max-width: 60ch; }
+
+/* Cierre y pie */
+.cierre { padding-block: clamp(3.5rem, 10vh, 6rem); }
+.cierre h2 { font-size: clamp(1.6rem, 4.4vw, 2.4rem); max-width: 22ch; }
+.cierre p { color: var(--grafito); margin: .8rem 0 1.6rem; max-width: 52ch; }
+.pie { border-top: 1px solid var(--linea); padding: 1.75rem 0 2.25rem; font-size: .93rem; color: var(--grafito); }
+.pie .wrap { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; justify-content: space-between; align-items: baseline; }
+.pie ul { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.pie a { text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) { .boton { transition: none; } }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="wrap top">
+    <a href="/" aria-label="Comunidad UXUI, ir al inicio">
+      <img class="logo logo-claro" src="../../assets/horizontal-texto-negro.svg" alt="Comunidad UXUI" width="335" height="60">
+      <img class="logo logo-oscuro" src="../../assets/horizontal-texto-blanco.svg" alt="Comunidad UXUI" width="335" height="60">
+    </a>
+  </div>
+
+  <!-- Encabezado: promesa, datos clave, la única acción y una muestra de lo que vas a diseñar -->
+  <header class="wrap hero">
+    <div>
+      <p class="antetitulo">DE USAR IA A DISEÑARLA · CAPACITACIÓN EN VIVO</p>
+      <h1>Una función de IA en tu producto, probada con personas y lista para desarrollo</h1>
+      <p class="bajada">Seis semanas en vivo para diseñadoras y diseñadores UX/UI que ya usan IA en su trabajo y quieren diseñarla. Terminas con un caso completo para tu portfolio y una certificación verificable.</p>
+      <ul class="datos" aria-label="Datos clave">
+        <li>Del 16/11 al 3/1</li>
+        <li>Clase en vivo los martes</li>
+        <li>Unas 3 horas por semana</li>
+        <li>Todo queda grabado</li>
+      </ul>
+      <a class="boton" data-boton="arriba" href="https://www.skool.com/comunidaduxui/plans">Unirme a Premium</a>
+      <p class="precio-corto">Plan Premium, 39 USD al mes. Incluye esta capacitación.</p>
+    </div>
+
+    <figure style="margin:0">
+      <div class="pantalla" role="img" aria-label="Ejemplo de función de IA: un asistente muestra su plan, marca los pasos hechos y pide confirmación antes de modificar el formulario de pago.">
+        <div class="barra"><i></i><i></i><i></i><span>Asistente · cambiar el flujo de pago</span></div>
+        <div class="lienzo">
+          <p class="tenue" style="font-size:.72rem;font-weight:700;letter-spacing:.06em">PLAN</p>
+          <div class="check"><span class="caja hecha">✓</span>Revisar el flujo actual</div>
+          <div class="check"><span class="caja hecha">✓</span>Proponer dos pasos menos</div>
+          <div class="check"><span class="caja ahora"></span><b>Modificar el formulario de pago</b></div>
+          <div class="check tenue"><span class="caja"></span>Probar el cambio</div>
+          <div class="alto">
+            <p>¿Sigo con este cambio? Afecta a 3 pantallas.</p>
+            <div class="acciones"><span class="chip lleno">Sí, continúa</span><span class="chip">Ver los cambios</span><span class="chip">Detener</span></div>
+          </div>
+        </div>
+      </div>
+      <figcaption class="pie-foto">Una de las decisiones que vas a tomar: dónde se detiene la IA y pide permiso.</figcaption>
+    </figure>
+  </header>
+
+  <!-- 01 · ¿Te suena? -->
+  <section class="seccion wrap" aria-labelledby="t-suena">
+    <p class="paso"><b>01</b> ¿Te suena?</p>
+    <h2 id="t-suena">Usas IA todos los días, pero todavía no la diseñas</h2>
+    <ol class="dolores">
+      <li><b>01</b><p>Usas IA para trabajar más rápido, pero cuando tu producto suma una función de IA, las decisiones las toma otra persona.</p></li>
+      <li><b>02</b><p>Te piden algo con IA y la respuesta por defecto es un chat, aunque la tarea pida otra cosa.</p></li>
+      <li><b>03</b><p>Los avisos de trabajo piden diseñar IA y tu portfolio todavía no tiene un caso que lo muestre.</p></li>
+    </ol>
+    <p class="remate">Si te reconoces en alguna, esta capacitación es para ti.</p>
+  </section>
+
+  <!-- 02 · Lo que cambia -->
+  <section class="seccion wrap" aria-labelledby="t-cambio">
+    <p class="paso"><b>02</b> Lo que cambia</p>
+    <h2 id="t-cambio">De usar IA a decidir cómo se comporta</h2>
+    <div class="antes-despues" role="table" aria-label="Hoy frente a al terminar">
+      <div class="col-ad" role="rowgroup">
+        <p class="cab" role="columnheader">Hoy</p>
+        <ul>
+          <li>Usas la IA como herramienta</li>
+          <li>Eliges el chat por costumbre</li>
+          <li>Diseñas solo el caso en que todo sale bien</li>
+          <li>Entregas pantallas</li>
+          <li>Tu portfolio muestra pantallas</li>
+        </ul>
+      </div>
+      <div class="col-ad despues" role="rowgroup">
+        <p class="cab" role="columnheader">Al terminar</p>
+        <ul>
+          <li>Decides dónde conviene usar IA y dónde no</li>
+          <li>Eliges el patrón según la tarea y el riesgo</li>
+          <li>Diseñas qué pasa cuando la IA duda o se equivoca</li>
+          <li>Entregas lo que desarrollo necesita para construirla</li>
+          <li>Tienes un caso de IA probado con personas</li>
+        </ul>
+      </div>
+    </div>
+    <p class="intro">Por ejemplo, la misma tarea resuelta de dos formas:</p>
+
+    <div class="comparar">
+      <div>
+        <h3>Un chat porque sí</h3>
+        <div class="pantalla" role="img" aria-label="Un chat genérico: la persona tiene que escribir qué necesita y copiar el resultado a mano.">
+          <div class="barra"><i></i><i></i><i></i><span>Asistente</span></div>
+          <div class="lienzo">
+            <p class="burbuja ia">Hola, ¿en qué te ayudo?</p>
+            <p class="burbuja yo">Resume el informe que pegué arriba para la reunión del lunes</p>
+            <p class="burbuja ia">Claro. ¿Qué tan largo lo quieres?</p>
+            <p class="entrada">Escribe tu pregunta…</p>
+          </div>
+        </div>
+        <p class="leyenda">La persona explica todo y copia el resultado a mano.</p>
+      </div>
+      <div>
+        <h3><span class="marca">Un botón donde ya trabajas</span></h3>
+        <div class="pantalla" role="img" aria-label="La IA aparece junto al texto seleccionado con dos acciones: Resumir y Traducir.">
+          <div class="barra"><i></i><i></i><i></i><span>Informe de usabilidad</span></div>
+          <div class="lienzo">
+            <div class="renglon" style="width:45%"></div>
+            <p style="margin:.6rem 0"><span class="resaltado">El equipo necesita una versión corta del informe para la reunión del lunes.</span></p>
+            <div class="acciones"><span class="chip lleno">✦ Resumir</span><span class="chip">Traducir</span></div>
+            <div class="renglon" style="width:92%;margin-top:.9rem"></div>
+            <div class="renglon" style="width:78%"></div>
+          </div>
+        </div>
+        <p class="leyenda">Un clic, en el lugar de la tarea. Elegir bien depende de la tarea y del riesgo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · Lo que piden los equipos (avisos reales) -->
+  <section class="seccion wrap" aria-labelledby="t-avisos">
+    <p class="paso"><b>03</b> Lo que piden los equipos</p>
+    <h2 id="t-avisos">Está en los avisos de trabajo de hoy</h2>
+    <p class="intro">Tres tareas de avisos reales de Product Designer de octubre de 2026, y la semana en que las practicas.</p>
+    <ul class="llevas avisos">
+      <li>
+        <p class="cita">“Decidir cuándo algo debería ser un chat, un reporte o un resumen en línea.”</p>
+        <p class="fuente-aviso">Aviso de SPATE, remoto con Latinoamérica</p>
+        <p class="semana-ref">Semana 2</p>
+      </li>
+      <li>
+        <p class="cita">“Hacer entendibles la incertidumbre, la corrección, el plan B y el control humano.”</p>
+        <p class="fuente-aviso">Aviso de Codewalla</p>
+        <p class="semana-ref">Semana 4</p>
+      </li>
+      <li>
+        <p class="cita">“Definir qué es una buena respuesta y convertirlo en criterios medibles.”</p>
+        <p class="fuente-aviso">Avisos de SPATE y Codewalla</p>
+        <p class="semana-ref">Semana 6</p>
+      </li>
+    </ul>
+    <p class="nota-fuente">Citas traducidas del inglés.</p>
+  </section>
+
+  <!-- 04 · Cómo funciona -->
+  <section class="seccion wrap" aria-labelledby="t-semanas">
+    <p class="paso"><b>04</b> Cómo funciona</p>
+    <h2 id="t-semanas">Seis semanas, una parte de tu caso por semana</h2>
+    <p class="intro">Eliges un producto que uses o el de tu trabajo, si te dejan mostrarlo. Cada semana sumas una parte y el 3/1 entregas tu caso completo.</p>
+
+    <ol class="semanas">
+      <li class="semana">
+        <div>
+          <p class="num">SEMANA 1 <span>· desde el 16/11</span></p>
+          <h3>Justifica dónde va la IA</h3>
+          <p class="que">Eliges una tarea de tu producto y la comparas con una solución sin IA, como un filtro o una plantilla. Así descubres si la IA ayuda de verdad y qué riesgos trae.</p>
+          <p class="entregas"><b>Entregas:</b> la oportunidad que elegiste y sus límites.</p>
+        </div>
+        <div class="pantalla" role="img" aria-label="Comparación: un filtro por fecha frente a una pregunta en lenguaje natural sobre gastos raros del mes.">
+          <div class="barra"><i></i><i></i><i></i><span>App de gastos</span></div>
+          <div class="lienzo dos-col">
+            <div><small>Sin IA</small>Filtro: <b>octubre</b>, categoría <b>todas</b><div class="renglon"></div><div class="renglon" style="width:70%"></div></div>
+            <div><small>Con IA</small>“¿Qué gasto de este mes es raro?”<div class="renglon"></div><div class="renglon" style="width:60%"></div></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="semana">
+        <div>
+          <p class="num">SEMANA 2 <span>· desde el 23/11</span></p>
+          <h3>Elige el patrón</h3>
+          <p class="que">Decides cómo aparece la IA en la pantalla: un chat, un botón, una sugerencia mientras escribes o un agente que hace la tarea por pasos. Lo eliges con cinco preguntas sobre la tarea y el riesgo.</p>
+          <p class="entregas"><b>Entregas:</b> el flujo, un boceto y tus razones.</p>
+        </div>
+        <div class="pantalla" role="img" aria-label="Cuatro patrones de interacción con IA; el botón está marcado como elegido.">
+          <div class="barra"><i></i><i></i><i></i><span>Tu decisión</span></div>
+          <div class="lienzo patrones">
+            <div class="patron"><b>Chat</b>la persona explora</div>
+            <div class="patron elegido"><b>Botón ✓</b>la tarea se repite</div>
+            <div class="patron"><b>Sugerencia</b>ignorarla no cuesta</div>
+            <div class="patron"><b>Agente</b>delega varios pasos</div>
+          </div>
+        </div>
+      </li>
+
+      <li class="semana">
+        <div>
+          <p class="num">SEMANA 3 <span>· desde el 30/11</span></p>
+          <h3>Prototipa con IA</h3>
+          <p class="que">Construyes la pantalla con una herramienta de IA como Lovable, v0 o Figma Make. Incluyes respuestas buenas, dudosas y equivocadas, porque la IA no siempre acierta. Alcanza con respuestas simuladas.</p>
+          <p class="entregas"><b>Entregas:</b> el link a tu prototipo.</p>
+        </div>
+        <div class="pantalla" role="img" aria-label="Tres respuestas de la IA marcadas como buena, dudosa y equivocada.">
+          <div class="barra"><i></i><i></i><i></i><span>Prototipo · respuestas</span></div>
+          <div class="lienzo">
+            <div class="respuesta"><span class="etiqueta bien">Buena</span>Pagaste dos veces la misma suscripción.</div>
+            <div class="respuesta"><span class="etiqueta duda">Dudosa</span>Este gasto podría ser raro, no estoy segura.</div>
+            <div class="respuesta"><span class="etiqueta mal">Equivocada</span>El alquiler es un gasto raro.</div>
+          </div>
+        </div>
+      </li>
+
+      <li class="semana">
+        <div>
+          <p class="num">SEMANA 4 <span>· desde el 7/12</span></p>
+          <h3>Diseña la confianza</h3>
+          <p class="que">Sumas lo que hace que la persona confíe en la medida justa: revisar y deshacer, textos claros cuando la IA falla y un plan B. Defines dónde decide la persona y dónde se detiene la IA.</p>
+          <p class="entregas"><b>Entregas:</b> los controles, los textos de error y el plan B.</p>
+        </div>
+        <div class="pantalla" role="img" aria-label="Mensaje de la IA que admite no estar segura y ofrece revisar o pasar a una persona.">
+          <div class="barra"><i></i><i></i><i></i><span>Prototipo · cuando la IA duda</span></div>
+          <div class="lienzo">
+            <p><b>No estoy segura de que este gasto sea raro.</b></p>
+            <p class="tenue" style="margin:.3rem 0 .7rem">Lo marqué porque es el primero de este comercio.</p>
+            <div class="acciones"><span class="chip lleno">Revisarlo yo</span><span class="chip">Deshacer</span><span class="chip">Hablar con soporte</span></div>
+          </div>
+        </div>
+      </li>
+
+      <li class="semana">
+        <div>
+          <p class="num">SEMANA 5 <span>· desde el 14/12</span></p>
+          <h3>Pruébalo con personas</h3>
+          <p class="que">Miras a al menos una persona usar tu prototipo (tres o más suman para la distinción), revisas la accesibilidad y aplicas un cambio por lo que viste. En el workshop del sábado 19/12 lo pruebas con alguien del grupo.</p>
+          <p class="entregas"><b>Entregas:</b> lo que observaste y el cambio, con antes y después.</p>
+        </div>
+        <div class="pantalla" role="img" aria-label="Nota de una prueba: la persona aceptó la sugerencia sin leerla, y el cambio que se aplicó.">
+          <div class="barra"><i></i><i></i><i></i><span>Notas de la prueba</span></div>
+          <div class="lienzo">
+            <p class="nota-prueba"><b>Observación:</b> aceptó la sugerencia sin leerla.</p>
+            <p class="nota-prueba"><b>Cambio:</b> la sugerencia muestra por qué lo propone antes del botón.</p>
+          </div>
+        </div>
+      </li>
+
+      <li class="semana">
+        <div>
+          <p class="num">SEMANA 6 <span>· desde el 21/12</span></p>
+          <h3>Prepara el paso a desarrollo</h3>
+          <p class="que">Reúnes lo que el equipo necesita para construirla: cómo se comporta en cada caso, qué es una buena respuesta y qué medir. Presentas tu caso en un video de tres minutos.</p>
+          <p class="entregas"><b>Entregas:</b> tu caso final, el domingo 3/1. Tienes las fiestas de margen.</p>
+        </div>
+        <div class="pantalla" role="img" aria-label="Ficha de comportamiento con estados de la función y qué hace la IA en cada uno.">
+          <div class="barra"><i></i><i></i><i></i><span>Ficha de comportamiento: qué hace la IA en cada situación</span></div>
+          <div class="lienzo">
+            <table class="ficha">
+              <thead><tr><th>Estado</th><th>Qué hace la IA</th></tr></thead>
+              <tbody>
+                <tr><td>Segura</td></tr>
+                <tr><td>Duda</td></tr>
+                <tr><td>Sin datos</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 05 · Tu semana y tus fechas -->
+  <section class="seccion wrap" aria-labelledby="t-fechas">
+    <p class="paso"><b>05</b> Tu semana</p>
+    <h2 id="t-fechas">Una clase y una práctica por semana</h2>
+    <p class="intro">Unas 3 horas: la clase del martes (1 hora, queda grabada) y tu práctica (unas 2 horas, a tu ritmo). Las preguntas y respuestas del jueves son opcionales.</p>
+
+    <ul class="ritmo" aria-label="Una semana tipo">
+      <li><span class="dia">Lun</span></li>
+      <li class="activo"><span class="dia">Mar</span><span class="que">Clase en vivo</span><span class="hora" data-hora="clase">15:00</span></li>
+      <li><span class="dia">Mié</span></li>
+      <li class="activo"><span class="dia">Jue</span><span class="que">Preguntas y respuestas</span><span class="hora" data-hora="qa">15:00</span><span class="opc">opcional</span></li>
+      <li><span class="dia">Vie</span></li>
+      <li class="activo"><span class="dia">Sáb</span><span class="que">Workshop</span><span class="hora" data-hora="taller">13:00</span><span class="opc">28/11 y 19/12</span></li>
+      <li class="activo"><span class="dia">Dom</span><span class="que">Tu práctica</span><span class="hora">unas 2 h, a tu ritmo</span></li>
+    </ul>
+
+    <div class="husos">
+      <label for="pais">Ver los horarios en tu país</label>
+      <select id="pais"></select>
+      <p class="ahi" id="ahi">Horarios de Argentina.</p>
+    </div>
+
+    <ol class="linea-tiempo" aria-label="Fechas clave">
+      <li class="hito"><p class="fecha">Lun 16/11</p><p>Se abre el curso con la primera práctica.</p></li>
+      <li><p class="fecha">Mar 17/11 <small data-hora="clase">15:00</small></p><p>Primera clase en vivo.</p></li>
+      <li><p class="fecha">Sáb 19/12 <small data-hora="taller">13:00</small></p><p>Workshop 2: pruebas tu prototipo con alguien del grupo.</p></li>
+      <li class="hito"><p class="fecha">Dom 3/1</p><p>Entregas tu caso final.</p></li>
+      <li><p class="fecha">Enero</p><p>Recibes la revisión y tu certificación.</p></li>
+    </ol>
+  </section>
+
+  <!-- 06 · Certificación -->
+  <section class="seccion wrap" aria-labelledby="t-cert">
+    <p class="paso"><b>06</b> La certificación</p>
+    <h2 id="t-cert">Dos niveles, con criterios claros desde el primer día</h2>
+    <p class="intro">Anita Sevilla Ull revisa cada caso. Si cumple los cinco criterios, te certificas. Si falta alguno, te dice qué y lo corriges una vez.</p>
+
+    <div class="certs">
+      <figure class="cert">
+        <div class="hoja" role="img" aria-label="Ejemplo de certificado en Diseño de funciones de IA">
+          <img src="../../assets/horizontal-texto-negro.svg" alt="">
+          <div class="centro">
+            <p class="kicker">Certificado · Diseño de funciones de IA</p>
+            <p class="otorga">Comunidad UX/UI certifica que</p>
+            <p class="nombre">Tu Nombre</p>
+            <div class="subrayado"></div>
+            <p class="frase">diseñó, prototipó y probó con personas <b>una función de IA</b>, lista para pasar a desarrollo.</p>
+          </div>
+          <div class="pie-hoja">
+            <div><b>Anita Sevilla Ull</b>Fundadora, Comunidad UX/UI</div>
+            <svg class="qr" viewBox="0 0 7 7" aria-hidden="true"><path fill="#1a1a1a" d="M0 0h3v3H0zM4 0h3v3H4zM0 4h3v3H0zM4 4h1v1H4zM6 4h1v1H6zM5 5h1v1H5zM4 6h1v1H4zM6 6h1v1H6z"/><path fill="#FBF7F0" d="M1 1h1v1H1zM5 1h1v1H5zM1 5h1v1H1z"/></svg>
+          </div>
+        </div>
+        <figcaption>Certificado<span>Con los cinco criterios cumplidos.</span></figcaption>
+      </figure>
+
+      <figure class="cert">
+        <div class="hoja" role="img" aria-label="Ejemplo de certificado con distinción en Diseño de funciones de IA">
+          <img src="../../assets/horizontal-texto-negro.svg" alt="">
+          <div class="centro">
+            <p class="kicker">Certificado · Diseño de funciones de IA</p>
+            <p class="otorga">Comunidad UX/UI certifica que</p>
+            <p class="nombre">Tu Nombre</p>
+            <div class="subrayado"></div>
+            <p class="frase">diseñó, prototipó y probó con personas <b>una función de IA</b>, lista para pasar a desarrollo.</p>
+            <p><span class="sello">Con distinción</span></p>
+          </div>
+          <div class="pie-hoja">
+            <div><b>Anita Sevilla Ull</b>Fundadora, Comunidad UX/UI</div>
+            <svg class="qr" viewBox="0 0 7 7" aria-hidden="true"><path fill="#1a1a1a" d="M0 0h3v3H0zM4 0h3v3H4zM0 4h3v3H0zM4 4h1v1H4zM6 4h1v1H6zM5 5h1v1H5zM4 6h1v1H4zM6 6h1v1H6z"/><path fill="#FBF7F0" d="M1 1h1v1H1zM5 1h1v1H5zM1 5h1v1H1z"/></svg>
+          </div>
+        </div>
+        <figcaption>Certificado con distinción<span>Los cinco criterios, más dos de los tres extras.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="criterios">
+      <div>
+        <h3>Los cinco criterios</h3>
+        <ol>
+          <li>La IA está justificada frente a una solución sin IA.</li>
+          <li>El patrón y el control corresponden al riesgo.</li>
+          <li>La confianza está diseñada: errores, textos y plan B.</li>
+          <li>Probaste con personas y cambiaste algo por lo que viste.</li>
+          <li>Desarrollo puede construirla y medirla.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Para la distinción, dos de estos tres</h3>
+        <ul>
+          <li>Pruebas tu función con tres personas o más.</li>
+          <li>Conectas tu prototipo a un modelo de IA real.</li>
+          <li>Tu feedback ayuda a dos personas del grupo a mejorar su caso.</li>
+        </ul>
+        <p>Cada certificado lleva un código y un QR para verificarlo en verificar.comunidaduxui.com.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · Quién enseña -->
+  <section class="seccion wrap" aria-labelledby="t-quien">
+    <p class="paso"><b>07</b> Quién enseña</p>
+    <h2 id="t-quien">Lo enseña quien lo hace en su trabajo</h2>
+    <div class="quien">
+      <img src="../../assets/anita.jpg" alt="Anita Sevilla Ull" width="640" height="492" loading="lazy">
+      <div class="bio">
+        <p class="nombre">Anita Sevilla Ull</p>
+        <p class="rol">UXer hace 10 años, diseño de comportamiento e interacción. Fundadora de Comunidad UX/UI.</p>
+        <p>Desde 2023 suma la IA a su proceso de diseño en Globant. Desde 2025 diseña funciones de IA para productos tradicionales, las secuencias e interacciones de productos nuevos con agentes y las reglas de comportamiento de un sistema multinacional con millones de personas usuarias activas.</p>
+        <p>En esta capacitación enseña lo que aplica en su trabajo: dónde poner la IA, cuánto control darle a cada persona y cómo probarlo antes de que llegue a desarrollo.</p>
+        <ul class="cifras">
+          <li><b>10 años</b>en UX</li>
+          <li><b>Desde 2023</b>diseña con IA</li>
+          <li><b>Millones</b>de personas usuarias en el sistema cuyas reglas diseña</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="intro" style="margin-top:2.4rem">Es la primera edición. Esto dicen de sus mentorías:</p>
+    <div class="resenas" style="margin-top:1.2rem">
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Llegué saturada, terminé sin poder parar de crear.</p>
+          <p>Con la mentoría de Anita logré finalmente automatizar mi propio proceso de diseño: menos tiempo de ejecución y más tiempo de pensamiento estratégico.</p>
+        </blockquote>
+        <figcaption><span class="quien-es">Victoria</span> · diseñadora de experiencias<span class="fuente">Post en la comunidad</span></figcaption>
+      </figure>
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Cada sesión con Anita es aprendizaje asegurado.</p>
+          <p>No solo te escucha atentamente, sino que también se involucra en el problema que estás tratando de resolver.</p>
+        </blockquote>
+        <figcaption><span class="quien-es">Magdalena</span> · diseñadora UX<span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 08 · Precio, de frente -->
+  <section class="seccion wrap" aria-labelledby="t-precio">
+    <p class="paso"><b>08</b> Cuánto cuesta</p>
+    <h2 id="t-precio">Todo lo que incluye</h2>
+    <table class="incluye">
+      <tbody>
+        <tr><td>Seis clases en vivo de una hora, con grabación</td></tr>
+        <tr><td>Preguntas y respuestas en vivo cada jueves</td></tr>
+        <tr><td>Dos workshops en vivo, uno para probar tu prototipo</td></tr>
+        <tr><td>La plantilla del caso, con una sección por semana</td></tr>
+        <tr><td>La rúbrica con los cinco criterios, desde el primer día</td></tr>
+        <tr><td>La revisión de tu caso por Anita Sevilla Ull</td></tr>
+        <tr><td>La certificación verificable, con o sin distinción</td></tr>
+        <tr><td>El resto de Premium: cursos, comunidad y eventos</td></tr>
+      </tbody>
+    </table>
+    <div class="oferta">
+      <div>
+        <p class="monto">39 USD <small>al mes</small></p>
+        <p class="cuenta">El cobro se repite cada 30 días desde el día en que entras. Hasta la revisión de tu caso en enero:</p>
+        <ul class="cobros">
+          <li>Si entras desde el 16/11: <strong>dos cobros, 78 USD</strong>.</li>
+          <li>Si entras antes: <strong>tres cobros, 117 USD</strong>, y Premium empieza ese mismo día, con todo lo que ya incluye.</li>
+        </ul>
+        <p class="contexto">También puedes pagar el año completo, en la misma página.</p>
+      </div>
+      <div class="lado-boton">
+        <a class="boton" data-boton="precio" href="https://www.skool.com/comunidaduxui/plans">Unirme a Premium</a>
+        <p>Pagas en Skool, la plataforma de la comunidad: elige el plan Premium. Cancelas desde tu cuenta cuando quieras.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 · Preguntas -->
+  <section class="seccion wrap" aria-labelledby="t-preguntas">
+    <p class="paso"><b>09</b> Preguntas</p>
+    <h2 id="t-preguntas">Lo que suelen preguntar</h2>
+    <div class="preguntas">
+      <details>
+        <summary>¿Necesito saber programar?</summary>
+        <p>No. Prototipas con herramientas de IA que generan la pantalla a partir de tus instrucciones, y alcanza con respuestas simuladas. Conectar un modelo real es opcional y suma para la distinción.</p>
+      </details>
+      <details>
+        <summary>¿Necesito una herramienta paga?</summary>
+        <p>Para el prototipo alcanza la versión gratuita de Lovable, v0 o Figma Make. Si ya usas Claude Code u otra herramienta, también sirve.</p>
+      </details>
+      <details>
+        <summary>¿Y si diciembre se complica?</summary>
+        <p>Lo único que se pide es la práctica de cada semana, y las clases quedan grabadas. Si te atrasas, terminas tu caso con las grabaciones y lo entregas en la próxima edición, mientras sigas en Premium.</p>
+      </details>
+      <details>
+        <summary>Ya soy Premium, ¿me tengo que inscribir?</summary>
+        <p>No. Ya estás adentro: el curso aparece en el classroom antes del 16/11, con tu primera tarea.</p>
+      </details>
+      <details>
+        <summary>Soy Standard, ¿cómo entro?</summary>
+        <p>Te cambias a Premium desde la configuración de tu membresía en la comunidad y entras con el grupo.</p>
+      </details>
+      <details>
+        <summary>¿Puedo pagar el año?</summary>
+        <p>Sí. En la misma página de pago eliges Premium anual.</p>
+      </details>
+      <details>
+        <summary>¿Puedo dejar Premium después?</summary>
+        <p>Sí, cuando quieras, desde tu cuenta. Para recibir la revisión de tu caso y la certificación necesitas seguir en Premium hasta ese momento.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="cierre wrap" aria-labelledby="t-cierre">
+    <h2 id="t-cierre">Arranca el lunes 16/11</h2>
+    <p>La primera clase es el martes 17/11. El feedback en vivo sobre tu caso es parte de esta primera edición: cada jueves y en el workshop del 19/12.</p>
+    <a class="boton" data-boton="abajo" href="https://www.skool.com/comunidaduxui/plans">Unirme a Premium</a>
+    <p class="precio-corto">Plan Premium, 39 USD al mes. Incluye esta capacitación.</p>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <p>Comunidad UX/UI · fundada por Anita Sevilla Ull</p>
+    <ul>
+      <li><a href="https://www.instagram.com/comunidaduxui/">Instagram</a></li>
+      <li><a href="https://www.youtube.com/@ComunidadUXUI">YouTube</a></li>
+      <li><a href="https://www.linkedin.com/company/comunidaduxui">LinkedIn</a></li>
+      <li><a href="https://comunidad-uxui.kit.com/fb40f8e711">Newsletter Minuto UX</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+/* Horarios en el país de quien lee. Las horas fijas están en Argentina (UTC-3, sin horario de verano).
+   Detecta la zona del navegador y deja cambiarla. */
+(function () {
+  var PAISES = [
+    ['Argentina', 'America/Argentina/Buenos_Aires'], ['Bolivia', 'America/La_Paz'], ['Chile', 'America/Santiago'],
+    ['Colombia', 'America/Bogota'], ['Costa Rica', 'America/Costa_Rica'], ['Cuba', 'America/Havana'],
+    ['Ecuador', 'America/Guayaquil'], ['El Salvador', 'America/El_Salvador'], ['España', 'Europe/Madrid'],
+    ['Estados Unidos (este)', 'America/New_York'], ['Estados Unidos (oeste)', 'America/Los_Angeles'],
+    ['Guatemala', 'America/Guatemala'], ['Honduras', 'America/Tegucigalpa'], ['México', 'America/Mexico_City'],
+    ['Nicaragua', 'America/Managua'], ['Panamá', 'America/Panama'], ['Paraguay', 'America/Asuncion'],
+    ['Perú', 'America/Lima'], ['Puerto Rico', 'America/Puerto_Rico'], ['República Dominicana', 'America/Santo_Domingo'],
+    ['Uruguay', 'America/Montevideo'], ['Venezuela', 'America/Caracas'], ['Brasil', 'America/Sao_Paulo'],
+    ['Portugal', 'Europe/Lisbon'], ['Reino Unido', 'Europe/London'], ['Alemania', 'Europe/Berlin'],
+    ['Francia', 'Europe/Paris'], ['Italia', 'Europe/Rome'], ['Países Bajos', 'Europe/Amsterdam']
+  ];
+  /* fechas reales de cada evento, en UTC (15:00 y 13:00 de Argentina) */
+  var EVENTOS = {
+    clase: Date.UTC(2026, 10, 17, 18, 0),
+    qa: Date.UTC(2026, 10, 19, 18, 0),
+    taller: Date.UTC(2026, 10, 28, 16, 0)
+  };
+  var sel = document.getElementById('pais');
+  var ahi = document.getElementById('ahi');
+  if (!sel) return;
+  var detectada = '';
+  try { detectada = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  if (/^America\/(Argentina\/|Buenos_Aires|Cordoba)/.test(detectada)) detectada = 'America/Argentina/Buenos_Aires';
+  if (detectada && !PAISES.some(function (p) { return p[1] === detectada; })) {
+    PAISES.unshift(['Tu zona horaria', detectada]);
+  }
+  PAISES.forEach(function (p) {
+    var o = document.createElement('option');
+    o.value = p[1]; o.textContent = p[0];
+    if (p[1] === detectada) o.selected = true;
+    sel.appendChild(o);
+  });
+  if (!detectada) sel.value = 'America/Argentina/Buenos_Aires';
+
+  function hora(ts, tz) {
+    return new Intl.DateTimeFormat('es', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: tz }).format(new Date(ts));
+  }
+  function dia(ts, tz) {
+    return new Intl.DateTimeFormat('es', { weekday: 'long', timeZone: tz }).format(new Date(ts));
+  }
+  function pintar() {
+    var tz = sel.value;
+    var esAR = tz === 'America/Argentina/Buenos_Aires';
+    document.querySelectorAll('[data-hora]').forEach(function (el) {
+      var ts = EVENTOS[el.getAttribute('data-hora')];
+      var base = el.getAttribute('data-hora') === 'clase' ? 'martes' : el.getAttribute('data-hora') === 'qa' ? 'jueves' : 'sábado';
+      var d = dia(ts, tz);
+      el.textContent = hora(ts, tz) + (d !== base ? ' (' + d + ')' : '');
+    });
+    ahi.textContent = esAR
+      ? 'Horarios de Argentina.'
+      : (sel.options[sel.selectedIndex].textContent === 'Tu zona horaria' ? 'Horarios en tu zona horaria.' : 'Horarios de ' + sel.options[sel.selectedIndex].textContent + '.') + ' En Argentina la clase es a las 15:00.';
+  }
+  sel.addEventListener('change', pintar);
+  pintar();
+})();
+
+/* Medición propia, la misma tabla que la portada (site_events). Sin cookies ni datos personales.
+   Visita "ia" o "ia:<de>"; clics "ia-arriba", "ia-precio" o "ia-abajo". Consultas en sql/003_landing_ia.sql. */
+(function () {
+  if (navigator.webdriver || !/(^|\.)comunidaduxui\.com$/.test(location.hostname)) return;
+  var URL_EVENTOS = 'https://ypmowaaxoyuknlmwmyth.supabase.co/rest/v1/site_events';
+  var CLAVE = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlwbW93YWF4b3l1a25sbXdteXRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNzk1ODEsImV4cCI6MjA5MjY1NTU4MX0.r9c_VB5H-kUmICseEc5La-VZ2_jKlAdAuDlWIIVVh1w';
+  var id;
+  try { id = sessionStorage.getItem('visita_id_ia'); } catch (e) {}
+  var esNueva = !id;
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)).slice(0, 36);
+    try { sessionStorage.setItem('visita_id_ia', id); } catch (e) {}
+  }
+  var origen = 'directo';
+  try { if (document.referrer) origen = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch (e) {}
+  var de = '';
+  try { de = (new URLSearchParams(location.search).get('de') || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 12); } catch (e) {}
+  var dispositivo = matchMedia('(max-width: 720px)').matches ? 'celular' : 'escritorio';
+  function registrar(evento, detalle) {
+    try {
+      fetch(URL_EVENTOS, {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json', apikey: CLAVE, Authorization: 'Bearer ' + CLAVE, Prefer: 'return=minimal' },
+        body: JSON.stringify({ site: 'comunidaduxui.com', event: evento, detalle: detalle, visita_id: id, origen: origen, dispositivo: dispositivo })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  if (esNueva) registrar('visita', de ? 'ia:' + de : 'ia');
+  document.querySelectorAll('[data-boton]').forEach(function (b) {
+    b.addEventListener('click', function () { registrar('clic_boton', 'ia-' + b.getAttribute('data-boton')); });
+  });
+})();
+</script>
+
+</body>
+</html>
