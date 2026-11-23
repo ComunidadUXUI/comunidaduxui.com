@@ -519,3 +519,6 @@ details ul{color:var(--humo);padding-left:1.1rem;display:flex;flex-direction:col
 .solo.practica .pr-fin{gap:1rem}
 .recorte{width:calc(390px*var(--k,1));max-width:100%;height:calc(102px*var(--k,1));overflow:hidden;border-radius:12px;position:relative;background:#fff;box-shadow:0 0 0 1px var(--borde)}
 .recorte .scr{position:absolute;left:0;top:calc(-196px*var(--k,1));pointer-events:none}
+
+/* Llegada desde el classroom: solo el botón para volver */
+.cta.vuelta{background:none;padding:0}

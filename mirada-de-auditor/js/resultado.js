@@ -5,7 +5,7 @@ import { PANTALLAS, ORDENAR, DECIR, ACTOS, NIVELES, DESTINO, DESGLOSE, PUENTE, O
 import { temaActual } from "./tema.js";
 import { puntuar } from "./puntaje.js";
 import { CONFIG } from "./config.js";
-import { evento, guardarResultado, pedirDesglose, PRIMERO_CAMINO, LOCAL } from "./datos.js";
+import { evento, guardarResultado, pedirDesglose, PRIMERO_CAMINO, LOCAL, DE_COMUNIDAD } from "./datos.js";
 import { ic, esc } from "./util.js";
 
 // ---------- enlaces (todo va en el #, nada se lee de un servidor) ----------
@@ -52,6 +52,8 @@ function botonCamino(id) {
 // La invitación a la comunidad. En el resultado: puente + lo que recibe. En los resultados completos: puente + su ruta.
 // El precio del VIP va solo en los resultados completos: en la primera pantalla frenaba (revisiones del 19/11/2026).
 function bloqueCamino(R, id, conVip = false) {
+  if (DE_COMUNIDAD) return `
+    <section class="cta vuelta"><div class="fila"><a class="btn p" id="${id}" href="${CONFIG.classroom}">Volver a la comunidad${ic("flecha")}</a></div></section>`;
   const altos = R.nivel === "ordenas" || R.nivel === "defiendes";
   const vip = conVip && altos ? `<p class="precio">La certificación se obtiene solo con el plan VIP: ${PRECIOS.vipAnio} USD al año, precio de fundadores para las primeras 10 personas. Después, ${PRECIOS.vipDespues} USD al año.</p>` : "";
   return `
@@ -200,7 +202,7 @@ export function mostrarResultado(main, S, { propio, alRepetir, previa = false, m
   posarFoco(main);
   $("#otra")?.addEventListener("click", alRepetir);
   $("#jugar")?.addEventListener("click", alRepetir);
-  $("#skool1")?.addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "resultado" }));
+  $("#skool1")?.addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "resultado", vuelta: DE_COMUNIDAD }));
   // Compartir, como en el test vocacional: un solo botón. En el celular abre el menú de compartir del teléfono con la
   // imagen y el texto ya cargados (la persona no sale del juego). Donde eso no existe, descarga la imagen y copia el texto.
   // La imagen se arma antes del toque: el menú de compartir solo se abre si se lo llama enseguida.
@@ -325,7 +327,7 @@ export function mostrarDesglose(main, S, { alRepetir }) {
   });
   main.querySelector("#d1").focus({ preventScroll: true });
   main.querySelector("#otra").addEventListener("click", alRepetir);
-  main.querySelector("#skool2").addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "desglose" }));
+  main.querySelector("#skool2").addEventListener("click", () => evento("clic_skool", { nivel: R.nivel, salto: R.salto, lugar: "desglose", vuelta: DE_COMUNIDAD }));
 }
 
 // ---------- imagen para compartir (1080 × 1350) ----------

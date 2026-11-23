@@ -12,6 +12,6 @@ export const CONFIG = {
   kit: "https://app.kit.com/forms/10214262/subscriptions", // formulario propio del juego, sin correo de confirmación
   kitOrigen: "mirada-de-auditor",
   skool: "https://www.skool.com/comunidaduxui/about",
-  paso0: "https://www.skool.com/comunidaduxui/classroom/e632fb03",
+  classroom: "https://www.skool.com/comunidaduxui/classroom",
   legales: "https://legales.comunidaduxui.com/",
 };

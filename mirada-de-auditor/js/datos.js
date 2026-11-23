@@ -11,6 +11,12 @@ export const ORIGEN = (q.get("utm_source") || q.get("desde") || (q.has("reto") ?
 export const ENTRADA_JUEGO = q.get("entrada") === "juego";
 // ?primero=camino pone el camino y su precio antes del pedido de correo (para quienes ya están en la lista).
 export const PRIMERO_CAMINO = q.get("primero") === "camino";
+// Quien llega desde el classroom de Skool ya es parte de la comunidad: en vez de la oferta ve un botón para volver (Anita, 23/11/2026).
+// Se recuerda en el navegador para que el enlace del correo (que no lleva el origen) muestre lo mismo.
+export const DE_COMUNIDAD = (() => {
+  const si = ORIGEN === "classroom";
+  try { if (si) localStorage.setItem("mirada-comunidad", "1"); return si || localStorage.getItem("mirada-comunidad") === "1"; } catch (e) { return si; }
+})();
 export const LOCAL = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
 
 function sesion() {

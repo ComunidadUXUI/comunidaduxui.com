@@ -333,7 +333,7 @@ export const PUENTE = {
 // Primero lo que la persona ya probó (las prácticas). El tercero usa las palabras del About de Skool.
 export const OFERTA = [
   "Prácticas sobre pantallas como las de este juego",
-  "7 pasos, de ver un problema a presentarlo a quien decide",
+  "Todo el recorrido, de ver un problema a presentarlo a quien decide",
   "Tu propia auditoría, lista para mostrar",
 ];
 
