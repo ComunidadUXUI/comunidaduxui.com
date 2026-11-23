@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Comunidad UXUI</title>
-<meta name="description" content="Aumenta tu seniority en UX/UI con práctica real, feedback honesto e IA aplicada a tu proceso. Una comunidad en español que acompaña.">
+<title>Certificación en auditoría UX/UI | Comunidad UXUI</title>
+<meta name="description" content="Certifícate como auditor UX/UI: evaluación heurística, usabilidad y accesibilidad con el método de Anita Sevilla Ull, con más de 130 auditorías para empresas.">
 <link rel="canonical" href="https://comunidaduxui.com/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://comunidaduxui.com/">
-<meta property="og:title" content="Comunidad UXUI">
-<meta property="og:description" content="Aumenta tu seniority en UX/UI con práctica real, feedback honesto e IA aplicada a tu proceso. Una comunidad en español que acompaña.">
+<meta property="og:title" content="Certifícate como auditor UX/UI · Comunidad UXUI">
+<meta property="og:description" content="Certifícate como auditor UX/UI: evaluación heurística, usabilidad y accesibilidad con el método de Anita Sevilla Ull, con más de 130 auditorías para empresas.">
 <meta property="og:image" content="https://comunidaduxui.com/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -22,6 +22,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Raleway:wght@400;500;600;700&display=swap">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"EducationalOrganization","name":"Comunidad UXUI","url":"https://comunidaduxui.com/","logo":"https://comunidaduxui.com/assets/favicon.png","description":"Certificación en auditoría UX/UI para diseñadores.","founder":{"@type":"Person","name":"Anita Sevilla Ull"},"sameAs":["https://www.skool.com/comunidaduxui","https://www.instagram.com/comunidaduxui/","https://www.youtube.com/@ComunidadUXUI","https://www.linkedin.com/company/comunidaduxui"]}
+</script>
 <style>
 :root {
   --papel: #F6F4EF;
@@ -86,8 +89,15 @@ a { color: inherit; }
   .logo-claro { display: none; }
   .logo-oscuro { display: block; }
 }
-.hero h1 { font-size: clamp(2.1rem, 7vw, 3.8rem); max-width: 14ch; margin: 0 auto; }
-.hero .bajada { color: var(--grafito); font-size: clamp(1.02rem, 2.4vw, 1.2rem); max-width: 38ch; margin: 1rem auto 0; text-wrap: pretty; }
+.hero .antetitulo { font-weight: 700; font-size: .95rem; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); margin: 0 0 .8rem; }
+.hero h1 { font-size: clamp(2.3rem, 7.5vw, 4rem); max-width: 16ch; margin: 0 auto; }
+.hero .bajada { color: var(--tinta); font-size: clamp(1.08rem, 2.6vw, 1.3rem); max-width: 40ch; margin: 1.1rem auto 0; text-wrap: pretty; }
+.hero .prueba { color: var(--grafito); font-size: .98rem; max-width: 48ch; margin: .9rem auto 0; text-wrap: pretty; }
+.hero .aviso { color: var(--grafito); font-size: .9rem; margin-top: .7rem; }
+.camino { list-style: none; padding: 0; margin: clamp(2rem, 6vh, 3rem) auto 0; max-width: 46rem; display: grid; gap: .9rem 2rem; text-align: left; }
+@media (min-width: 720px) { .camino { grid-template-columns: 1fr 1fr; } }
+.camino li { padding-left: 1.6rem; position: relative; line-height: 1.5; }
+.camino li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--acento); font-weight: 700; }
 .boton {
   display: inline-block;
   margin-top: clamp(1.5rem, 4vh, 2.25rem);
@@ -147,22 +157,54 @@ a { color: inherit; }
   <header class="hero wrap">
     <img class="logo logo-claro" src="assets/horizontal-texto-negro.svg" alt="Comunidad UXUI" width="335" height="60">
     <img class="logo logo-oscuro" src="assets/horizontal-texto-blanco.svg" alt="Comunidad UXUI" width="335" height="60">
-    <h1>Aumenta tu seniority en UX/UI</h1>
-    <p class="bajada">Práctica real, feedback honesto e IA aplicada a tu proceso, en una comunidad en español que acompaña.</p>
-    <a class="boton" data-boton="arriba" href="https://www.skool.com/comunidaduxui/about">Ir a la comunidad</a>
+    <p class="antetitulo">Certificación en auditoría UX/UI</p>
+    <h1>Certifícate como auditor UX/UI</h1>
+    <p class="bajada">Prepárate para el nuevo rol del diseñador de producto: ya no es mover píxeles, es detectar qué falla en un producto digital y saber cómo arreglarlo.</p>
+    <p class="prueba">Con el método de Anita Sevilla Ull: más de 130 auditorías para empresas y más de 10 años en diseño de producto (Globant, Dow Jones, EY).</p>
+    <a class="boton" data-boton="arriba" href="https://www.skool.com/comunidaduxui/about">Quiero certificarme</a>
+    <p class="aviso">Certificación incluida en el plan VIP. Planes y precios en Skool.</p>
+    <ul class="camino">
+      <li>Con plantillas y checklists listos para usar, aprendes evaluación heurística, usabilidad, accesibilidad y contenido.</li>
+      <li>Practicas desde el primer paso y comparas tu trabajo con ejemplos resueltos.</li>
+      <li>Sumas a tu portfolio una auditoría certificada que demuestra que sabes detectar qué falla y cómo arreglarlo.</li>
+      <li>Anita revisa tu auditoría final antes de certificarte.</li>
+    </ul>
   </header>
 
-  <section class="muro wrap" aria-labelledby="t-comunidad">
-    <h2 id="t-comunidad">Lo que cuentan quienes ya están adentro</h2>
-    <p class="nota">Reseñas, posts y mensajes reales de la comunidad.</p>
+  <section class="muro wrap" aria-labelledby="t-resenas">
+    <h2 id="t-resenas">Lo que cuentan quienes aprendieron con Anita</h2>
+    <p class="nota">Reseñas públicas, encuestas y mensajes reales.</p>
     <div class="columnas">
 
       <figure class="resena">
         <blockquote>
-          <p class="titular">Tengo trabajo gracias a la Comunidad UX/UI.</p>
-          <p>Vengo de ser la única diseñadora en mi equipo de 20 desarrolladores, por lo que al fin hablar con alguien de diseño fue terapéutico.</p>
+          <p class="titular">Me ha ayudado a despejar dudas sobre el desarrollo de una evaluación heurística.</p>
+          <p>Cada sesión con Anita es aprendizaje asegurado.</p>
         </blockquote>
-        <figcaption><span class="nombre">Luisa</span> <span class="quien">· UX designer</span><span class="fuente">Post en la comunidad</span></figcaption>
+        <figcaption><span class="nombre">Magdalena</span> <span class="quien">· diseñadora UX</span><span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Me ayudó a revisar cómo estoy haciendo las propuestas y entendiendo los pedidos y entregables.</p>
+          <p>He estado aprendiendo sobre auditorías UX. También tomé su curso de Auditorías UX.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Valeria</span> <span class="quien">· diseñadora freelance</span><span class="fuente">Reseña en ADPList</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Una de las cosas que más me gustó fue pensar en mi capacidad y valor como diseñador para ofrecer una solución, en este caso una auditoría.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Alumno del curso de auditoría UX de Anita</span><span class="fuente">Encuesta anónima de cierre</span></figcaption>
+      </figure>
+
+      <figure class="resena">
+        <blockquote>
+          <p class="titular">Me sirvió aclarar los pasos para el proceso.</p>
+          <p>Saber que estaba haciendo bien y cómo podía complementar lo que he estado haciendo de auditorías.</p>
+        </blockquote>
+        <figcaption><span class="nombre">Alumna del curso de auditoría UX de Anita</span><span class="fuente">Encuesta anónima de cierre</span></figcaption>
       </figure>
 
       <figure class="resena">
@@ -170,15 +212,7 @@ a { color: inherit; }
           <p class="titular">Llegué saturada, terminé sin poder parar de crear.</p>
           <p>Coleccionaba skills, las probaba y no llegaba a buenos resultados. Con la mentoría de Anita logré finalmente automatizar mi propio proceso de diseño: menos tiempo de ejecución y más tiempo de pensamiento estratégico.</p>
         </blockquote>
-        <figcaption><span class="nombre">Victoria</span> <span class="quien">· diseñadora de experiencias</span><span class="fuente">Post en la comunidad</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Hoy me han dado la respuesta que tanto esperaba: el puesto es mío.</p>
-          <p>Solo puedo decir gracias a esta comunidad y a la gente de aquí que me ha respondido una duda, me ha dado un consejo o ha compartido su experiencia sin pedir nada a cambio.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Diego</span> <span class="quien">· Product Designer, antes desarrollador web</span><span class="fuente">Post en la comunidad</span></figcaption>
+        <figcaption><span class="nombre">Victoria</span> <span class="quien">· UX Lead</span><span class="fuente">Post en la comunidad</span></figcaption>
       </figure>
 
       <figure class="resena">
@@ -191,88 +225,17 @@ a { color: inherit; }
 
       <figure class="resena">
         <blockquote>
-          <p class="titular">Uno llega buscando respuestas y termina encontrando apoyo, claridad y ese empujoncito que hace falta para creérselo de verdad.</p>
+          <p class="titular">Un espacio donde uno no solo aprende, sino que piensa acompañado.</p>
         </blockquote>
         <figcaption><span class="nombre">Clarise</span> <span class="quien">· diseñadora UX/UI</span><span class="fuente">Comentario en la comunidad</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Valoro su lado humano: el apoyo, la cercanía y la motivación.</p>
-          <p>Las prácticas grupales nos permiten aplicar lo aprendido y ganar confianza para acercarnos a nuestras metas profesionales.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Katerine</span> <span class="quien">· Service &amp; UX Designer</span><span class="fuente">Reseña en Skool</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Lo que más valoro es el compañerismo.</p>
-          <p>Poder hacer preguntas, aprender juntos, compartir ideas y ayudarnos en el camino.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Sarah</span> <span class="quien">· diseñadora UX/UI</span><span class="fuente">Reseña en Skool</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Podemos compartir dudas, miedos y logros.</p>
-          <p>Ambientes como este nos ayudan muchísimo a ir mejorando y sentirnos escuchados y motivados.</p>
-        </blockquote>
-        <figcaption><span class="nombre">María de los Ángeles</span> <span class="quien">· Visual Designer</span><span class="fuente">Comentario en la comunidad</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Es un espacio seguro para aprender y compartir.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Natali</span> <span class="quien">· diseñadora gráfica y UX/UI</span><span class="fuente">Reseña en Skool</span></figcaption>
-      </figure>
-
-    </div>
-  </section>
-
-  <section class="muro wrap" aria-labelledby="t-mentorias">
-    <h2 id="t-mentorias">Lo que dicen de las mentorías con Anita Sevilla Ull</h2>
-    <p class="nota"><span>Anita fundó la comunidad y la acompaña todos los días.</span> <span>Estas son reseñas públicas de sus mentorías individuales.</span></p>
-    <div class="columnas">
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Anita es una gran profesional y una excelente mentora.</p>
-          <p>Fue honesta y precisa. Me ayudó a ordenarme y me dio una guía para mi transición a UX/UI.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Juana</span> <span class="quien">· diseñadora de imagen y sonido</span><span class="fuente">Reseña en ADPList</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Si sos junior y tenés problemas para destacarte, hablá con Anita.</p>
-          <p>Descubrió enseguida un problema de comunicación que no sabía que tenía.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Regina</span> <span class="quien">· UX Designer</span><span class="fuente">Reseña en ADPList</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Cada sesión con Anita es aprendizaje asegurado.</p>
-          <p>No solo te escucha atentamente, sino que también se involucra en el problema que estás tratando de resolver.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Magdalena</span> <span class="quien">· diseñadora UX</span><span class="fuente">Reseña en ADPList</span></figcaption>
-      </figure>
-
-      <figure class="resena">
-        <blockquote>
-          <p class="titular">Recomiendo mucho a Anita.</p>
-          <p>Me ayudó a ordenar mis ideas y a hacerme las preguntas relevantes para avanzar en mi proceso.</p>
-        </blockquote>
-        <figcaption><span class="nombre">Nico</span> <span class="quien">· Project Manager, en transición a UX</span><span class="fuente">Reseña en ADPList</span></figcaption>
       </figure>
 
     </div>
   </section>
 
   <section class="cierre wrap" aria-labelledby="t-cierre">
-    <h2 id="t-cierre">Te esperamos adentro</h2>
-    <a class="boton" data-boton="abajo" href="https://www.skool.com/comunidaduxui/about">Ir a la comunidad</a>
+    <h2 id="t-cierre">Empieza tu camino de auditor UX/UI</h2>
+    <a class="boton" data-boton="abajo" href="https://www.skool.com/comunidaduxui/about">Quiero certificarme</a>
   </section>
 </main>
 
